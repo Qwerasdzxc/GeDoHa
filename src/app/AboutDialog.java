@@ -30,6 +30,6 @@ public class AboutDialog extends JDialog {
             }
         });
 
-        setSize(250, 150);
+        this.setSize(250, 150);
     }
 }
