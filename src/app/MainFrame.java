@@ -13,7 +13,7 @@ import java.io.IOException;
 public class MainFrame extends JFrame {
 
     private static MainFrame instance = null;
-
+    
     private MainFrame() {
         initialize();
     }
@@ -38,7 +38,7 @@ public class MainFrame extends JFrame {
 
         this.setLocationRelativeTo(null);
 
-        JToolBar toolbar = new JToolBar();
+        /*JToolBar toolbar = new JToolBar();
         toolbar.setFloatable(false);
 
         ImageIcon buttonIcon = null;
@@ -56,10 +56,10 @@ public class MainFrame extends JFrame {
             toolbar.add(new JButton("", buttonIcon));
 
         Container contentPane = this.getContentPane();
-        contentPane.add(toolbar, BorderLayout.NORTH);
+        contentPane.add(toolbar, BorderLayout.NORTH);*/
 
         //Where the GUI is created:
-        JMenuBar menuBar;
+        /*JMenuBar menuBar;
         JMenu menu;
         JMenuItem menuItem;
 
@@ -81,10 +81,15 @@ public class MainFrame extends JFrame {
                 dialog.setVisible(true);
             }
         });
-        menu.add(menuItem);
+        menu.add(menuItem);*/
 
+        MyMenuBar menuBar= new MyMenuBar();
         this.setJMenuBar(menuBar);
 
+        MyToolBar toolBar = new MyToolBar();
+        add(toolBar, BorderLayout.NORTH);
+        
+		
         // create a panel
         JPanel p1 = new JPanel();
         JPanel p = new JPanel();
