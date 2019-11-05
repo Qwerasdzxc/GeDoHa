@@ -27,9 +27,5 @@ public class MyToolBar extends JToolBar{
         if (buttonIcon != null)
             this.add(new JButton("", buttonIcon));
 		
-		/*JButton btnDoc = new JButton();
-		btnDoc.setToolTipText("Document");
-		btnDoc.setIcon(new ImageIcon("/images/open_22x22.jpg"));
-		this.add(btnDoc);*/
 	}
 }
