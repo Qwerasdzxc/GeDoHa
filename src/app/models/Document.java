@@ -10,6 +10,16 @@ public class Document implements MutableTreeNode {
 
     private String name;
 
+    public Document(String name) {
+        this.name = name;
+
+        ArrayList<Page> pages = new ArrayList<>();
+        pages.add(new Page("Page 1"));
+        pages.add(new Page("Page 2"));
+
+        this.pages = pages;
+    }
+
     // Children nodes
     private ArrayList<Page> pages = new ArrayList<>();
 
@@ -75,5 +85,17 @@ public class Document implements MutableTreeNode {
     @Override
     public String toString() {
         return this.getName();
+    }
+
+    public Page getPage(int index) {
+        return (Page) this.pages.get(index);
+    }
+
+    public int getPageCount() {
+        return this.pages.size();
+    }
+
+    public int getPageIndex(Page child) {
+        return this.pages.indexOf(child);
     }
 }

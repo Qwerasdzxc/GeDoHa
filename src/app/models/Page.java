@@ -10,6 +10,12 @@ public class Page implements TreeNode {
     // Parent node
     private Document parent;
 
+    private String name;
+
+    public Page(String name) {
+        this.name = name;
+    }
+
     @Override
     public TreeNode getChildAt(int childIndex) {
         return null;
@@ -43,5 +49,18 @@ public class Page implements TreeNode {
     @Override
     public Enumeration<? extends TreeNode> children() {
         return null;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return getName();
     }
 }

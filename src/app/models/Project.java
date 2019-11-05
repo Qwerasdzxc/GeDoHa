@@ -12,6 +12,12 @@ public class Project implements MutableTreeNode {
 
     public Project(String name) {
         this.name = name;
+
+        ArrayList<Document> documents = new ArrayList<>();
+        documents.add(new Document("Document 1"));
+        documents.add(new Document("Document 2"));
+
+        this.documents = documents;
     }
 
     // Children nodes
