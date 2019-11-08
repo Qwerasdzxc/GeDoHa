@@ -19,8 +19,9 @@ public class Page implements TreeNode, IObserver {
     
 	List<IListener> listeners;
 
-    public Page(String name) {
-        this.name = name;
+    public Page(Document parent) {
+    	this.name = "Page";
+        this.parent = parent;
     }
 
     @Override

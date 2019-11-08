@@ -11,6 +11,7 @@ import javax.swing.tree.TreeNode;
 import app.observer.IListener;
 import app.observer.IObserver;
 
+
 public class Workspace implements MutableTreeNode, IObserver {
 
     private String name;
@@ -117,6 +118,11 @@ public class Workspace implements MutableTreeNode, IObserver {
     public String toString() {
         return this.getName();
     }
+    
+    public void deleteProject(Project project) {
+		projects.remove(project);
+
+	}
     
    // Observer metode
 

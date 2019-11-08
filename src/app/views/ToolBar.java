@@ -1,11 +1,16 @@
 package app.views;
 
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.AbstractButton;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JToolBar;
 import javax.swing.SwingConstants;
+
+import app.actions.ActionManager;
 
 public class ToolBar extends JToolBar{
 	
@@ -24,6 +29,7 @@ public class ToolBar extends JToolBar{
             e.printStackTrace();
         }
 
+		 
         if (buttonIcon != null)
             this.add(new JButton("", buttonIcon));
 		

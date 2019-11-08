@@ -10,6 +10,7 @@ import javax.swing.tree.TreeNode;
 import app.observer.IListener;
 import app.observer.IObserver;
 
+
 public class Project implements MutableTreeNode, IObserver {
 
     private String name;
@@ -48,6 +49,10 @@ public class Project implements MutableTreeNode, IObserver {
     public int getValue() {
 
 		return count;
+	}
+    
+	public void deleteDocument(Document document) {
+		documents.remove(document);
 	}
     
     public static void setCount(int count) {

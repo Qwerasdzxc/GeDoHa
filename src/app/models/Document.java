@@ -10,18 +10,19 @@ import javax.swing.tree.TreeNode;
 import app.observer.IListener;
 import app.observer.IObserver;
 
+
 public class Document implements MutableTreeNode, IObserver {
 
     private String name;
 	List<IListener> listeners;
 
-
     public Document(String name) {
         this.name = name;
 
         ArrayList<Page> pages = new ArrayList<>();
-        pages.add(new Page("Page 1"));
-        pages.add(new Page("Page 2"));
+
+        pages.add(new Page(this));
+        pages.add(new Page(this));
 
         this.pages = pages;
     }
@@ -29,8 +30,13 @@ public class Document implements MutableTreeNode, IObserver {
     // Children nodes
     private ArrayList<Page> pages = new ArrayList<>();
 
-    // Parent node object
+    // Parent node object 
     private Project parent;
+    
+    public void deletePage(Page page) {
+		pages.remove(page);
+		
+	}
 
     public TreeNode getChildAt(int childIndex) {
         return this.pages.get(childIndex);
@@ -92,6 +98,13 @@ public class Document implements MutableTreeNode, IObserver {
     public String toString() {
         return this.getName();
     }
+    
+    public void addPage(Page page) {
+		pages.add(page);
+		if (page.getName() == null)
+			page.setName("Page - " + pages.size());
+		
+	}
 
     public Page getPage(int index) {
         return (Page) this.pages.get(index);

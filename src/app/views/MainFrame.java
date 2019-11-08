@@ -92,4 +92,9 @@ public class MainFrame extends JFrame implements IListener {
     public void update(Object event) {
 
     }
+
+	public JTree getTree() {
+		
+		return hierarchyTree;
+	}
 }

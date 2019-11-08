@@ -2,6 +2,7 @@ package app.actions;
 
 import app.models.Document;
 import app.models.Project;
+import app.models.Workspace;
 import app.views.MainFrame;
 
 import javax.swing.*;
@@ -22,8 +23,11 @@ public class ActNewProject extends GAbstractAction {
     }
 
     public void actionPerformed(ActionEvent arg0) {
-
-        // TODO: Implementirati akciju pravljenja novog projekta
-
+    	// dodavanje novog projekta u JTree
+		JTree tree = MainFrame.getInstance().getTree();
+		TreePath path = tree.getSelectionPath();
+		tree.expandPath(path);
+		Project project = new Project("Projekat");
+		((Workspace) tree.getModel().getRoot()).addProject(project);
     }
 }
