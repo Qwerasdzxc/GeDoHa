@@ -1,4 +1,4 @@
-package app;
+package app.views;
 
 import java.awt.Image;
 
@@ -7,9 +7,9 @@ import javax.swing.JButton;
 import javax.swing.JToolBar;
 import javax.swing.SwingConstants;
 
-public class MyToolBar extends JToolBar{
+public class ToolBar extends JToolBar{
 	
-	public MyToolBar() {
+	public ToolBar() {
 		super(SwingConstants.VERTICAL);
 		
 		setFloatable(false);

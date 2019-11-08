@@ -1,8 +1,15 @@
 package app.actions;
 
-//preko ove klase se pozivaju sve akcije za Menibar i Toolbar
-
 public class ActionManager {
 
-	
+    private static ActionManager instance = null;
+
+    private ActionManager() {}
+
+    public static ActionManager getInstance() {
+        if (instance == null)
+            instance = new ActionManager();
+
+        return instance;
+    }
 }

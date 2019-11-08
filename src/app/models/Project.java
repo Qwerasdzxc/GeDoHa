@@ -10,7 +10,7 @@ import javax.swing.tree.TreeNode;
 import app.observer.IListener;
 import app.observer.IObserver;
 
-public class Project implements MutableTreeNode,IObserver {
+public class Project implements MutableTreeNode, IObserver {
 
     private String name;
 	private static int count=0;
@@ -41,11 +41,14 @@ public class Project implements MutableTreeNode,IObserver {
         return this.documents.size();
     }
 
+    public void addDocument(Document document) {
+        this.documents.add(document);
+    }
+
     public int getValue() {
 
 		return count;
 	}
-    
     
     public static void setCount(int count) {
 		Project.count = count;
@@ -110,7 +113,6 @@ public class Project implements MutableTreeNode,IObserver {
         this.parent = (Workspace) newParent;
     }
 
-
     @Override
     public void setUserObject(Object object) {}
 
@@ -130,7 +132,7 @@ public class Project implements MutableTreeNode,IObserver {
         return this.getName();
     }
     
-  //Observer metode
+    // Observer metode
 
   	@Override
   	public void addObserver(IListener listener) {

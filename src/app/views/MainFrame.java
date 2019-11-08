@@ -1,13 +1,14 @@
-package app;
+package app.views;
 
 import javax.swing.*;
 import java.awt.*;
 
-import app.hierarchy.HierarchyModel;
-import app.hierarchy.HierarchyTree;
+import app.views.hierarchy.HierarchyModel;
+import app.views.hierarchy.HierarchyTree;
 import app.actions.ActionManager;
+import app.observer.IListener;
 
-public class MainFrame extends JFrame {
+public class MainFrame extends JFrame implements IListener {
 
     private static MainFrame instance = null;
     private ActionManager actionManager;
@@ -43,10 +44,10 @@ public class MainFrame extends JFrame {
 
         this.setLocationRelativeTo(null);
 
-        MyMenuBar menuBar= new MyMenuBar();
+        MenuBar menuBar= new MenuBar();
         this.setJMenuBar(menuBar);
 
-        MyToolBar toolBar = new MyToolBar();
+        ToolBar toolBar = new ToolBar();
         add(toolBar, BorderLayout.NORTH);
         
 		
@@ -85,5 +86,10 @@ public class MainFrame extends JFrame {
         this.hierarchyTree = new HierarchyTree();
         this.hierarchyModel = new HierarchyModel();
         this.hierarchyTree.setModel(hierarchyModel);
+    }
+
+    @Override
+    public void update(Object event) {
+
     }
 }

@@ -10,7 +10,7 @@ import javax.swing.tree.TreeNode;
 import app.observer.IListener;
 import app.observer.IObserver;
 
-public class Page implements TreeNode,IObserver {
+public class Page implements TreeNode, IObserver {
 
     // Parent node
     private Document parent;
@@ -18,7 +18,6 @@ public class Page implements TreeNode,IObserver {
     private String name;
     
 	List<IListener> listeners;
-
 
     public Page(String name) {
         this.name = name;
@@ -72,7 +71,7 @@ public class Page implements TreeNode,IObserver {
         return getName();
     }
 
-  //Observer metode
+    // Observer metode
 
   	@Override
   	public void addObserver(IListener listener) {

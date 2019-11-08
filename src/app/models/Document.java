@@ -10,7 +10,7 @@ import javax.swing.tree.TreeNode;
 import app.observer.IListener;
 import app.observer.IObserver;
 
-public class Document implements MutableTreeNode,IObserver {
+public class Document implements MutableTreeNode, IObserver {
 
     private String name;
 	List<IListener> listeners;

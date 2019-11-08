@@ -1,6 +1,4 @@
-package app.hierarchy;
-
-import java.util.ArrayList;
+package app.views.hierarchy;
 
 import javax.swing.tree.DefaultTreeModel;
 

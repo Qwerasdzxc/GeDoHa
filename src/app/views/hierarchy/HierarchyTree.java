@@ -1,4 +1,4 @@
-package app.hierarchy;
+package app.views.hierarchy;
 
 import javax.swing.JTree;
 import javax.swing.SwingUtilities;
@@ -8,7 +8,9 @@ import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.TreePath;
 
 import app.models.Document;
+import app.models.Page;
 import app.models.Project;
+import app.models.Workspace;
 
 public class HierarchyTree extends JTree implements TreeSelectionListener {
 
@@ -26,12 +28,20 @@ public class HierarchyTree extends JTree implements TreeSelectionListener {
 
     public void valueChanged(TreeSelectionEvent arg0) {
         TreePath path = arg0.getPath();
-        for (int i = 0; i < path.getPathCount(); i++) {
-            if (path.getPathComponent(i) instanceof Document) {
-                // Pronaci i postaviti kao aktivan JInternalFrame koji sadrži selektovani dokument
-                Document d = (Document) path.getPathComponent(i);
-                break;
-            }
+
+        Object selectedComponent = path.getLastPathComponent();
+
+        if (selectedComponent instanceof Workspace) {
+            // Ovde idu akcije vezane za rad sa workspace-om
+        } else if (selectedComponent instanceof Project) {
+            Project project = (Project) selectedComponent;
+            // Ovde idu akcije vezane za rad sa project-om
+        } else if (selectedComponent instanceof Document) {
+            Document document = (Document) selectedComponent;
+            // Ovde idu akcije vezane za rad sa document-om
+        } else if (selectedComponent instanceof Page) {
+            Page page = (Page) selectedComponent;
+            // Ovde idu akcije vezane za rad sa page-om
         }
     }
 }

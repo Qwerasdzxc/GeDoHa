@@ -1,4 +1,4 @@
-package app.hierarchy;
+package app.views.hierarchy;
 
 import java.awt.Component;
 import java.net.URL;

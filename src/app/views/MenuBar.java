@@ -1,16 +1,15 @@
-package app;
+package app.views;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
-public class MyMenuBar extends JMenuBar{
+public class MenuBar extends JMenuBar{
 	
-	public MyMenuBar() {
+	public MenuBar() {
 		JMenu file= new JMenu("File");
 		JMenu help= new JMenu("Help");
 		JMenu about= new JMenu("About");

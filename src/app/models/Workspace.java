@@ -11,7 +11,7 @@ import javax.swing.tree.TreeNode;
 import app.observer.IListener;
 import app.observer.IObserver;
 
-public class Workspace implements MutableTreeNode,IObserver {
+public class Workspace implements MutableTreeNode, IObserver {
 
     private String name;
 
@@ -118,7 +118,7 @@ public class Workspace implements MutableTreeNode,IObserver {
         return this.getName();
     }
     
-  //Observer metode
+   // Observer metode
 
   	@Override
   	public void addObserver(IListener listener) {

@@ -1,4 +1,4 @@
-package app;
+package app.views;
 
 import javax.swing.*;
 import java.awt.Image;
