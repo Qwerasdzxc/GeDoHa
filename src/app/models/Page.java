@@ -1,16 +1,24 @@
 package app.models;
 
+import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.List;
 
 import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreeNode;
 
-public class Page implements TreeNode {
+import app.observer.IListener;
+import app.observer.IObserver;
+
+public class Page implements TreeNode,IObserver {
 
     // Parent node
     private Document parent;
 
     private String name;
+    
+	List<IListener> listeners;
+
 
     public Page(String name) {
         this.name = name;
@@ -63,4 +71,34 @@ public class Page implements TreeNode {
     public String toString() {
         return getName();
     }
+
+  //Observer metode
+
+  	@Override
+  	public void addObserver(IListener listener) {
+  		if(listener == null)
+  			return;
+  		if(this.listeners ==null)
+  			this.listeners = new ArrayList<>();
+  		if(this.listeners.contains(listener))
+  			return;
+  		this.listeners.add(listener);		
+  	}
+
+  	@Override
+  	public void removeObserver(IListener listener) {
+  		if(listener == null || this.listeners == null || !this.listeners.contains(listener))
+  			return;
+  		this.listeners.remove(listener);		
+  	}
+
+  	@Override
+  	public void notifyObservers(Object event) {
+  		if(event == null || this.listeners == null || this.listeners.isEmpty())
+  			return;
+
+  		for(IListener listener : listeners){
+  			listener.update(event);
+  		}		
+  	}
 }

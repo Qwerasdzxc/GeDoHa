@@ -2,13 +2,20 @@ package app.models;
 
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.List;
 
 import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreeNode;
 
-public class Project implements MutableTreeNode {
+import app.observer.IListener;
+import app.observer.IObserver;
+
+public class Project implements MutableTreeNode,IObserver {
 
     private String name;
+	private static int count=0;
+
+	List<IListener> listeners;
 
     public Project(String name) {
         this.name = name;
@@ -34,7 +41,17 @@ public class Project implements MutableTreeNode {
         return this.documents.size();
     }
 
-    public int getDocumentIndex(Document child) {
+    public int getValue() {
+
+		return count;
+	}
+    
+    
+    public static void setCount(int count) {
+		Project.count = count;
+	}
+
+	public int getDocumentIndex(Document child) {
         return this.documents.indexOf(child);
     }
 
@@ -112,4 +129,34 @@ public class Project implements MutableTreeNode {
     public String toString() {
         return this.getName();
     }
+    
+  //Observer metode
+
+  	@Override
+  	public void addObserver(IListener listener) {
+  		if(listener == null)
+  			return;
+  		if(this.listeners ==null)
+  			this.listeners = new ArrayList<>();
+  		if(this.listeners.contains(listener))
+  			return;
+  		this.listeners.add(listener);		
+  	}
+
+  	@Override
+  	public void removeObserver(IListener listener) {
+  		if(listener == null || this.listeners == null || !this.listeners.contains(listener))
+  			return;
+  		this.listeners.remove(listener);		
+  	}
+
+  	@Override
+  	public void notifyObservers(Object event) {
+  		if(event == null || this.listeners == null || this.listeners.isEmpty())
+  			return;
+
+  		for(IListener listener : listeners){
+  			listener.update(event);
+  		}		
+  	}
 }

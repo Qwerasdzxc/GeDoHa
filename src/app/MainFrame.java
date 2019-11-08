@@ -5,14 +5,18 @@ import java.awt.*;
 
 import app.hierarchy.HierarchyModel;
 import app.hierarchy.HierarchyTree;
+import app.actions.ActionManager;
 
 public class MainFrame extends JFrame {
 
     private static MainFrame instance = null;
+    private ActionManager actionManager;
 
     private HierarchyModel hierarchyModel;
     private HierarchyTree hierarchyTree;
     
+    private JDesktopPane desktop;
+
     private MainFrame() {
 
         initialiseWorkspaceTree();
@@ -47,21 +51,23 @@ public class MainFrame extends JFrame {
         
 		
         // create a panel
-        JPanel p = new JPanel();
+        //JPanel p = new JPanel();
+
+		desktop=new JDesktopPane();
 
         // create text areas
         JTextArea t1 = new JTextArea(10, 10);
 
         // set text
-        t1.setText("this is a text area");
+        //t1.setText("this is a text area");
 
         // add text area to panel
-        p.add(t1);
+        //p.add(t1);
 
         // create a splitpane
         JScrollPane scroll=new JScrollPane(hierarchyTree);
         scroll.setMinimumSize(new Dimension(200,150));
-        JSplitPane sl = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, scroll, p);
+        JSplitPane sl = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, scroll, desktop);
         sl.setOneTouchExpandable(true);
         sl.setResizeWeight(0.1);
 
@@ -71,6 +77,10 @@ public class MainFrame extends JFrame {
         this.setVisible(true);
     }
 
+    public HierarchyTree getHierarchyTree() {
+		return hierarchyTree;
+	}
+    
     private void initialiseWorkspaceTree(){
         this.hierarchyTree = new HierarchyTree();
         this.hierarchyModel = new HierarchyModel();

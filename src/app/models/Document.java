@@ -2,13 +2,19 @@ package app.models;
 
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.List;
 
 import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreeNode;
 
-public class Document implements MutableTreeNode {
+import app.observer.IListener;
+import app.observer.IObserver;
+
+public class Document implements MutableTreeNode,IObserver {
 
     private String name;
+	List<IListener> listeners;
+
 
     public Document(String name) {
         this.name = name;
@@ -98,4 +104,35 @@ public class Document implements MutableTreeNode {
     public int getPageIndex(Page child) {
         return this.pages.indexOf(child);
     }
+
+    //Observer metode
+
+	@Override
+	public void addObserver(IListener listener) {
+		if(listener == null)
+			return;
+		if(this.listeners ==null)
+			this.listeners = new ArrayList<>();
+		if(this.listeners.contains(listener))
+			return;
+		this.listeners.add(listener);		
+	}
+
+	@Override
+	public void removeObserver(IListener listener) {
+		if(listener == null || this.listeners == null || !this.listeners.contains(listener))
+			return;
+		this.listeners.remove(listener);		
+	}
+
+	@Override
+	public void notifyObservers(Object event) {
+		if(event == null || this.listeners == null || this.listeners.isEmpty())
+			return;
+
+		for(IListener listener : listeners){
+			listener.update(event);
+		}		
+	}
+    
 }
