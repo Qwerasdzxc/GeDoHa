@@ -1,4 +1,4 @@
-package app.models;
+package app.models.document;
 
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -7,14 +7,17 @@ import java.util.List;
 import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreeNode;
 
+import app.models.page.Page;
+import app.models.project.Project;
 import app.observer.IListener;
 import app.observer.IObserver;
 
 
-public class Document implements MutableTreeNode, IObserver {
+public class Document implements MutableTreeNode, DocObserver {
 
     private String name;
-	List<IListener> listeners;
+
+	List<DocListener> listeners;
 
     public Document(String name) {
         this.name = name;
@@ -118,10 +121,8 @@ public class Document implements MutableTreeNode, IObserver {
         return this.pages.indexOf(child);
     }
 
-    //Observer metode
-
 	@Override
-	public void addObserver(IListener listener) {
+	public void addObserver(DocListener listener) {
 		if(listener == null)
 			return;
 		if(this.listeners ==null)
@@ -132,20 +133,10 @@ public class Document implements MutableTreeNode, IObserver {
 	}
 
 	@Override
-	public void removeObserver(IListener listener) {
-		if(listener == null || this.listeners == null || !this.listeners.contains(listener))
+	public void removeObserver(DocListener listener) {
+		if(listener == null || this.listeners == null)
 			return;
+
 		this.listeners.remove(listener);		
 	}
-
-	@Override
-	public void notifyObservers(Object event) {
-		if(event == null || this.listeners == null || this.listeners.isEmpty())
-			return;
-
-		for(IListener listener : listeners){
-			listener.update(event);
-		}		
-	}
-    
 }

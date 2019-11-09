@@ -8,8 +8,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultTreeCellRenderer;
 
-import app.models.Document;
-import app.models.Project;
+import app.models.document.Document;
+import app.models.project.Project;
 
 class HierarchyTreeCellRendered extends DefaultTreeCellRenderer {
 

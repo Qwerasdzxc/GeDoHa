@@ -1,4 +1,4 @@
-package app.models;
+package app.models.project;
 
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -7,16 +7,18 @@ import java.util.List;
 import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreeNode;
 
+import app.models.workspace.Workspace;
+import app.models.document.Document;
 import app.observer.IListener;
 import app.observer.IObserver;
 
 
-public class Project implements MutableTreeNode, IObserver {
+public class Project implements MutableTreeNode, ProjObserver {
 
     private String name;
 	private static int count=0;
 
-	List<IListener> listeners;
+	List<ProjListener> listeners;
 
     public Project(String name) {
         this.name = name;
@@ -44,12 +46,9 @@ public class Project implements MutableTreeNode, IObserver {
 
     public void addDocument(Document document) {
         this.documents.add(document);
+
+        notifyDocumentCreated(document);
     }
-
-    public int getValue() {
-
-		return count;
-	}
     
 	public void deleteDocument(Document document) {
 		documents.remove(document);
@@ -132,15 +131,17 @@ public class Project implements MutableTreeNode, IObserver {
         return name;
     }
 
+    public void setSelected() {
+        notifyProjectSelected();
+    }
+
     @Override
     public String toString() {
         return this.getName();
     }
-    
-    // Observer metode
 
   	@Override
-  	public void addObserver(IListener listener) {
+  	public void addObserver(ProjListener listener) {
   		if(listener == null)
   			return;
   		if(this.listeners ==null)
@@ -151,19 +152,30 @@ public class Project implements MutableTreeNode, IObserver {
   	}
 
   	@Override
-  	public void removeObserver(IListener listener) {
-  		if(listener == null || this.listeners == null || !this.listeners.contains(listener))
+  	public void removeObserver(ProjListener listener) {
+  		if(listener == null || this.listeners == null)
   			return;
+
   		this.listeners.remove(listener);		
   	}
 
-  	@Override
-  	public void notifyObservers(Object event) {
-  		if(event == null || this.listeners == null || this.listeners.isEmpty())
-  			return;
+    @Override
+    public void notifyDocumentCreated(Document document) {
+        if(this.listeners == null)
+            return;
 
-  		for(IListener listener : listeners){
-  			listener.update(event);
-  		}		
-  	}
+        for(ProjListener listener : listeners){
+            listener.onDocumentCreated(document);
+        }
+    }
+
+    @Override
+    public void notifyProjectSelected() {
+        if(this.listeners == null)
+            return;
+
+        for(ProjListener listener : listeners){
+            listener.onProjectSelected(this);
+        }
+    }
 }

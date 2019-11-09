@@ -12,7 +12,7 @@ public class ActNodeRename extends GAbstractAction{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		JTree tree = MainFrame.getInstance().getTree();
+		JTree tree = MainFrame.getInstance().getHierarchyTree();
 		TreePath path = tree.getSelectionPath();
 		if (path != null) {
 			tree.startEditingAtPath(path);

@@ -11,8 +11,8 @@ import javax.swing.JTree;
 import javax.swing.tree.DefaultTreeCellEditor;
 import javax.swing.tree.DefaultTreeCellRenderer;
 
-import app.models.Document;
-import app.models.Project;
+import app.models.document.Document;
+import app.models.project.Project;
 
 class HierarchyTreeEditor extends DefaultTreeCellEditor implements ActionListener {
 

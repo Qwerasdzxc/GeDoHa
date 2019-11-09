@@ -1,16 +1,16 @@
 package app.views.hierarchy;
 
-import javax.swing.JTree;
-import javax.swing.SwingUtilities;
+import javax.swing.*;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.TreePath;
 
-import app.models.Document;
-import app.models.Page;
-import app.models.Project;
-import app.models.Workspace;
+import app.models.document.Document;
+import app.models.page.Page;
+import app.models.project.Project;
+import app.models.workspace.Workspace;
+import app.views.project.ProjectView;
 
 public class HierarchyTree extends JTree implements TreeSelectionListener {
 
@@ -21,21 +21,18 @@ public class HierarchyTree extends JTree implements TreeSelectionListener {
         setEditable(true);
     }
 
-    public void addProject(Project project) {
-        ((HierarchyModel) getModel()).addProject(project);
-        SwingUtilities.updateComponentTreeUI(this);
-    }
-
     public void valueChanged(TreeSelectionEvent arg0) {
         TreePath path = arg0.getPath();
 
         Object selectedComponent = path.getLastPathComponent();
+        System.out.println(selectedComponent.toString());
 
         if (selectedComponent instanceof Workspace) {
             // Ovde idu akcije vezane za rad sa workspace-om
         } else if (selectedComponent instanceof Project) {
             Project project = (Project) selectedComponent;
-            // Ovde idu akcije vezane za rad sa project-om
+            project.setSelected();
+
         } else if (selectedComponent instanceof Document) {
             Document document = (Document) selectedComponent;
             // Ovde idu akcije vezane za rad sa document-om
@@ -43,5 +40,9 @@ public class HierarchyTree extends JTree implements TreeSelectionListener {
             Page page = (Page) selectedComponent;
             // Ovde idu akcije vezane za rad sa page-om
         }
+    }
+
+    void activateProjectView(Project project) {
+
     }
 }

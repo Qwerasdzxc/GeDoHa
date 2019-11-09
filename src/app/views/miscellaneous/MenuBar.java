@@ -1,4 +1,6 @@
-package app.views;
+package app.views.miscellaneous;
+
+import app.views.MainFrame;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

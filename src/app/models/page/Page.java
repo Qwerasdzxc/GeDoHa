@@ -1,12 +1,12 @@
-package app.models;
+package app.models.page;
 
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 
-import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreeNode;
 
+import app.models.document.Document;
 import app.observer.IListener;
 import app.observer.IObserver;
 

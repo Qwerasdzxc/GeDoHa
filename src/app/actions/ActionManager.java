@@ -7,14 +7,15 @@ public class ActionManager {
 	private ActNodeDelete deleteNode;
 	private ActNodeRename renameNode;
 	private ActNewProject newProject;
+	private ActNewDocument newDocument;
 	private ActNewPage newPage;
     
     private ActionManager() {
     	deleteNode= new ActNodeDelete();
 		renameNode = new ActNodeRename();
 		newProject = new ActNewProject();
+		newDocument = new ActNewDocument();
 		newPage = new ActNewPage();
-
     }
 
     public ActNewPage getNewPageAction() {
@@ -27,4 +28,12 @@ public class ActionManager {
 
         return instance;
     }
+
+	public ActNewProject getNewProject() {
+		return newProject;
+	}
+
+	public ActNewDocument getNewDocument() {
+		return newDocument;
+	}
 }

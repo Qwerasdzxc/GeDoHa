@@ -3,15 +3,21 @@ package app.views;
 import javax.swing.*;
 import java.awt.*;
 
+import app.models.workspace.Workspace;
 import app.views.hierarchy.HierarchyModel;
 import app.views.hierarchy.HierarchyTree;
 import app.actions.ActionManager;
 import app.observer.IListener;
+import app.views.miscellaneous.MenuBar;
+import app.views.miscellaneous.ToolBar;
+import app.views.workspace.WorkspaceView;
 
-public class MainFrame extends JFrame implements IListener {
+public class MainFrame extends JFrame {
 
     private static MainFrame instance = null;
     private ActionManager actionManager;
+
+    private WorkspaceView workspaceView;
 
     private HierarchyModel hierarchyModel;
     private HierarchyTree hierarchyTree;
@@ -20,7 +26,6 @@ public class MainFrame extends JFrame implements IListener {
 
     private MainFrame() {
 
-        initialiseWorkspaceTree();
         initialize();
     }
 
@@ -48,31 +53,16 @@ public class MainFrame extends JFrame implements IListener {
         this.setJMenuBar(menuBar);
 
         ToolBar toolBar = new ToolBar();
-        add(toolBar, BorderLayout.NORTH);
-        
-		
-        // create a panel
-        //JPanel p = new JPanel();
+        this.add(toolBar, BorderLayout.NORTH);
 
-		desktop=new JDesktopPane();
+        initialiseWorkspaceTree();
 
-        // create text areas
-        JTextArea t1 = new JTextArea(10, 10);
-
-        // set text
-        //t1.setText("this is a text area");
-
-        // add text area to panel
-        //p.add(t1);
-
-        // create a splitpane
-        JScrollPane scroll=new JScrollPane(hierarchyTree);
+        JScrollPane scroll = new JScrollPane(hierarchyTree);
         scroll.setMinimumSize(new Dimension(200,150));
-        JSplitPane sl = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, scroll, desktop);
+        JSplitPane sl = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, scroll, workspaceView);
         sl.setOneTouchExpandable(true);
         sl.setResizeWeight(0.1);
 
-        // add panel
         this.getContentPane().add(sl, BorderLayout.CENTER);
 
         this.setVisible(true);
@@ -82,19 +72,15 @@ public class MainFrame extends JFrame implements IListener {
 		return hierarchyTree;
 	}
     
-    private void initialiseWorkspaceTree(){
+    private void initialiseWorkspaceTree() {
+        this.workspaceView = new WorkspaceView();
+        this.workspaceView.setBackground(Color.CYAN);
+
+        Workspace workspace = new Workspace();
+        workspace.addObserver(workspaceView);
+
         this.hierarchyTree = new HierarchyTree();
-        this.hierarchyModel = new HierarchyModel();
+        this.hierarchyModel = new HierarchyModel(workspace);
         this.hierarchyTree.setModel(hierarchyModel);
     }
-
-    @Override
-    public void update(Object event) {
-
-    }
-
-	public JTree getTree() {
-		
-		return hierarchyTree;
-	}
 }

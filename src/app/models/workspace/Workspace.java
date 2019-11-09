@@ -1,25 +1,23 @@
-package app.models;
+package app.models.workspace;
 
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 
-import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreeNode;
 
-import app.observer.IListener;
-import app.observer.IObserver;
+import app.models.project.Project;
 
 
-public class Workspace implements MutableTreeNode, IObserver {
+public class Workspace implements MutableTreeNode, WSObserver {
 
     private String name;
 
-	List<IListener> listeners;
+	List<WSListener> listeners;
 
-    public Workspace(String name) {
-        this.name = name;
+    public Workspace() {
+        this.name = "Workspace";
 
         ArrayList<Project> projects = new ArrayList<>();
         projects.add(new Project("Project 1"));
@@ -50,6 +48,8 @@ public class Workspace implements MutableTreeNode, IObserver {
 
     public void addProject(Project project) {
         this.projects.add(project);
+
+        notifyProjectCreated(project);
     }
 
     @Override
@@ -123,11 +123,9 @@ public class Workspace implements MutableTreeNode, IObserver {
 		projects.remove(project);
 
 	}
-    
-   // Observer metode
 
   	@Override
-  	public void addObserver(IListener listener) {
+  	public void addObserver(WSListener listener) {
   		if(listener == null)
   			return;
   		if(this.listeners ==null)
@@ -138,19 +136,20 @@ public class Workspace implements MutableTreeNode, IObserver {
   	}
 
   	@Override
-  	public void removeObserver(IListener listener) {
-  		if(listener == null || this.listeners == null || !this.listeners.contains(listener))
+  	public void removeObserver(WSListener listener) {
+  		if(listener == null)
   			return;
+
   		this.listeners.remove(listener);		
   	}
 
   	@Override
-  	public void notifyObservers(Object event) {
-  		if(event == null || this.listeners == null || this.listeners.isEmpty())
+  	public void notifyProjectCreated(Project project) {
+  		if(this.listeners == null)
   			return;
 
-  		for(IListener listener : listeners){
-  			listener.update(event);
+  		for(WSListener listener : listeners){
+  			listener.onProjectCreated(project);
   		}		
   	}
 }

@@ -4,10 +4,10 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.JTree;
 
-import app.models.Document;
-import app.models.Page;
-import app.models.Project;
-import app.models.Workspace;
+import app.models.document.Document;
+import app.models.page.Page;
+import app.models.project.Project;
+import app.models.workspace.Workspace;
 import app.views.MainFrame;
 
 
@@ -16,7 +16,7 @@ public class ActNodeDelete extends GAbstractAction{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		JTree tree = MainFrame.getInstance().getTree();
+		JTree tree = MainFrame.getInstance().getHierarchyTree();
 		Object selectedComponent = tree.getLastSelectedPathComponent();
 		Object[] path = tree.getSelectionPath().getPath();
 

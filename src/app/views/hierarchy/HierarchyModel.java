@@ -2,16 +2,16 @@ package app.views.hierarchy;
 
 import javax.swing.tree.DefaultTreeModel;
 
-import app.models.Document;
-import app.models.Page;
-import app.models.Project;
-import app.models.Workspace;
+import app.models.document.Document;
+import app.models.page.Page;
+import app.models.project.Project;
+import app.models.workspace.Workspace;
 
 public class HierarchyModel extends DefaultTreeModel {
 
-    public HierarchyModel() {
+    public HierarchyModel(Workspace workspace) {
         // Root object
-        super(new Workspace("Workspace"));
+        super(workspace);
     }
 
     @Override
