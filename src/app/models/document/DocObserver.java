@@ -8,5 +8,7 @@ public interface DocObserver {
 
     void notifyPageCreated(Page document);
     void notifyPageDeleted(Page document);
+
     void notifyDocumentSelected();
+    void notifyDocumentChangedName();
 }

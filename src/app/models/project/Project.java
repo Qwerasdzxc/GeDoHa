@@ -130,6 +130,8 @@ public class Project implements MutableTreeNode, ProjObserver {
 
     public void setName(String name) {
         this.name = name;
+
+        notifyProjectChangedName(name);
     }
 
     public String getName() {
@@ -153,6 +155,7 @@ public class Project implements MutableTreeNode, ProjObserver {
             this.listeners = new ArrayList<>();
         if (this.listeners.contains(listener))
             return;
+
         this.listeners.add(listener);
     }
 
@@ -169,7 +172,8 @@ public class Project implements MutableTreeNode, ProjObserver {
         if (this.listeners == null)
             return;
 
-        for (ProjListener listener : listeners) {
+        for (int i = 0; i < listeners.size(); i++) {
+            ProjListener listener = listeners.get(i);
             listener.onDocumentCreated(document);
         }
     }
@@ -189,7 +193,18 @@ public class Project implements MutableTreeNode, ProjObserver {
         if (this.listeners == null)
             return;
 
-        for (int i = 0; i < listeners.size(); i++)
-            listeners.get(i).onProjectSelected(this);
+        for (int i = 0; i < listeners.size(); i++) {
+            ProjListener listener = listeners.get(i);
+            listener.onProjectSelected(this);
+        }
+    }
+
+    @Override
+    public void notifyProjectChangedName(String name) {
+        if (this.listeners == null)
+            return;
+
+        for (ProjListener listener : listeners)
+            listener.onProjectChangedName(name);
     }
 }

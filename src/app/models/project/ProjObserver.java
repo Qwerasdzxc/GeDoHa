@@ -8,5 +8,7 @@ public interface ProjObserver {
 
     void notifyDocumentCreated(Document document);
     void notifyDocumentDeleted(Document document);
+
     void notifyProjectSelected();
+    void notifyProjectChangedName(String name);
 }

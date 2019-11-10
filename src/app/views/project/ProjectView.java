@@ -20,6 +20,8 @@ public class ProjectView extends JPanel implements ProjListener, DocListener {
     private JTabbedPane tabbedPane;
     private Project project;
 
+    private Label projectNameLabel;
+
     public ProjectView(Project project) {
         super(new BorderLayout());
 
@@ -32,8 +34,8 @@ public class ProjectView extends JPanel implements ProjListener, DocListener {
 
         this.setBackground(Color.WHITE);
 
-        Label label = new Label(project.getName());
-        this.add(label, BorderLayout.NORTH);
+        projectNameLabel = new Label(project.getName());
+        this.add(projectNameLabel, BorderLayout.NORTH);
 
         this.tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 
@@ -84,5 +86,21 @@ public class ProjectView extends JPanel implements ProjListener, DocListener {
         }
 
         tabbedPane.setSelectedComponent(view);
+    }
+
+    @Override
+    public void onProjectChangedName(String name) {
+        projectNameLabel.setText(name);
+    }
+
+    @Override
+    public void onDocumentChangedName(Document document) {
+        DocumentView view = null;
+        for (int i = 0; i < tabbedPane.getComponents().length; i ++) {
+            if (((DocumentView) tabbedPane.getComponents()[i]).getDocument() == document)
+                view = (DocumentView) tabbedPane.getComponents()[i];
+        }
+
+        tabbedPane.setTitleAt(tabbedPane.indexOfComponent(view), document.getName());
     }
 }

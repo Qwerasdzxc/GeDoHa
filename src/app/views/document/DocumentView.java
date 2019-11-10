@@ -4,6 +4,7 @@ import app.models.document.DocListener;
 import app.models.document.Document;
 import app.models.page.Page;
 import app.models.page.PageListener;
+import app.models.project.ProjListener;
 import app.models.project.Project;
 import app.views.MainFrame;
 import app.views.page.PageView;
@@ -12,9 +13,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class DocumentView extends JPanel implements DocListener, PageListener {
+public class DocumentView extends JPanel implements ProjListener, DocListener, PageListener {
 
     public Document document;
+
+    Label pathLabel;
 
     private ArrayList<PageView> pageViews = new ArrayList<>();
 
@@ -23,12 +26,13 @@ public class DocumentView extends JPanel implements DocListener, PageListener {
 
         this.document = document;
         this.document.addObserver(this);
+        ((Project) this.document.getParent()).addObserver(this);
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         Project parent = (Project) document.getParent();
-        Label label = new Label(parent.getName() + " -> " + document.getName());
-        this.add(label);
+        pathLabel = new Label(parent.getName() + " -> " + document.getName());
+        this.add(pathLabel);
 
         addExistingPages();
 
@@ -66,5 +70,17 @@ public class DocumentView extends JPanel implements DocListener, PageListener {
 
         remove(pageViews.get(((Document) page.getParent()).getPageIndex(page)));
         SwingUtilities.updateComponentTreeUI(MainFrame.getInstance().getHierarchyTree());
+    }
+
+    @Override
+    public void onDocumentChangedName(Document document) {
+        Project parent = (Project) document.getParent();
+
+        pathLabel.setText(parent.getName() + " -> " + document.getName());
+    }
+
+    @Override
+    public void onProjectChangedName(String name) {
+        pathLabel.setText(name + " -> " + document.getName());
     }
 }

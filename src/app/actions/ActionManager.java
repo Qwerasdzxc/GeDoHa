@@ -40,4 +40,8 @@ public class ActionManager {
 	public ActNodeDelete getDeleteNode() {
 		return deleteNode;
 	}
+
+	public ActNodeRename getRenameNode() {
+		return renameNode;
+	}
 }

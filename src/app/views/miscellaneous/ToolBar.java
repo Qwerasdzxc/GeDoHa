@@ -9,7 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JToolBar;
 import javax.swing.SwingConstants;
 
-public class ToolBar extends JToolBar{
+public class ToolBar extends JToolBar {
 	
 	public ToolBar() {
 		super(SwingConstants.HORIZONTAL);
@@ -22,6 +22,7 @@ public class ToolBar extends JToolBar{
 
 		addSeparator();
 
+		add(ActionManager.getInstance().getRenameNode());
 		add(ActionManager.getInstance().getDeleteNode());
 	}
 }

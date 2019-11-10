@@ -87,6 +87,8 @@ public class Document implements MutableTreeNode, DocObserver {
 
     public void setName(String name) {
         this.name = name;
+
+        notifyDocumentChangedName();
     }
 
     public String getName() {
@@ -166,6 +168,15 @@ public class Document implements MutableTreeNode, DocObserver {
 
         for (int i = 0; i < listeners.size(); i++)
             listeners.get(i).onDocumentSelected(this);
+    }
+
+    @Override
+    public void notifyDocumentChangedName() {
+        if (this.listeners == null)
+            return;
+
+        for (int i = 0; i < listeners.size(); i++)
+            listeners.get(i).onDocumentChangedName(this);
     }
 
     public ArrayList<Page> getPages() {
