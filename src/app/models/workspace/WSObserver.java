@@ -7,4 +7,5 @@ public interface WSObserver {
     void removeObserver(WSListener listener);
 
     void notifyProjectCreated(Project project);
+    void notifyProjectDeleted(Project project);
 }

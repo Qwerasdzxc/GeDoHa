@@ -6,8 +6,13 @@ import app.models.project.ProjListener;
 import app.models.project.Project;
 import app.views.MainFrame;
 import app.views.document.DocumentView;
+import app.views.hierarchy.HierarchyModel;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.tree.TreeNode;
+import javax.swing.tree.TreePath;
 import java.awt.*;
 
 public class ProjectView extends JPanel implements ProjListener, DocListener {
@@ -33,7 +38,6 @@ public class ProjectView extends JPanel implements ProjListener, DocListener {
         this.tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 
         addExistingDocuments();
-
         this.add(tabbedPane, BorderLayout.CENTER);
     }
 
@@ -54,6 +58,21 @@ public class ProjectView extends JPanel implements ProjListener, DocListener {
        tabbedPane.add(document.getName(), documentView);
 
        SwingUtilities.updateComponentTreeUI(MainFrame.getInstance().getHierarchyTree());
+    }
+
+    @Override
+    public void onDocumentDeleted(Document document) {
+        document.removeObserver(this);
+
+        DocumentView view = null;
+
+        for (int i = 0; i < tabbedPane.getComponents().length; i ++) {
+            if (((DocumentView) tabbedPane.getComponents()[i]).getDocument() == document)
+                view = (DocumentView) tabbedPane.getComponents()[i];
+        }
+
+        tabbedPane.remove(view);
+        SwingUtilities.updateComponentTreeUI(MainFrame.getInstance().getHierarchyTree());
     }
 
     @Override

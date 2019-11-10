@@ -17,10 +17,6 @@ public class ActionManager {
 		newDocument = new ActNewDocument();
 		newPage = new ActNewPage();
     }
-
-    public ActNewPage getNewPageAction() {
-		return newPage;
-	}
     
     public static ActionManager getInstance() {
         if (instance == null)
@@ -35,5 +31,13 @@ public class ActionManager {
 
 	public ActNewDocument getNewDocument() {
 		return newDocument;
+	}
+
+	public ActNewPage getNewPage() {
+		return newPage;
+	}
+
+	public ActNodeDelete getDeleteNode() {
+		return deleteNode;
 	}
 }

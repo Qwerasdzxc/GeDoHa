@@ -18,5 +18,10 @@ public class ToolBar extends JToolBar{
 		
         add(ActionManager.getInstance().getNewProject());
 		add(ActionManager.getInstance().getNewDocument());
+		add(ActionManager.getInstance().getNewPage());
+
+		addSeparator();
+
+		add(ActionManager.getInstance().getDeleteNode());
 	}
 }

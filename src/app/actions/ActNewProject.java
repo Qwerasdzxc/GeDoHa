@@ -26,7 +26,9 @@ public class ActNewProject extends GAbstractAction {
 		JTree hierarchy = MainFrame.getInstance().getHierarchyTree();
 		TreePath path = hierarchy.getSelectionPath();
         hierarchy.expandPath(path);
-		Project project = new Project("Novi projekat - " + new Random().nextInt(100));
+
+        Workspace workspace = (Workspace) ((HierarchyModel) hierarchy.getModel()).getRoot();
+		Project project = new Project(workspace, "Projekat " + workspace.getProjectsCount());
 		((HierarchyModel) hierarchy.getModel()).addProject(project);
     }
 }

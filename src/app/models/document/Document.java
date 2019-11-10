@@ -8,10 +8,10 @@ import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreeNode;
 
 import app.models.page.Page;
+import app.models.project.ProjListener;
 import app.models.project.Project;
 import app.observer.IListener;
 import app.observer.IObserver;
-
 
 public class Document implements MutableTreeNode, DocObserver {
 
@@ -22,13 +22,7 @@ public class Document implements MutableTreeNode, DocObserver {
     public Document(Project parent, String name) {
         this.parent = parent;
         this.name = name;
-
-        ArrayList<Page> pages = new ArrayList<>();
-
-        pages.add(new Page(this));
-        pages.add(new Page(this));
-
-        this.pages = pages;
+        this.pages = new ArrayList<>();
     }
 
     // Children nodes
@@ -39,6 +33,8 @@ public class Document implements MutableTreeNode, DocObserver {
     
     public void deletePage(Page page) {
 		pages.remove(page);
+
+		notifyPageDeleted(page);
 	}
 
     public TreeNode getChildAt(int childIndex) {
@@ -104,9 +100,8 @@ public class Document implements MutableTreeNode, DocObserver {
     
     public void addPage(Page page) {
 		pages.add(page);
-		if (page.getName() == null)
-			page.setName("Page - " + pages.size());
-		
+
+        notifyPageCreated(page);
 	}
 
     public Page getPage(int index) {
@@ -145,11 +140,35 @@ public class Document implements MutableTreeNode, DocObserver {
 	}
 
     @Override
+    public void notifyPageCreated(Page page) {
+        if (this.listeners == null)
+            return;
+
+        for (DocListener listener : listeners) {
+            listener.onPageCreated(page);
+        }
+    }
+
+    @Override
+    public void notifyPageDeleted(Page page) {
+        if (this.listeners == null)
+            return;
+
+        for (DocListener listener : listeners) {
+            listener.onPageDeleted(page);
+        }
+    }
+
+    @Override
     public void notifyDocumentSelected() {
         if (this.listeners == null)
             return;
 
         for (int i = 0; i < listeners.size(); i++)
             listeners.get(i).onDocumentSelected(this);
+    }
+
+    public ArrayList<Page> getPages() {
+        return this.pages;
     }
 }

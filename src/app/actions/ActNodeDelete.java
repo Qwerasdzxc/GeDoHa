@@ -1,8 +1,9 @@
 package app.actions;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 
-import javax.swing.JTree;
+import javax.swing.*;
 
 import app.models.document.Document;
 import app.models.page.Page;
@@ -12,13 +13,20 @@ import app.views.MainFrame;
 
 
 
-public class ActNodeDelete extends GAbstractAction{
+public class ActNodeDelete extends GAbstractAction {
+
+	public ActNodeDelete() {
+		putValue(ACCELERATOR_KEY,KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0));
+		putValue(SMALL_ICON, loadIcon("images/delete_node.png"));
+		putValue(NAME, "Obriši");
+		putValue(SHORT_DESCRIPTION, "Obriši izabranu stavku");
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		JTree tree = MainFrame.getInstance().getHierarchyTree();
 		Object selectedComponent = tree.getLastSelectedPathComponent();
-		Object[] path = tree.getSelectionPath().getPath();
+		Object[] treePath = tree.getSelectionPath().getPath();
 
 		if (((selectedComponent instanceof Workspace)) || (selectedComponent == null)) {
 			return;
@@ -32,7 +40,7 @@ public class ActNodeDelete extends GAbstractAction{
 		} else if (selectedComponent instanceof Document) {
 
 			Document document = (Document) selectedComponent;
-			Project project = (Project) path[1];
+			Project project = (Project) treePath[1];
 			project.deleteDocument(document);
 
 		} else if (selectedComponent instanceof Page) {
@@ -40,7 +48,6 @@ public class ActNodeDelete extends GAbstractAction{
 			Page page = (Page) selectedComponent;
 			Document parent = (Document) page.getParent();
 			parent.deletePage(page);
-
 		}	
 	}
 

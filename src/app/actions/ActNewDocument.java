@@ -31,7 +31,7 @@ public class ActNewDocument extends GAbstractAction {
             hierarchy.expandPath(path);
 
             Project project = (Project) selectedComponent;
-            Document document = new Document(project,"Novi dokument - " + new Random().nextInt(100));
+            Document document = new Document(project,"Novi dokument " + project.getDocumentCount());
             project.addDocument(document);
         }
     }

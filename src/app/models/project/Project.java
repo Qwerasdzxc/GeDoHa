@@ -21,7 +21,8 @@ public class Project implements MutableTreeNode, ProjObserver {
 
     List<ProjListener> listeners;
 
-    public Project(String name) {
+    public Project(Workspace parent, String name) {
+        this.parent = parent;
         this.name = name;
         this.documents = new ArrayList<>();
     }
@@ -52,6 +53,8 @@ public class Project implements MutableTreeNode, ProjObserver {
 
     public void deleteDocument(Document document) {
         documents.remove(document);
+
+        notifyDocumentDeleted(document);
     }
 
     public static void setCount(int count) {
@@ -168,6 +171,16 @@ public class Project implements MutableTreeNode, ProjObserver {
 
         for (ProjListener listener : listeners) {
             listener.onDocumentCreated(document);
+        }
+    }
+
+    @Override
+    public void notifyDocumentDeleted(Document document) {
+        if (this.listeners == null)
+            return;
+
+        for (ProjListener listener : listeners) {
+            listener.onDocumentDeleted(document);
         }
     }
 

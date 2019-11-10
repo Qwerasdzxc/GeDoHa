@@ -10,17 +10,17 @@ import app.models.document.Document;
 import app.observer.IListener;
 import app.observer.IObserver;
 
-public class Page implements TreeNode, IObserver {
+public class Page implements TreeNode, PageObserver {
 
     // Parent node
     private Document parent;
 
     private String name;
     
-	List<IListener> listeners;
+	List<PageListener> listeners;
 
-    public Page(Document parent) {
-    	this.name = "Page";
+    public Page(Document parent, String name) {
+    	this.name = name;
         this.parent = parent;
     }
 
@@ -75,7 +75,7 @@ public class Page implements TreeNode, IObserver {
     // Observer metode
 
   	@Override
-  	public void addObserver(IListener listener) {
+  	public void addObserver(PageListener listener) {
   		if(listener == null)
   			return;
   		if(this.listeners ==null)
@@ -86,19 +86,16 @@ public class Page implements TreeNode, IObserver {
   	}
 
   	@Override
-  	public void removeObserver(IListener listener) {
-  		if(listener == null || this.listeners == null || !this.listeners.contains(listener))
+  	public void removeObserver(PageListener listener) {
+  		if(listener == null || this.listeners == null)
   			return;
   		this.listeners.remove(listener);		
   	}
 
-  	@Override
-  	public void notifyObservers(Object event) {
-  		if(event == null || this.listeners == null || this.listeners.isEmpty())
-  			return;
+    @Override
+    public void notifyPageSelected(Page page) {
+        // TODO
+    }
 
-  		for(IListener listener : listeners){
-  			listener.update(event);
-  		}		
-  	}
+
 }

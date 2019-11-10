@@ -7,5 +7,6 @@ public interface ProjObserver {
     void removeObserver(ProjListener listener);
 
     void notifyDocumentCreated(Document document);
+    void notifyDocumentDeleted(Document document);
     void notifyProjectSelected();
 }

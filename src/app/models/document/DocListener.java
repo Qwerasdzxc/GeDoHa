@@ -1,5 +1,9 @@
 package app.models.document;
 
+import app.models.page.Page;
+
 public interface DocListener {
-    void onDocumentSelected(Document document);
+    default void onDocumentSelected(Document document) {};
+    default void onPageCreated(Page page) {};
+    default void onPageDeleted(Page page) {};
 }

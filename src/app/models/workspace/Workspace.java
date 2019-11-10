@@ -117,6 +117,7 @@ public class Workspace implements MutableTreeNode, WSObserver {
     public void deleteProject(Project project) {
 		projects.remove(project);
 
+		notifyProjectDeleted(project);
 	}
 
   	@Override
@@ -147,4 +148,14 @@ public class Workspace implements MutableTreeNode, WSObserver {
   			listener.onProjectCreated(project);
   		}		
   	}
+
+    @Override
+    public void notifyProjectDeleted(Project project) {
+        if(this.listeners == null)
+            return;
+
+        for(WSListener listener : listeners){
+            listener.onProjectDeleted(project);
+        }
+    }
 }
