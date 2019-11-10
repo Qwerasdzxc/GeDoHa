@@ -14,11 +14,16 @@ import app.views.project.ProjectView;
 
 public class HierarchyTree extends JTree implements TreeSelectionListener {
 
+    private HierarchyContextMenu contextMenu;
+
     public HierarchyTree() {
         addTreeSelectionListener(this);
         setCellEditor(new HierarchyTreeEditor(this,new DefaultTreeCellRenderer()));
         setCellRenderer(new HierarchyTreeCellRendered());
         setEditable(true);
+
+        this.contextMenu = new HierarchyContextMenu();
+        setComponentPopupMenu(contextMenu);
     }
 
     public void valueChanged(TreeSelectionEvent arg0) {
@@ -42,5 +47,9 @@ public class HierarchyTree extends JTree implements TreeSelectionListener {
             Page page = (Page) selectedComponent;
             // Ovde idu akcije vezane za rad sa page-om
         }
+    }
+
+    public HierarchyContextMenu getContextMenu() {
+        return contextMenu;
     }
 }

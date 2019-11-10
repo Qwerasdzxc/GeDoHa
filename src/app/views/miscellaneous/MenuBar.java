@@ -1,5 +1,6 @@
 package app.views.miscellaneous;
 
+import app.actions.ActionManager;
 import app.views.MainFrame;
 
 import java.awt.event.ActionEvent;
@@ -12,9 +13,17 @@ import javax.swing.JMenuItem;
 public class MenuBar extends JMenuBar{
 	
 	public MenuBar() {
-		JMenu file= new JMenu("File");
-		JMenu help= new JMenu("Help");
-		JMenu about= new JMenu("About");
+		JMenu file = new JMenu("File");
+
+		file.add(ActionManager.getInstance().getNewProject());
+		file.add(ActionManager.getInstance().getNewDocument());
+		file.add(ActionManager.getInstance().getNewPage());
+		file.addSeparator();
+		file.add(ActionManager.getInstance().getRenameNode());
+		file.add(ActionManager.getInstance().getDeleteNode());
+
+		JMenu help = new JMenu("Help");
+		JMenu about = new JMenu("About");
 		
 		JMenuItem aboutTim= new JMenuItem("Members");
 

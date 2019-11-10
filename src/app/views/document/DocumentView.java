@@ -17,7 +17,7 @@ public class DocumentView extends JPanel implements ProjListener, DocListener, P
 
     public Document document;
 
-    Label pathLabel;
+    private JLabel pathLabel;
 
     private ArrayList<PageView> pageViews = new ArrayList<>();
 
@@ -31,7 +31,7 @@ public class DocumentView extends JPanel implements ProjListener, DocListener, P
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         Project parent = (Project) document.getParent();
-        pathLabel = new Label(parent.getName() + " -> " + document.getName());
+        pathLabel = new JLabel(parent.getName() + " -> " + document.getName());
         this.add(pathLabel);
 
         addExistingPages();
@@ -44,6 +44,7 @@ public class DocumentView extends JPanel implements ProjListener, DocListener, P
             page.addObserver(this);
 
             PageView pageView = new PageView(page);
+            pageViews.add(pageView);
             add(pageView);
         }
     }
@@ -57,6 +58,7 @@ public class DocumentView extends JPanel implements ProjListener, DocListener, P
         page.addObserver(this);
 
         PageView pageView = new PageView(page);
+        pageViews.add(pageView);
         add(pageView);
 
         revalidate();
@@ -65,10 +67,16 @@ public class DocumentView extends JPanel implements ProjListener, DocListener, P
     }
 
     @Override
-    public void onPageDeleted(Page page) {
+    public void onPageDeleted(Page page, int index) {
         page.removeObserver(this);
 
-        remove(pageViews.get(((Document) page.getParent()).getPageIndex(page)));
+        PageView pageView = pageViews.get(index);
+        remove(pageView);
+        pageViews.remove(pageView);
+
+        revalidate();
+        repaint();
+
         SwingUtilities.updateComponentTreeUI(MainFrame.getInstance().getHierarchyTree());
     }
 

@@ -7,7 +7,7 @@ public interface DocObserver {
     void removeObserver(DocListener listener);
 
     void notifyPageCreated(Page document);
-    void notifyPageDeleted(Page document);
+    void notifyPageDeleted(Page document, int index);
 
     void notifyDocumentSelected();
     void notifyDocumentChangedName();

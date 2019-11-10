@@ -32,9 +32,10 @@ public class Document implements MutableTreeNode, DocObserver {
     private Project parent;
     
     public void deletePage(Page page) {
+        int index = getPageIndex(page);
 		pages.remove(page);
 
-		notifyPageDeleted(page);
+		notifyPageDeleted(page, index);
 	}
 
     public TreeNode getChildAt(int childIndex) {
@@ -146,18 +147,19 @@ public class Document implements MutableTreeNode, DocObserver {
         if (this.listeners == null)
             return;
 
-        for (DocListener listener : listeners) {
+        for (int i = 0; i < listeners.size(); i++) {
+            DocListener listener = listeners.get(i);
             listener.onPageCreated(page);
         }
     }
 
     @Override
-    public void notifyPageDeleted(Page page) {
+    public void notifyPageDeleted(Page page, int index) {
         if (this.listeners == null)
             return;
 
         for (DocListener listener : listeners) {
-            listener.onPageDeleted(page);
+            listener.onPageDeleted(page, index);
         }
     }
 

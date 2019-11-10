@@ -20,7 +20,7 @@ public class ProjectView extends JPanel implements ProjListener, DocListener {
     private JTabbedPane tabbedPane;
     private Project project;
 
-    private Label projectNameLabel;
+    private JLabel projectNameLabel;
 
     public ProjectView(Project project) {
         super(new BorderLayout());
@@ -34,7 +34,7 @@ public class ProjectView extends JPanel implements ProjListener, DocListener {
 
         this.setBackground(Color.WHITE);
 
-        projectNameLabel = new Label(project.getName());
+        projectNameLabel = new JLabel(project.getName());
         this.add(projectNameLabel, BorderLayout.NORTH);
 
         this.tabbedPane = new JTabbedPane(JTabbedPane.TOP);

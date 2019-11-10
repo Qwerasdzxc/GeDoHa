@@ -34,7 +34,7 @@ public class WorkspaceView extends JPanel implements WSListener, ProjListener {
         add(activeProjectView, BorderLayout.CENTER);
 
         activeProjectView.setVisible(true);
-        project.addObserver(WorkspaceView.this);
+        project.addObserver(this);
 
         revalidate();
 
@@ -46,9 +46,10 @@ public class WorkspaceView extends JPanel implements WSListener, ProjListener {
     public void onProjectDeleted(Project project) {
         project.removeObserver(this);
         activeProject = null;
-
+        System.out.println("Call");
         removeAll();
         revalidate();
+        repaint();
         SwingUtilities.updateComponentTreeUI(MainFrame.getInstance().getHierarchyTree());
     }
 
