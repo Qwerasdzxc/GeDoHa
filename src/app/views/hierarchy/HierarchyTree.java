@@ -25,7 +25,7 @@ public class HierarchyTree extends JTree implements TreeSelectionListener {
         TreePath path = arg0.getPath();
 
         Object selectedComponent = path.getLastPathComponent();
-        System.out.println(selectedComponent.toString());
+//        System.out.println(selectedComponent.toString());
 
         if (selectedComponent instanceof Workspace) {
             // Ovde idu akcije vezane za rad sa workspace-om
@@ -35,7 +35,10 @@ public class HierarchyTree extends JTree implements TreeSelectionListener {
 
         } else if (selectedComponent instanceof Document) {
             Document document = (Document) selectedComponent;
-            // Ovde idu akcije vezane za rad sa document-om
+            Project parent = (Project) document.getParent();
+
+            parent.setSelected();
+            document.setSelected();
         } else if (selectedComponent instanceof Page) {
             Page page = (Page) selectedComponent;
             // Ovde idu akcije vezane za rad sa page-om

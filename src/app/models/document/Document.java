@@ -19,7 +19,8 @@ public class Document implements MutableTreeNode, DocObserver {
 
 	List<DocListener> listeners;
 
-    public Document(String name) {
+    public Document(Project parent, String name) {
+        this.parent = parent;
         this.name = name;
 
         ArrayList<Page> pages = new ArrayList<>();
@@ -38,7 +39,6 @@ public class Document implements MutableTreeNode, DocObserver {
     
     public void deletePage(Page page) {
 		pages.remove(page);
-		
 	}
 
     public TreeNode getChildAt(int childIndex) {
@@ -121,6 +121,10 @@ public class Document implements MutableTreeNode, DocObserver {
         return this.pages.indexOf(child);
     }
 
+    public void setSelected() {
+        notifyDocumentSelected();
+    }
+
 	@Override
 	public void addObserver(DocListener listener) {
 		if(listener == null)
@@ -139,4 +143,13 @@ public class Document implements MutableTreeNode, DocObserver {
 
 		this.listeners.remove(listener);		
 	}
+
+    @Override
+    public void notifyDocumentSelected() {
+        if (this.listeners == null)
+            return;
+
+        for (int i = 0; i < listeners.size(); i++)
+            listeners.get(i).onDocumentSelected(this);
+    }
 }

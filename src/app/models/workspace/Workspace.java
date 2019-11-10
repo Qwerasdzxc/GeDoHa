@@ -18,12 +18,7 @@ public class Workspace implements MutableTreeNode, WSObserver {
 
     public Workspace() {
         this.name = "Workspace";
-
-        ArrayList<Project> projects = new ArrayList<>();
-        projects.add(new Project("Project 1"));
-        projects.add(new Project("Project 2"));
-
-        this.projects = projects;
+        this.projects = new ArrayList<>();
     }
 
     // Children nodes

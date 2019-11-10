@@ -64,7 +64,6 @@ public class MainFrame extends JFrame {
         sl.setResizeWeight(0.1);
 
         this.getContentPane().add(sl, BorderLayout.CENTER);
-
         this.setVisible(true);
     }
 
@@ -74,7 +73,6 @@ public class MainFrame extends JFrame {
     
     private void initialiseWorkspaceTree() {
         this.workspaceView = new WorkspaceView();
-        this.workspaceView.setBackground(Color.CYAN);
 
         Workspace workspace = new Workspace();
         workspace.addObserver(workspaceView);

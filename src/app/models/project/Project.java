@@ -2,6 +2,7 @@ package app.models.project;
 
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.swing.tree.MutableTreeNode;
@@ -16,18 +17,13 @@ import app.observer.IObserver;
 public class Project implements MutableTreeNode, ProjObserver {
 
     private String name;
-	private static int count=0;
+    private static int count = 0;
 
-	List<ProjListener> listeners;
+    List<ProjListener> listeners;
 
     public Project(String name) {
         this.name = name;
-
-        ArrayList<Document> documents = new ArrayList<>();
-        documents.add(new Document("Document 1"));
-        documents.add(new Document("Document 2"));
-
-        this.documents = documents;
+        this.documents = new ArrayList<>();
     }
 
     // Children nodes
@@ -35,6 +31,10 @@ public class Project implements MutableTreeNode, ProjObserver {
 
     // Parent node object
     private Workspace parent;
+
+    public ArrayList<Document> getDocuments() {
+        return this.documents;
+    }
 
     public Document getDocument(int index) {
         return this.documents.get(index);
@@ -49,16 +49,16 @@ public class Project implements MutableTreeNode, ProjObserver {
 
         notifyDocumentCreated(document);
     }
-    
-	public void deleteDocument(Document document) {
-		documents.remove(document);
-	}
-    
-    public static void setCount(int count) {
-		Project.count = count;
-	}
 
-	public int getDocumentIndex(Document child) {
+    public void deleteDocument(Document document) {
+        documents.remove(document);
+    }
+
+    public static void setCount(int count) {
+        Project.count = count;
+    }
+
+    public int getDocumentIndex(Document child) {
         return this.documents.indexOf(child);
     }
 
@@ -118,10 +118,12 @@ public class Project implements MutableTreeNode, ProjObserver {
     }
 
     @Override
-    public void setUserObject(Object object) {}
+    public void setUserObject(Object object) {
+    }
 
     @Override
-    public void removeFromParent() {}
+    public void removeFromParent() {
+    }
 
     public void setName(String name) {
         this.name = name;
@@ -140,42 +142,41 @@ public class Project implements MutableTreeNode, ProjObserver {
         return this.getName();
     }
 
-  	@Override
-  	public void addObserver(ProjListener listener) {
-  		if(listener == null)
-  			return;
-  		if(this.listeners ==null)
-  			this.listeners = new ArrayList<>();
-  		if(this.listeners.contains(listener))
-  			return;
-  		this.listeners.add(listener);		
-  	}
+    @Override
+    public void addObserver(ProjListener listener) {
+        if (listener == null)
+            return;
+        if (this.listeners == null)
+            this.listeners = new ArrayList<>();
+        if (this.listeners.contains(listener))
+            return;
+        this.listeners.add(listener);
+    }
 
-  	@Override
-  	public void removeObserver(ProjListener listener) {
-  		if(listener == null || this.listeners == null)
-  			return;
+    @Override
+    public void removeObserver(ProjListener listener) {
+        if (listener == null || this.listeners == null)
+            return;
 
-  		this.listeners.remove(listener);		
-  	}
+        this.listeners.remove(listener);
+    }
 
     @Override
     public void notifyDocumentCreated(Document document) {
-        if(this.listeners == null)
+        if (this.listeners == null)
             return;
 
-        for(ProjListener listener : listeners){
+        for (ProjListener listener : listeners) {
             listener.onDocumentCreated(document);
         }
     }
 
     @Override
     public void notifyProjectSelected() {
-        if(this.listeners == null)
+        if (this.listeners == null)
             return;
 
-        for(ProjListener listener : listeners){
-            listener.onProjectSelected(this);
-        }
+        for (int i = 0; i < listeners.size(); i++)
+            listeners.get(i).onProjectSelected(this);
     }
 }

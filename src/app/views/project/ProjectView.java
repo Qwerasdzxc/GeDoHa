@@ -1,5 +1,6 @@
 package app.views.project;
 
+import app.models.document.DocListener;
 import app.models.document.Document;
 import app.models.project.ProjListener;
 import app.models.project.Project;
@@ -9,7 +10,7 @@ import app.views.document.DocumentView;
 import javax.swing.*;
 import java.awt.*;
 
-public class ProjectView extends JPanel implements ProjListener {
+public class ProjectView extends JPanel implements ProjListener, DocListener {
 
     private JTabbedPane tabbedPane;
     private Project project;
@@ -24,16 +25,31 @@ public class ProjectView extends JPanel implements ProjListener {
         this.project = project;
         this.project.addObserver(this);
 
-        this.tabbedPane = new JTabbedPane(JTabbedPane.TOP);
         this.setBackground(Color.WHITE);
-        Label label = new Label("Adawdawdaawda adaw");
+
+        Label label = new Label(project.getName());
         this.add(label, BorderLayout.NORTH);
+
+        this.tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+
+        addExistingDocuments();
+
         this.add(tabbedPane, BorderLayout.CENTER);
-        this.setVisible(true);
+    }
+
+    private void addExistingDocuments() {
+        for (Document doc : project.getDocuments()) {
+            doc.addObserver(this);
+
+            DocumentView documentView = new DocumentView(doc);
+            tabbedPane.add(doc.getName(), documentView);
+        }
     }
 
     @Override
     public void onDocumentCreated(Document document) {
+       document.addObserver(this);
+
        DocumentView documentView = new DocumentView(document);
        tabbedPane.add(document.getName(), documentView);
 
@@ -41,7 +57,13 @@ public class ProjectView extends JPanel implements ProjListener {
     }
 
     @Override
-    public void onProjectSelected(Project project) {
-        this.setVisible(true);
+    public void onDocumentSelected(Document document) {
+        DocumentView view = null;
+        for (int i = 0; i < tabbedPane.getComponents().length; i ++) {
+            if (((DocumentView) tabbedPane.getComponents()[i]).getDocument() == document)
+                view = (DocumentView) tabbedPane.getComponents()[i];
+        }
+
+        tabbedPane.setSelectedComponent(view);
     }
 }

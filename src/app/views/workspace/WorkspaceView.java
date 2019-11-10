@@ -6,39 +6,54 @@ import app.models.project.Project;
 import app.models.workspace.WSListener;
 import app.models.workspace.Workspace;
 import app.views.MainFrame;
+import app.views.hierarchy.HierarchyModel;
 import app.views.project.ProjectView;
 
 import javax.swing.*;
+import javax.swing.tree.TreePath;
 import java.awt.*;
 
 public class WorkspaceView extends JPanel implements WSListener, ProjListener {
 
-    ProjectView activeProjectView;
+    Project activeProject;
 
     public WorkspaceView() {
         super(new BorderLayout());
 
-
+        setBackground(Color.BLUE);
+        setVisible(true);
     }
 
     @Override
     public void onProjectCreated(Project project) {
-        project.addObserver(this);
-        activeProjectView = new ProjectView(project);
+        activeProject = project;
+        ProjectView activeProjectView = new ProjectView(project);
+
+        removeAll();
         add(activeProjectView, BorderLayout.CENTER);
-        setBackground(Color.BLUE);
+
+        activeProjectView.setVisible(true);
+        project.addObserver(WorkspaceView.this);
+
+        revalidate();
 
         SwingUtilities.updateComponentTreeUI(MainFrame.getInstance().getHierarchyTree());
     }
 
     @Override
-    public void onDocumentCreated(Document document) {}
-
-    @Override
     public void onProjectSelected(Project project) {
-        System.out.println("sel");
-        removeAll();
+        if (activeProject == project)
+            return;
 
-        onProjectCreated(project);
+        activeProject = project;
+        ProjectView activeProjectView = new ProjectView(project);
+
+        removeAll();
+        add(activeProjectView, BorderLayout.CENTER);
+
+        activeProjectView.setVisible(true);
+        project.addObserver(this);
+
+        revalidate();
     }
 }

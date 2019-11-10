@@ -9,6 +9,7 @@ import javax.swing.*;
 import javax.swing.tree.TreePath;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.util.Random;
 
 public class ActNewDocument extends GAbstractAction {
 
@@ -30,7 +31,7 @@ public class ActNewDocument extends GAbstractAction {
             hierarchy.expandPath(path);
 
             Project project = (Project) selectedComponent;
-            Document document = new Document("Novi dokument");
+            Document document = new Document(project,"Novi dokument - " + new Random().nextInt(100));
             project.addDocument(document);
         }
     }

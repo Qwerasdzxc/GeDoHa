@@ -3,11 +3,13 @@ package app.actions;
 import app.models.project.Project;
 import app.models.workspace.Workspace;
 import app.views.MainFrame;
+import app.views.hierarchy.HierarchyModel;
 
 import javax.swing.*;
 import javax.swing.tree.TreePath;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.util.Random;
 
 public class ActNewProject extends GAbstractAction {
 
@@ -24,7 +26,7 @@ public class ActNewProject extends GAbstractAction {
 		JTree hierarchy = MainFrame.getInstance().getHierarchyTree();
 		TreePath path = hierarchy.getSelectionPath();
         hierarchy.expandPath(path);
-		Project project = new Project("Novi projekat");
-		((Workspace) hierarchy.getModel().getRoot()).addProject(project);
+		Project project = new Project("Novi projekat - " + new Random().nextInt(100));
+		((HierarchyModel) hierarchy.getModel()).addProject(project);
     }
 }
