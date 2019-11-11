@@ -6,13 +6,8 @@ import app.models.project.ProjListener;
 import app.models.project.Project;
 import app.views.MainFrame;
 import app.views.document.DocumentView;
-import app.views.hierarchy.HierarchyModel;
 
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import javax.swing.tree.TreeNode;
-import javax.swing.tree.TreePath;
 import java.awt.*;
 
 public class ProjectView extends JPanel implements ProjListener, DocListener {
@@ -21,6 +16,9 @@ public class ProjectView extends JPanel implements ProjListener, DocListener {
     private Project project;
 
     private JLabel projectNameLabel;
+
+    private JButton closeAllTabsButton;
+    private JButton closeActiveTabButton;
 
     public ProjectView(Project project) {
         super(new BorderLayout());
@@ -34,13 +32,44 @@ public class ProjectView extends JPanel implements ProjListener, DocListener {
 
         this.setBackground(Color.WHITE);
 
-        projectNameLabel = new JLabel(project.getName());
-        this.add(projectNameLabel, BorderLayout.NORTH);
+        JPanel topPanel = new JPanel();
 
+        this.closeAllTabsButton = new JButton();
+        this.closeAllTabsButton.setText("Zatvori sve tabove");
+        this.closeActiveTabButton = new JButton();
+        this.closeActiveTabButton.setText("Zatvori aktivan tab");
+
+        this.projectNameLabel = new JLabel(project.getName());
+
+        topPanel.add(projectNameLabel);
+        topPanel.add(closeActiveTabButton);
+        topPanel.add(closeAllTabsButton);
+
+        this.add(topPanel, BorderLayout.NORTH);
         this.tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 
         addExistingDocuments();
         this.add(tabbedPane, BorderLayout.CENTER);
+
+        // Inicijalizacija controller-a
+        new ProjectViewController(this);
+    }
+
+    void closeAllTabs() {
+        for (Document doc : project.getDocuments()) {
+            DocumentView view = null;
+
+            for (int i = 0; i < tabbedPane.getComponents().length; i ++) {
+                if (((DocumentView) tabbedPane.getComponents()[i]).getDocument() == doc)
+                    view = (DocumentView) tabbedPane.getComponents()[i];
+            }
+
+            tabbedPane.remove(view);
+        }
+    }
+
+    void closeActiveTab() {
+        tabbedPane.remove(tabbedPane.getSelectedComponent());
     }
 
     private void addExistingDocuments() {
@@ -85,7 +114,19 @@ public class ProjectView extends JPanel implements ProjListener, DocListener {
                 view = (DocumentView) tabbedPane.getComponents()[i];
         }
 
-        tabbedPane.setSelectedComponent(view);
+        // Ako tab postoji, postavi ga u fokus
+        if (view != null)
+            tabbedPane.setSelectedComponent(view);
+        // Ako ne postoji, napravi novi tab
+        else {
+            document.addObserver(this);
+
+            DocumentView documentView = new DocumentView(document);
+            tabbedPane.add(document.getName(), documentView);
+
+            revalidate();
+            repaint();
+        }
     }
 
     @Override
@@ -102,5 +143,13 @@ public class ProjectView extends JPanel implements ProjListener, DocListener {
         }
 
         tabbedPane.setTitleAt(tabbedPane.indexOfComponent(view), document.getName());
+    }
+
+    public JButton getCloseAllTabsButton() {
+        return closeAllTabsButton;
+    }
+
+    public JButton getCloseActiveTabButton() {
+        return closeActiveTabButton;
     }
 }

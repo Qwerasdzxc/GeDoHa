@@ -48,7 +48,7 @@ public class ActNodeDelete extends GAbstractAction {
 			Page page = (Page) selectedComponent;
 			Document parent = (Document) page.getParent();
 			parent.deletePage(page);
-		}	
+		}
 	}
 
 }

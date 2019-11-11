@@ -18,9 +18,10 @@ public class HierarchyTree extends JTree implements TreeSelectionListener {
 
     public HierarchyTree() {
         addTreeSelectionListener(this);
-        setCellEditor(new HierarchyTreeEditor(this,new DefaultTreeCellRenderer()));
+        setCellEditor(new HierarchyTreeEditor(this, new DefaultTreeCellRenderer()));
         setCellRenderer(new HierarchyTreeCellRendered());
         setEditable(true);
+        setToggleClickCount(2);
 
         this.contextMenu = new HierarchyContextMenu();
         setComponentPopupMenu(contextMenu);

@@ -15,7 +15,7 @@ import app.models.document.Document;
 import app.models.page.Page;
 import app.models.project.Project;
 
-class HierarchyTreeEditor extends DefaultTreeCellEditor implements ActionListener {
+public class HierarchyTreeEditor extends DefaultTreeCellEditor implements ActionListener {
 
     private Object node = null;
     private JTextField edit = null;
@@ -26,6 +26,7 @@ class HierarchyTreeEditor extends DefaultTreeCellEditor implements ActionListene
 
     public Component getTreeCellEditorComponent(
             JTree arg0, Object arg1, boolean arg2, boolean arg3, boolean arg4, int arg5) {
+        super.getTreeCellEditorComponent(arg0, arg1, arg2, arg3, arg4, arg5);
 
         node = arg1;
 
@@ -34,13 +35,12 @@ class HierarchyTreeEditor extends DefaultTreeCellEditor implements ActionListene
         return edit;
     }
 
+    @Override
     public boolean isCellEditable(EventObject arg0) {
-        if (arg0 instanceof MouseEvent)
-            return ((MouseEvent) arg0).getClickCount() == 3;
-
         return false;
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         String newName = e.getActionCommand();
 
