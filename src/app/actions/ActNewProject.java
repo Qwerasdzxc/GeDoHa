@@ -19,6 +19,8 @@ public class ActNewProject extends GAbstractAction {
         putValue(SMALL_ICON, loadIcon("images/new_project.png"));
         putValue(NAME, "Novi projekat");
         putValue(SHORT_DESCRIPTION, "Napravi novi projekat za workspace");
+
+        setEnabled(false);
     }
 
     @Override
@@ -29,6 +31,6 @@ public class ActNewProject extends GAbstractAction {
 
         Workspace workspace = (Workspace) ((HierarchyModel) hierarchy.getModel()).getRoot();
 		Project project = new Project(workspace, "Projekat " + workspace.getProjectsCount());
-		((HierarchyModel) hierarchy.getModel()).addProject(project);
+		workspace.addProject(project);
     }
 }

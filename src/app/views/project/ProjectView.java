@@ -6,8 +6,14 @@ import app.models.project.ProjListener;
 import app.models.project.Project;
 import app.views.MainFrame;
 import app.views.document.DocumentView;
+import app.views.hierarchy.HierarchyModel;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreeNode;
+import javax.swing.tree.TreePath;
 import java.awt.*;
 
 public class ProjectView extends JPanel implements ProjListener, DocListener {

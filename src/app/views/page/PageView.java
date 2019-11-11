@@ -49,4 +49,11 @@ public class PageView extends JPanel implements ProjListener, DocListener, PageL
         Project project = (Project) page.getParent().getParent();
         pathLabel.setText(project.getName() + " -> " + document.getName() + " -> " + page.getName());
     }
+
+    @Override
+    public void onPageChangedName(String name) {
+        Project project = (Project) page.getParent().getParent();
+        Document doc = (Document) page.getParent();
+        pathLabel.setText(project.getName() + " -> " + doc.getName() + " -> " + name);
+    }
 }

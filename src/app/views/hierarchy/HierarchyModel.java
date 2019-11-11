@@ -61,8 +61,4 @@ public class HierarchyModel extends DefaultTreeModel {
         }
         return -1;
     }
-
-    public void addProject(Project project) {
-        ((Workspace) getRoot()).addProject(project);
-    }
 }

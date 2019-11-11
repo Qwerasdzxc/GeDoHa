@@ -22,6 +22,8 @@ public class ActNodeRename extends GAbstractAction {
         putValue(SMALL_ICON, loadIcon("images/rename_node.png"));
         putValue(NAME, "Preimenuj");
         putValue(SHORT_DESCRIPTION, "Preimenuj izabranu stavku");
+
+        setEnabled(false);
     }
 
     @Override

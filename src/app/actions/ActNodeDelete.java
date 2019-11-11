@@ -20,6 +20,8 @@ public class ActNodeDelete extends GAbstractAction {
 		putValue(SMALL_ICON, loadIcon("images/delete_node.png"));
 		putValue(NAME, "Obriši");
 		putValue(SHORT_DESCRIPTION, "Obriši izabranu stavku");
+
+        setEnabled(false);
 	}
 
 	@Override

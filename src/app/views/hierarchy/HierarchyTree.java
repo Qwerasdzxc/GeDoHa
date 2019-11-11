@@ -6,6 +6,7 @@ import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.TreePath;
 
+import app.actions.ActionManager;
 import app.models.document.Document;
 import app.models.page.Page;
 import app.models.project.Project;
@@ -33,18 +34,24 @@ public class HierarchyTree extends JTree implements TreeSelectionListener {
         Object selectedComponent = path.getLastPathComponent();
 
         if (selectedComponent instanceof Workspace) {
-            // Ovde idu akcije vezane za rad sa workspace-om
+            enableForWorkspace();
         } else if (selectedComponent instanceof Project) {
+            enableForProject();
+
             Project project = (Project) selectedComponent;
             project.setSelected();
 
         } else if (selectedComponent instanceof Document) {
+            enableForDocument();
+
             Document document = (Document) selectedComponent;
             Project parent = (Project) document.getParent();
 
             parent.setSelected();
             document.setSelected();
         } else if (selectedComponent instanceof Page) {
+            enableForPage();
+
             Page page = (Page) selectedComponent;
             // Ovde idu akcije vezane za rad sa page-om
         }
@@ -52,5 +59,45 @@ public class HierarchyTree extends JTree implements TreeSelectionListener {
 
     public HierarchyContextMenu getContextMenu() {
         return contextMenu;
+    }
+
+    private void enableForWorkspace() {
+        ActionManager.getInstance().getNewProject().setEnabled(true);
+        ActionManager.getInstance().getNewDocument().setEnabled(false);
+        ActionManager.getInstance().getNewPage().setEnabled(false);
+        ActionManager.getInstance().getRenameNode().setEnabled(false);
+        ActionManager.getInstance().getDeleteNode().setEnabled(false);
+
+        getContextMenu().enableForWorkspace();
+    }
+
+    private void enableForProject() {
+        ActionManager.getInstance().getNewProject().setEnabled(false);
+        ActionManager.getInstance().getNewDocument().setEnabled(true);
+        ActionManager.getInstance().getNewPage().setEnabled(false);
+        ActionManager.getInstance().getRenameNode().setEnabled(true);
+        ActionManager.getInstance().getDeleteNode().setEnabled(true);
+
+        getContextMenu().enableForProject();
+    }
+
+    private void enableForDocument() {
+        ActionManager.getInstance().getNewProject().setEnabled(false);
+        ActionManager.getInstance().getNewDocument().setEnabled(false);
+        ActionManager.getInstance().getNewPage().setEnabled(true);
+        ActionManager.getInstance().getRenameNode().setEnabled(true);
+        ActionManager.getInstance().getDeleteNode().setEnabled(true);
+
+        getContextMenu().enableForDocument();
+    }
+
+    private void enableForPage() {
+        ActionManager.getInstance().getNewProject().setEnabled(false);
+        ActionManager.getInstance().getNewDocument().setEnabled(false);
+        ActionManager.getInstance().getNewPage().setEnabled(false);
+        ActionManager.getInstance().getRenameNode().setEnabled(true);
+        ActionManager.getInstance().getDeleteNode().setEnabled(true);
+
+        getContextMenu().enableForPage();
     }
 }

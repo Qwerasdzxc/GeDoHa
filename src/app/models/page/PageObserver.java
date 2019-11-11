@@ -5,4 +5,5 @@ public interface PageObserver {
     void removeObserver(PageListener listener);
 
     void notifyPageSelected(Page page);
+    void notifyPageChangedName(String name);
 }

@@ -46,10 +46,11 @@ public class WorkspaceView extends JPanel implements WSListener, ProjListener {
     public void onProjectDeleted(Project project) {
         project.removeObserver(this);
         activeProject = null;
-        System.out.println("Call");
+
         removeAll();
         revalidate();
         repaint();
+
         SwingUtilities.updateComponentTreeUI(MainFrame.getInstance().getHierarchyTree());
     }
 
@@ -75,7 +76,6 @@ public class WorkspaceView extends JPanel implements WSListener, ProjListener {
 
         HierarchyModel m = (HierarchyModel) MainFrame.getInstance().getHierarchyTree().getModel();
         TreeNode[] n = m.getPathToRoot(activeProject);
-        System.out.println(n);
 
         SwingUtilities.invokeLater(new Runnable() {
             @Override

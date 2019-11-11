@@ -65,6 +65,8 @@ public class Page implements TreeNode, PageObserver {
 
     public void setName(String name) {
         this.name = name;
+
+        notifyPageChangedName(name);
     }
 
     @Override
@@ -97,5 +99,12 @@ public class Page implements TreeNode, PageObserver {
         // TODO
     }
 
+    @Override
+    public void notifyPageChangedName(String name) {
+        if (this.listeners == null)
+            return;
 
+        for (int i = 0; i < listeners.size(); i++)
+            listeners.get(i).onPageChangedName(name);
+    }
 }

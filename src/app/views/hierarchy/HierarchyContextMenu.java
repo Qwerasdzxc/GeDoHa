@@ -36,4 +36,35 @@ public class HierarchyContextMenu extends JPopupMenu {
         add(delete);
     }
 
+    public void enableForWorkspace() {
+        createProject.setEnabled(true);
+        createDocument.setEnabled(false);
+        createPage.setEnabled(false);
+        rename.setEnabled(false);
+        delete.setEnabled(false);
+    }
+
+    public void enableForProject() {
+        createProject.setEnabled(false);
+        createDocument.setEnabled(true);
+        createPage.setEnabled(false);
+        rename.setEnabled(true);
+        delete.setEnabled(true);
+    }
+
+    public void enableForDocument() {
+        createProject.setEnabled(false);
+        createDocument.setEnabled(false);
+        createPage.setEnabled(true);
+        rename.setEnabled(true);
+        delete.setEnabled(true);
+    }
+
+    public void enableForPage() {
+        createProject.setEnabled(false);
+        createDocument.setEnabled(false);
+        createPage.setEnabled(false);
+        rename.setEnabled(true);
+        delete.setEnabled(true);
+    }
 }

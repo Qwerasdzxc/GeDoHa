@@ -19,6 +19,8 @@ public class ActNewDocument extends GAbstractAction {
         putValue(SMALL_ICON, loadIcon("images/new_document.png"));
         putValue(NAME, "Novi dokument");
         putValue(SHORT_DESCRIPTION, "Napravi novi dokument za projekat");
+
+        setEnabled(false);
     }
 
     @Override

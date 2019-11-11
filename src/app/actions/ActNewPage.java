@@ -19,6 +19,8 @@ public class ActNewPage extends GAbstractAction {
 		putValue(SMALL_ICON, loadIcon("images/new_page.png"));
 		putValue(NAME, "Nova strana");
 		putValue(SHORT_DESCRIPTION, "Napravi novu stranicu za dokument");
+
+		setEnabled(false);
 	}
 
 	@Override
