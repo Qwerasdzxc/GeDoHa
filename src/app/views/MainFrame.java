@@ -2,6 +2,8 @@ package app.views;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
 import app.models.workspace.Workspace;
 import app.views.hierarchy.HierarchyModel;
@@ -62,6 +64,32 @@ public class MainFrame extends JFrame {
         JSplitPane sl = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, scroll, workspaceView);
         sl.setOneTouchExpandable(true);
         sl.setResizeWeight(0.1);
+
+        addWindowListener(new WindowListener() {
+            @Override
+            public void windowClosed(WindowEvent e) {}
+            @Override
+            public void windowOpened(WindowEvent e) {}
+            @Override
+            public void windowClosing(WindowEvent e) {
+                MainFrame frame = (MainFrame) e.getComponent();
+                int result = JOptionPane.showConfirmDialog(frame, "Da li ste sigurni da želite da ugasite program?",
+                        "Gašenje programa", JOptionPane.YES_NO_OPTION);
+                if (result != JOptionPane.YES_OPTION) {
+                    frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+                } else {
+                    frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+                }
+            }
+            @Override
+            public void windowIconified(WindowEvent e) {}
+            @Override
+            public void windowDeiconified(WindowEvent e) {}
+            @Override
+            public void windowActivated(WindowEvent e) {}
+            @Override
+            public void windowDeactivated(WindowEvent e) {}
+        });
 
         this.getContentPane().add(sl, BorderLayout.CENTER);
         this.setVisible(true);
