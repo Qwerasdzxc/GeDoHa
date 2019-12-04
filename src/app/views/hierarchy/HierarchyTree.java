@@ -60,6 +60,16 @@ public class HierarchyTree extends JTree implements TreeSelectionListener {
     public HierarchyContextMenu getContextMenu() {
         return contextMenu;
     }
+    
+    public Project getCurrentProject() {
+		TreePath path = getSelectionPath();
+		for(int i=0; i<path.getPathCount(); i++){
+			if(path.getPathComponent(i) instanceof Project){
+				return (Project)path.getPathComponent(i);
+			}
+		}
+		return null;
+	}
 
     private void enableForWorkspace() {
         ActionManager.getInstance().getNewProject().setEnabled(true);

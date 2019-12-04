@@ -1,5 +1,6 @@
 package app.models.page;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
@@ -10,7 +11,7 @@ import app.models.document.Document;
 import app.observer.IListener;
 import app.observer.IObserver;
 
-public class Page implements TreeNode, PageObserver {
+public class Page implements TreeNode, PageObserver, Serializable {
 
     // Parent node
     private Document parent;

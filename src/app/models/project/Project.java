@@ -1,10 +1,13 @@
 package app.models.project;
 
+import java.io.File;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.swing.SwingUtilities;
 import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreeNode;
 
@@ -12,12 +15,16 @@ import app.models.workspace.Workspace;
 import app.models.document.Document;
 import app.observer.IListener;
 import app.observer.IObserver;
+import app.views.MainFrame;
 
 
-public class Project implements MutableTreeNode, ProjObserver {
+public class Project implements MutableTreeNode, ProjObserver, Serializable,UpdateListener {
 
     private String name;
     private static int count = 0;
+    private transient boolean changed;
+	private File projectFile=null;
+
 
     List<ProjListener> listeners;
 
@@ -141,11 +148,31 @@ public class Project implements MutableTreeNode, ProjObserver {
     public void setSelected() {
         notifyProjectSelected();
     }
+    public boolean isChanged() {
+		return changed;
+	}
+
+	public void setChanged(boolean changed) {
+		this.changed = changed;
+		SwingUtilities.updateComponentTreeUI(MainFrame.getInstance().getHierarchyTree());
+	}
+	
+	public File getProjectFile() {
+		return projectFile;
+	}
+	
+	public void setProjectFile(File projectFile) {
+		this.projectFile=projectFile;
+	}
 
     @Override
     public String toString() {
         return this.getName();
     }
+    @Override
+	public void updatePerformed(UpdateEvent e) {
+    	setChanged(true);
+	}
 
     @Override
     public void addObserver(ProjListener listener) {
@@ -207,4 +234,6 @@ public class Project implements MutableTreeNode, ProjObserver {
         for (ProjListener listener : listeners)
             listener.onProjectChangedName(name);
     }
+
+	
 }

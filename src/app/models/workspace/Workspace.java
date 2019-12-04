@@ -1,5 +1,6 @@
 package app.models.workspace;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
@@ -10,7 +11,7 @@ import javax.swing.tree.TreeNode;
 import app.models.project.Project;
 
 
-public class Workspace implements MutableTreeNode, WSObserver {
+public class Workspace implements MutableTreeNode, WSObserver, Serializable {
 
     private String name;
 

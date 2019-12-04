@@ -1,5 +1,7 @@
 package app.models.document;
 
+import java.io.File;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
@@ -13,9 +15,11 @@ import app.models.project.Project;
 import app.observer.IListener;
 import app.observer.IObserver;
 
-public class Document implements MutableTreeNode, DocObserver {
+public class Document implements MutableTreeNode, DocObserver, Serializable {
 
     private String name;
+	private File documentFile = null;
+
 
 	List<DocListener> listeners;
 
@@ -65,6 +69,14 @@ public class Document implements MutableTreeNode, DocObserver {
     public Enumeration<? extends TreeNode> children() {
         return (Enumeration<Page>) this.pages;
     }
+    
+    public File getDocumentFile() {
+		return documentFile;
+	}
+	
+	public void setDocumentFile(File documentFile) {
+		this.documentFile=documentFile;
+	}
 
     @Override
     public void setParent(MutableTreeNode newParent) {
