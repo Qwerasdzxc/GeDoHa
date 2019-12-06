@@ -6,15 +6,15 @@ import javax.swing.filechooser.FileFilter;
 
 public class DocumentFileFilter extends FileFilter {
 
-	@Override
-	public boolean accept(File f) {
-		return (f.isDirectory() || 
+    @Override
+    public boolean accept(File f) {
+        return (f.isDirectory() ||
                 f.getName().toLowerCase().endsWith(".geru"));
-	}
+    }
 
-	@Override
-	public String getDescription() {
-		return "GeRuDok Project Files (*.geru)";		
-	}
+    @Override
+    public String getDescription() {
+        return "GeRuDok Project Files (*.geru)";
+    }
 
 }

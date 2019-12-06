@@ -18,13 +18,11 @@ import app.observer.IObserver;
 import app.views.MainFrame;
 
 
-public class Project implements MutableTreeNode, ProjObserver, Serializable,UpdateListener {
+public class Project implements MutableTreeNode, ProjObserver, Serializable {
 
     private String name;
-    private static int count = 0;
     private transient boolean changed;
-	private File projectFile=null;
-
+	private File projectFile;
 
     List<ProjListener> listeners;
 
@@ -62,10 +60,6 @@ public class Project implements MutableTreeNode, ProjObserver, Serializable,Upda
         documents.remove(document);
 
         notifyDocumentDeleted(document);
-    }
-
-    public static void setCount(int count) {
-        Project.count = count;
     }
 
     public int getDocumentIndex(Document child) {
@@ -154,7 +148,8 @@ public class Project implements MutableTreeNode, ProjObserver, Serializable,Upda
 
 	public void setChanged(boolean changed) {
 		this.changed = changed;
-		SwingUtilities.updateComponentTreeUI(MainFrame.getInstance().getHierarchyTree());
+
+		// TODO: Preko observera
 	}
 	
 	public File getProjectFile() {
@@ -162,17 +157,13 @@ public class Project implements MutableTreeNode, ProjObserver, Serializable,Upda
 	}
 	
 	public void setProjectFile(File projectFile) {
-		this.projectFile=projectFile;
+		this.projectFile = projectFile;
 	}
 
     @Override
     public String toString() {
         return this.getName();
     }
-    @Override
-	public void updatePerformed(UpdateEvent e) {
-    	setChanged(true);
-	}
 
     @Override
     public void addObserver(ProjListener listener) {
@@ -234,6 +225,4 @@ public class Project implements MutableTreeNode, ProjObserver, Serializable,Upda
         for (ProjListener listener : listeners)
             listener.onProjectChangedName(name);
     }
-
-	
 }

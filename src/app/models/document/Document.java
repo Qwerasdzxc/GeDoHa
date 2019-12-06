@@ -20,7 +20,6 @@ public class Document implements MutableTreeNode, DocObserver, Serializable {
     private String name;
 	private File documentFile = null;
 
-
 	List<DocListener> listeners;
 
     public Document(Project parent, String name) {
