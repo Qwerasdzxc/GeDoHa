@@ -4,6 +4,7 @@ import app.actions.ActionManager;
 
 import java.awt.Image;
 
+import javax.swing.Action;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JToolBar;
@@ -15,10 +16,13 @@ public class ToolBar extends JToolBar {
 		super(SwingConstants.HORIZONTAL);
 		
 		setFloatable(false);
+
+		add(ActionManager.getInstance().getSaveProject());
+		add(ActionManager.getInstance().getOpenProject());
+
+		addSeparator();
 		
-        add(ActionManager.getInstance().getNewProject());
-		add(ActionManager.getInstance().getNewDocument());
-		add(ActionManager.getInstance().getNewPage());
+        add(ActionManager.getInstance().getNewNode());
 
 		addSeparator();
 

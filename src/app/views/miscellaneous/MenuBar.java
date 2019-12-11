@@ -15,9 +15,7 @@ public class MenuBar extends JMenuBar{
 	public MenuBar() {
 		JMenu file = new JMenu("File");
 
-		file.add(ActionManager.getInstance().getNewProject());
-		file.add(ActionManager.getInstance().getNewDocument());
-		file.add(ActionManager.getInstance().getNewPage());
+		file.add(ActionManager.getInstance().getNewNode());
 		file.addSeparator();
 		file.add(ActionManager.getInstance().getRenameNode());
 		file.add(ActionManager.getInstance().getDeleteNode());

@@ -1,5 +1,6 @@
 package app.views.document;
 
+import app.models.AbstractNode;
 import app.models.document.DocListener;
 import app.models.document.Document;
 import app.models.page.Page;
@@ -10,7 +11,7 @@ import app.views.MainFrame;
 import app.views.page.PageView;
 
 import javax.swing.*;
-import java.awt.*;
+
 import java.util.ArrayList;
 
 public class DocumentView extends JPanel implements ProjListener, DocListener, PageListener {
@@ -26,11 +27,11 @@ public class DocumentView extends JPanel implements ProjListener, DocListener, P
 
         this.document = document;
         this.document.addObserver(this);
-        ((Project) this.document.getParent()).addObserver(this);
+        Project parent = (Project) this.document.getParent();
+        parent.addObserver(this);
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        Project parent = (Project) document.getParent();
         pathLabel = new JLabel(parent.getName() + " -> " + document.getName());
         this.add(pathLabel);
 
@@ -40,7 +41,8 @@ public class DocumentView extends JPanel implements ProjListener, DocListener, P
     }
 
     private void addExistingPages() {
-        for (Page page : document.getPages()) {
+        for (AbstractNode node : document.getChildren()) {
+            Page page = (Page) node;
             page.addObserver(this);
 
             PageView pageView = new PageView(page);

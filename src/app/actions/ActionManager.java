@@ -1,21 +1,25 @@
 package app.actions;
 
 
+import javax.swing.Action;
+
 public class ActionManager {
 
-    private static ActionManager instance = null;
+    private static ActionManager instance;
+
 	private ActNodeDelete deleteNode;
 	private ActNodeRename renameNode;
-	private ActNewProject newProject;
-	private ActNewDocument newDocument;
-	private ActNewPage newPage;
+	private ActNewNode newNode;
+
+	private ActSaveProject saveProject;
+	private ActOpenProject openProject;
     
     private ActionManager() {
     	deleteNode= new ActNodeDelete();
 		renameNode = new ActNodeRename();
-		newProject = new ActNewProject();
-		newDocument = new ActNewDocument();
-		newPage = new ActNewPage();
+		newNode = new ActNewNode();
+		saveProject = new ActSaveProject();
+		openProject = new ActOpenProject();
     }
     
     public static ActionManager getInstance() {
@@ -25,23 +29,23 @@ public class ActionManager {
         return instance;
     }
 
-	public ActNewProject getNewProject() {
-		return newProject;
-	}
-
-	public ActNewDocument getNewDocument() {
-		return newDocument;
-	}
-
-	public ActNewPage getNewPage() {
-		return newPage;
-	}
-
 	public ActNodeDelete getDeleteNode() {
 		return deleteNode;
 	}
 
 	public ActNodeRename getRenameNode() {
 		return renameNode;
+	}
+
+	public ActNewNode getNewNode() {
+		return newNode;
+	}
+
+	public ActSaveProject getSaveProject() {
+		return saveProject;
+	}
+
+	public ActOpenProject getOpenProject() {
+		return openProject;
 	}
 }

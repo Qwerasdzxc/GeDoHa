@@ -3,166 +3,56 @@ package app.models.project;
 import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.Iterator;
 import java.util.List;
 
-import javax.swing.SwingUtilities;
-import javax.swing.tree.MutableTreeNode;
-import javax.swing.tree.TreeNode;
-
-import app.models.workspace.Workspace;
+import app.models.AbstractNode;
 import app.models.document.Document;
-import app.observer.IListener;
-import app.observer.IObserver;
-import app.views.MainFrame;
 
+/**
+ * Created by Qwerasdzxc on 11/12/2019.
+ */
+public class Project extends AbstractNode implements ProjObserver, Serializable {
 
-public class Project implements MutableTreeNode, ProjObserver, Serializable {
+    private File file;
 
-    private String name;
-    private transient boolean changed;
-	private File projectFile;
+    private transient List<ProjListener> listeners;
 
-    List<ProjListener> listeners;
-
-    public Project(Workspace parent, String name) {
-        this.parent = parent;
-        this.name = name;
-        this.documents = new ArrayList<>();
+    public Project(String name) {
+        super(name);
+        this.file = null;
     }
 
-    // Children nodes
-    private ArrayList<Document> documents = new ArrayList<>();
-
-    // Parent node object
-    private Workspace parent;
-
-    public ArrayList<Document> getDocuments() {
-        return this.documents;
-    }
-
-    public Document getDocument(int index) {
-        return this.documents.get(index);
-    }
-
-    public int getDocumentCount() {
-        return this.documents.size();
-    }
-
-    public void addDocument(Document document) {
-        this.documents.add(document);
+    @Override
+    public void addNewChild() {
+        Document document = new Document("Document " + (getChildCount() + 1));
+        this.addChild(document);
 
         notifyDocumentCreated(document);
     }
 
-    public void deleteDocument(Document document) {
-        documents.remove(document);
-
-        notifyDocumentDeleted(document);
-    }
-
-    public int getDocumentIndex(Document child) {
-        return this.documents.indexOf(child);
+    public File getFile() {
+        return file;
     }
 
     @Override
-    public TreeNode getChildAt(int childIndex) {
-        return this.documents.get(childIndex);
-    }
-
-    @Override
-    public int getChildCount() {
-        return this.documents.size();
-    }
-
-    @Override
-    public TreeNode getParent() {
-        return this.parent;
-    }
-
-    @Override
-    public int getIndex(TreeNode node) {
-        return this.documents.indexOf(node);
-    }
-
-    @Override
-    public boolean getAllowsChildren() {
-        return true;
-    }
-
-    @Override
-    public boolean isLeaf() {
-        return this.documents.isEmpty();
-    }
-
-    @Override
-    public Enumeration<? extends TreeNode> children() {
-        return (Enumeration<Document>) this.documents;
-    }
-
-    @Override
-    public void insert(MutableTreeNode child, int index) {
-        this.documents.add(index, (Document) child);
-    }
-
-    @Override
-    public void remove(int index) {
-        this.documents.remove(index);
-    }
-
-    @Override
-    public void remove(MutableTreeNode node) {
-        this.documents.remove(node);
-    }
-
-    @Override
-    public void setParent(MutableTreeNode newParent) {
-        this.parent = (Workspace) newParent;
-    }
-
-    @Override
-    public void setUserObject(Object object) {
-    }
-
-    @Override
-    public void removeFromParent() {
-    }
-
     public void setName(String name) {
-        this.name = name;
+        super.setName(name);
 
         notifyProjectChangedName(name);
     }
 
-    public String getName() {
-        return name;
+    public void setFile(File file) {
+        this.file = file;
     }
 
     public void setSelected() {
         notifyProjectSelected();
     }
-    public boolean isChanged() {
-		return changed;
-	}
 
-	public void setChanged(boolean changed) {
-		this.changed = changed;
+    public void deleteDocument(Document document) {
+        children.remove(document);
 
-		// TODO: Preko observera
-	}
-	
-	public File getProjectFile() {
-		return projectFile;
-	}
-	
-	public void setProjectFile(File projectFile) {
-		this.projectFile = projectFile;
-	}
-
-    @Override
-    public String toString() {
-        return this.getName();
+        notifyDocumentDeleted(document);
     }
 
     @Override

@@ -7,11 +7,11 @@ import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.TreePath;
 
 import app.actions.ActionManager;
+import app.models.AbstractNode;
 import app.models.document.Document;
 import app.models.page.Page;
 import app.models.project.Project;
 import app.models.workspace.Workspace;
-import app.views.project.ProjectView;
 
 public class HierarchyTree extends JTree implements TreeSelectionListener {
 
@@ -28,10 +28,11 @@ public class HierarchyTree extends JTree implements TreeSelectionListener {
         setComponentPopupMenu(contextMenu);
     }
 
+    @Override
     public void valueChanged(TreeSelectionEvent arg0) {
         TreePath path = arg0.getPath();
 
-        Object selectedComponent = path.getLastPathComponent();
+        AbstractNode selectedComponent = (AbstractNode) path.getLastPathComponent();
 
         if (selectedComponent instanceof Workspace) {
             enableForWorkspace();
@@ -60,21 +61,19 @@ public class HierarchyTree extends JTree implements TreeSelectionListener {
     public HierarchyContextMenu getContextMenu() {
         return contextMenu;
     }
-    
+
     public Project getCurrentProject() {
-		TreePath path = getSelectionPath();
-		for(int i=0; i<path.getPathCount(); i++){
-			if(path.getPathComponent(i) instanceof Project){
-				return (Project)path.getPathComponent(i);
-			}
-		}
-		return null;
-	}
+        TreePath path = getSelectionPath();
+        for (int i = 0; i < path.getPathCount(); i++) {
+            if (path.getPathComponent(i) instanceof Project) {
+                return (Project) path.getPathComponent(i);
+            }
+        }
+        return null;
+    }
 
     private void enableForWorkspace() {
-        ActionManager.getInstance().getNewProject().setEnabled(true);
-        ActionManager.getInstance().getNewDocument().setEnabled(false);
-        ActionManager.getInstance().getNewPage().setEnabled(false);
+        ActionManager.getInstance().getNewNode().setEnabled(true);
         ActionManager.getInstance().getRenameNode().setEnabled(false);
         ActionManager.getInstance().getDeleteNode().setEnabled(false);
 
@@ -82,9 +81,7 @@ public class HierarchyTree extends JTree implements TreeSelectionListener {
     }
 
     private void enableForProject() {
-        ActionManager.getInstance().getNewProject().setEnabled(false);
-        ActionManager.getInstance().getNewDocument().setEnabled(true);
-        ActionManager.getInstance().getNewPage().setEnabled(false);
+        ActionManager.getInstance().getNewNode().setEnabled(true);
         ActionManager.getInstance().getRenameNode().setEnabled(true);
         ActionManager.getInstance().getDeleteNode().setEnabled(true);
 
@@ -92,9 +89,7 @@ public class HierarchyTree extends JTree implements TreeSelectionListener {
     }
 
     private void enableForDocument() {
-        ActionManager.getInstance().getNewProject().setEnabled(false);
-        ActionManager.getInstance().getNewDocument().setEnabled(false);
-        ActionManager.getInstance().getNewPage().setEnabled(true);
+        ActionManager.getInstance().getNewNode().setEnabled(true);
         ActionManager.getInstance().getRenameNode().setEnabled(true);
         ActionManager.getInstance().getDeleteNode().setEnabled(true);
 
@@ -102,9 +97,7 @@ public class HierarchyTree extends JTree implements TreeSelectionListener {
     }
 
     private void enableForPage() {
-        ActionManager.getInstance().getNewProject().setEnabled(false);
-        ActionManager.getInstance().getNewDocument().setEnabled(false);
-        ActionManager.getInstance().getNewPage().setEnabled(false);
+        ActionManager.getInstance().getNewNode().setEnabled(false);
         ActionManager.getInstance().getRenameNode().setEnabled(true);
         ActionManager.getInstance().getDeleteNode().setEnabled(true);
 

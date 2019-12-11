@@ -9,12 +9,11 @@ public class DocumentFileFilter extends FileFilter {
     @Override
     public boolean accept(File f) {
         return (f.isDirectory() ||
-                f.getName().toLowerCase().endsWith(".geru"));
+                f.getName().toLowerCase().endsWith(".gdk"));
     }
 
     @Override
     public String getDescription() {
-        return "GeRuDok Project Files (*.geru)";
+        return "GeRuDok file-ovi sa ekstenzijom: .gdk";
     }
-
 }

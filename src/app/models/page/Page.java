@@ -2,102 +2,54 @@ package app.models.page;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.List;
 
-import javax.swing.tree.TreeNode;
+import app.models.AbstractNode;
 
-import app.models.document.Document;
-import app.observer.IListener;
-import app.observer.IObserver;
+/**
+ * Created by Qwerasdzxc on 11/12/2019.
+ */
+public class Page extends AbstractNode implements PageObserver, Serializable {
 
-public class Page implements TreeNode, PageObserver, Serializable {
+    private transient List<PageListener> listeners;
 
-    // Parent node
-    private Document parent;
-
-    private String name;
-    
-	List<PageListener> listeners;
-
-    public Page(Document parent, String name) {
-    	this.name = name;
-        this.parent = parent;
+    public Page(String name) {
+        super(name);
     }
 
     @Override
-    public TreeNode getChildAt(int childIndex) {
-        return null;
+    public void addNewChild() {
+        // TODO: Adding Slots
     }
 
     @Override
-    public int getChildCount() {
-        return 0;
-    }
-
-    @Override
-    public TreeNode getParent() {
-        return this.parent;
-    }
-
-    @Override
-    public int getIndex(TreeNode node) {
-        return 0;
-    }
-
-    @Override
-    public boolean getAllowsChildren() {
-        return false;
-    }
-
-    @Override
-    public boolean isLeaf() {
-        return true;
-    }
-
-    @Override
-    public Enumeration<? extends TreeNode> children() {
-        return null;
-    }
-
-    public String getName() {
-        return name;
-    }
-
     public void setName(String name) {
-        this.name = name;
+        super.setName(name);
 
         notifyPageChangedName(name);
     }
 
     @Override
-    public String toString() {
-        return getName();
-    }
-
-    // Observer metode
-
-  	@Override
-  	public void addObserver(PageListener listener) {
-  		if(listener == null)
-  			return;
-  		if(this.listeners ==null)
-  			this.listeners = new ArrayList<>();
-  		if(this.listeners.contains(listener))
-  			return;
-  		this.listeners.add(listener);		
-  	}
-
-  	@Override
-  	public void removeObserver(PageListener listener) {
-  		if(listener == null || this.listeners == null)
-  			return;
-  		this.listeners.remove(listener);		
-  	}
-
-    @Override
     public void notifyPageSelected(Page page) {
         // TODO
+    }
+
+    @Override
+    public void addObserver(PageListener listener) {
+        if(listener == null)
+            return;
+        if(this.listeners ==null)
+            this.listeners = new ArrayList<>();
+        if(this.listeners.contains(listener))
+            return;
+        this.listeners.add(listener);
+    }
+
+    @Override
+    public void removeObserver(PageListener listener) {
+        if(listener == null || this.listeners == null)
+            return;
+        this.listeners.remove(listener);
     }
 
     @Override

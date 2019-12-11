@@ -19,23 +19,22 @@ public class ActSaveProject extends GAbstractAction {
 
     public ActSaveProject() {
         putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_S, ActionEvent.CTRL_MASK));
-        putValue(SMALL_ICON, loadIcon("images/Save-icon.png"));
-        putValue(NAME, "Save");
-        putValue(SHORT_DESCRIPTION, "Save project");
+        putValue(SMALL_ICON, loadIcon("images/save.png"));
+        putValue(NAME, "Sačuvaj");
+        putValue(SHORT_DESCRIPTION, "Sačuvaj projekat");
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        JFileChooser jfc = new JFileChooser();
+        JFileChooser jfc = new JFileChooser(new File(System.getProperty("user.dir")));
         jfc.setFileFilter(new DocumentFileFilter());
+        jfc.setAcceptAllFileFilterUsed(false);
 
         Project project = MainFrame.getInstance().getHierarchyTree().getCurrentProject();
-        File projectFile = project.getProjectFile();
 
-        if (!project.isChanged()) {
-            return;
-        }
-        if (project.getProjectFile() == null) {
+        File projectFile = project.getFile();
+
+        if (project.getFile() == null) {
             if (jfc.showSaveDialog(MainFrame.getInstance()) == JFileChooser.APPROVE_OPTION) {
                 projectFile = jfc.getSelectedFile();
             } else {
@@ -46,13 +45,10 @@ public class ActSaveProject extends GAbstractAction {
         try {
             os = new ObjectOutputStream(new FileOutputStream(projectFile));
             os.writeObject(project);
-            project.setProjectFile(projectFile);
-            project.setChanged(false);
-        } catch (FileNotFoundException e1) {
-            e1.printStackTrace();
-        } catch (IOException e1) {
-            e1.printStackTrace();
+            project.setFile(projectFile);
+            os.close();
+        } catch (Exception exc) {
+            exc.printStackTrace();
         }
     }
-
 }

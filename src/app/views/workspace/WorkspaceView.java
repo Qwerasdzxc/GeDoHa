@@ -6,7 +6,6 @@ import app.models.project.Project;
 import app.models.workspace.WSListener;
 import app.models.workspace.Workspace;
 import app.views.MainFrame;
-import app.views.hierarchy.HierarchyModel;
 import app.views.project.ProjectView;
 
 import javax.swing.*;
@@ -69,21 +68,5 @@ public class WorkspaceView extends JPanel implements WSListener, ProjListener {
         project.addObserver(this);
 
         revalidate();
-//        setTreePath();
-    }
-
-    private void setTreePath() {
-
-        HierarchyModel m = (HierarchyModel) MainFrame.getInstance().getHierarchyTree().getModel();
-        TreeNode[] n = m.getPathToRoot(activeProject);
-
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                MainFrame.getInstance().getHierarchyTree().scrollPathToVisible(new TreePath(n));
-                MainFrame.getInstance().getHierarchyTree().setSelectionPath(new TreePath(n));
-//                SwingUtilities.updateComponentTreeUI(MainFrame.getInstance().getHierarchyTree());
-            }
-        });
     }
 }

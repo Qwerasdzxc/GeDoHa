@@ -1,15 +1,15 @@
 package app.views;
 
 import javax.swing.*;
+import javax.swing.tree.DefaultTreeModel;
+
 import java.awt.*;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
 import app.models.workspace.Workspace;
-import app.views.hierarchy.HierarchyModel;
 import app.views.hierarchy.HierarchyTree;
 import app.actions.ActionManager;
-import app.observer.IListener;
 import app.views.miscellaneous.MenuBar;
 import app.views.miscellaneous.ToolBar;
 import app.views.workspace.WorkspaceView;
@@ -21,7 +21,6 @@ public class MainFrame extends JFrame {
 
     private WorkspaceView workspaceView;
 
-    private HierarchyModel hierarchyModel;
     private HierarchyTree hierarchyTree;
     
     private JDesktopPane desktop;
@@ -106,7 +105,6 @@ public class MainFrame extends JFrame {
         workspace.addObserver(workspaceView);
 
         this.hierarchyTree = new HierarchyTree();
-        this.hierarchyModel = new HierarchyModel(workspace);
-        this.hierarchyTree.setModel(hierarchyModel);
+        this.hierarchyTree.setModel(new DefaultTreeModel(workspace));
     }
 }
