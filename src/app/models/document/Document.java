@@ -19,11 +19,13 @@ public class Document extends AbstractNode implements DocObserver, Serializable 
     private transient List<DocListener> listeners;
 
     @Override
-    public void addNewChild() {
+    public AbstractNode addNewChild() {
         Page page = new Page("Page " + (getChildCount() + 1));
         this.addChild(page);
 
         notifyPageCreated(page);
+
+        return page;
     }
 
     public void setSelected() {

@@ -36,8 +36,8 @@ public class WorkspaceView extends JPanel implements WSListener, ProjListener {
         project.addObserver(this);
 
         revalidate();
+        repaint();
 
-//        setTreePath();
         SwingUtilities.updateComponentTreeUI(MainFrame.getInstance().getHierarchyTree());
     }
 

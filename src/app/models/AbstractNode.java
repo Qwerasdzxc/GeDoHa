@@ -24,7 +24,7 @@ public abstract class AbstractNode implements MutableTreeNode, Serializable  {
         this.children = new ArrayList<>();
     }
 
-    public abstract void addNewChild();
+    public abstract AbstractNode addNewChild();
 
     public void addChild(AbstractNode childNode) {
         childNode.parent = this;

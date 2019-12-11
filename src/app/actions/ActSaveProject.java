@@ -22,6 +22,8 @@ public class ActSaveProject extends GAbstractAction {
         putValue(SMALL_ICON, loadIcon("images/save.png"));
         putValue(NAME, "Sačuvaj");
         putValue(SHORT_DESCRIPTION, "Sačuvaj projekat");
+
+        setEnabled(false);
     }
 
     @Override

@@ -18,8 +18,10 @@ public class Page extends AbstractNode implements PageObserver, Serializable {
     }
 
     @Override
-    public void addNewChild() {
+    public AbstractNode addNewChild() {
         // TODO: Adding Slots
+
+        return null;
     }
 
     @Override

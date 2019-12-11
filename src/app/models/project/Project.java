@@ -23,11 +23,13 @@ public class Project extends AbstractNode implements ProjObserver, Serializable 
     }
 
     @Override
-    public void addNewChild() {
+    public AbstractNode addNewChild() {
         Document document = new Document("Document " + (getChildCount() + 1));
         this.addChild(document);
 
         notifyDocumentCreated(document);
+
+        return document;
     }
 
     public File getFile() {
