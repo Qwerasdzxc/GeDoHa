@@ -11,13 +11,17 @@ import app.views.MainFrame;
 import app.views.page.PageView;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
 import java.util.ArrayList;
 
 public class DocumentView extends JPanel implements ProjListener, DocListener, PageListener {
 
     public Document document;
 
+    private JPanel body;
     private JLabel pathLabel;
 
     private ArrayList<PageView> pageViews = new ArrayList<>();
@@ -30,10 +34,16 @@ public class DocumentView extends JPanel implements ProjListener, DocListener, P
         Project parent = (Project) this.document.getParent();
         parent.addObserver(this);
 
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        body = new JPanel();
+        body.setLayout(new BoxLayout(body, BoxLayout.PAGE_AXIS));
+        body.setBackground(Color.LIGHT_GRAY);
+        body.setBorder(new EmptyBorder(10, 0, 0, 10));
 
-        pathLabel = new JLabel(parent.getName() + " -> " + document.getName());
-        this.add(pathLabel);
+        this.setLayout(new BorderLayout());
+        JScrollPane scrollBar = new JScrollPane(body, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
+                ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollBar.getVerticalScrollBar().setUnitIncrement(15);
+        this.add(scrollBar);
 
         addExistingPages();
 
@@ -47,7 +57,9 @@ public class DocumentView extends JPanel implements ProjListener, DocListener, P
 
             PageView pageView = new PageView(page);
             pageViews.add(pageView);
-            add(pageView);
+            body.add(pageView);
+            body.scrollRectToVisible(pageView.getBounds());
+            repaint();
         }
     }
 
@@ -61,7 +73,9 @@ public class DocumentView extends JPanel implements ProjListener, DocListener, P
 
         PageView pageView = new PageView(page);
         pageViews.add(pageView);
-        add(pageView);
+
+        body.add(pageView);
+        body.scrollRectToVisible(pageView.getBounds());
 
         revalidate();
 
@@ -73,7 +87,7 @@ public class DocumentView extends JPanel implements ProjListener, DocListener, P
         page.removeObserver(this);
 
         PageView pageView = pageViews.get(index);
-        remove(pageView);
+        body.remove(pageView);
         pageViews.remove(pageView);
 
         revalidate();

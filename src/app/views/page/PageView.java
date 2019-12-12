@@ -1,5 +1,6 @@
 package app.views.page;
 
+import app.Utilities;
 import app.models.document.DocListener;
 import app.models.document.Document;
 import app.models.page.Page;
@@ -8,6 +9,11 @@ import app.models.project.ProjListener;
 import app.models.project.Project;
 
 import javax.swing.*;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.EtchedBorder;
+import javax.swing.border.TitledBorder;
+
 import java.awt.*;
 
 public class PageView extends JPanel implements ProjListener, DocListener, PageListener {
@@ -15,6 +21,7 @@ public class PageView extends JPanel implements ProjListener, DocListener, PageL
     private Page page;
 
     private JLabel pathLabel;
+    private JPanel content;
 
     public PageView(Page page) {
         this.page = page;
@@ -22,13 +29,31 @@ public class PageView extends JPanel implements ProjListener, DocListener, PageL
         ((Document) this.page.getParent()).addObserver(this);
         ((Project) this.page.getParent().getParent()).addObserver(this);
 
-        setLayout(new BorderLayout());
-        setBackground(Color.gray);
+        Dimension pageDimensions = new Dimension(Utilities.PAGE_WIDTH, Utilities.PAGE_HEIGHT);
 
-        Document doc = (Document) page.getParent();
-        Project project = (Project) doc.getParent();
-        pathLabel = new JLabel(project.getName() + " -> " + doc.getName() + " -> " + page.getName());
-        add(pathLabel, BorderLayout.CENTER);
+        setMaximumSize(pageDimensions);
+        setPreferredSize(pageDimensions);
+        setMinimumSize(pageDimensions);
+        setBackground(Color.LIGHT_GRAY);
+        setAlignmentY(CENTER_ALIGNMENT);
+
+        EmptyBorder paddingBorder = new EmptyBorder(15, 0, 15, 0);
+        TitledBorder pageTitleBorder = BorderFactory.createTitledBorder(new EmptyBorder(0, 0, 0, 0), page.getName());
+        pageTitleBorder.setTitlePosition(TitledBorder.ABOVE_TOP);
+        pageTitleBorder.setTitleJustification(TitledBorder.CENTER);
+        CompoundBorder border = new CompoundBorder(paddingBorder, pageTitleBorder);
+
+        setLayout(new BorderLayout());
+        setBorder(border);
+
+        content = new JPanel();
+        content.setBackground(Color.WHITE);
+        add(content);
+
+//        Document doc = (Document) page.getParent();
+//        Project project = (Project) doc.getParent();
+//        pathLabel = new JLabel(project.getName() + " -> " + doc.getName() + " -> " + page.getName());
+//        add(pathLabel, BorderLayout.CENTER);
 
         setVisible(true);
     }

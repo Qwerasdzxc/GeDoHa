@@ -12,6 +12,7 @@ public class ActionManager {
 	private ActNewNode newNode;
 
 	private ActSaveProject saveProject;
+	private ActSaveProjectAs saveProjectAs;
 	private ActOpenProject openProject;
     
     private ActionManager() {
@@ -19,6 +20,7 @@ public class ActionManager {
 		renameNode = new ActNodeRename();
 		newNode = new ActNewNode();
 		saveProject = new ActSaveProject();
+		saveProjectAs = new ActSaveProjectAs();
 		openProject = new ActOpenProject();
     }
     
@@ -47,5 +49,9 @@ public class ActionManager {
 
 	public ActOpenProject getOpenProject() {
 		return openProject;
+	}
+
+	public ActSaveProjectAs getSaveProjectAs() {
+		return saveProjectAs;
 	}
 }

@@ -43,7 +43,7 @@ public class MainFrame extends JFrame {
 
         int screenHeight = screenSize.height;
         int screenWidth = screenSize.width;
-        setSize(screenWidth / 2, screenHeight / 2);
+        setSize((int) (screenWidth / 1.5), (int) (screenHeight / 1.5));
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setTitle("GeRuDok");

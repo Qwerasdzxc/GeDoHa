@@ -78,6 +78,7 @@ public class HierarchyTree extends JTree implements TreeSelectionListener {
         ActionManager.getInstance().getDeleteNode().setEnabled(false);
 
         ActionManager.getInstance().getSaveProject().setEnabled(false);
+        ActionManager.getInstance().getSaveProjectAs().setEnabled(false);
 
         getContextMenu().enableForWorkspace();
     }
@@ -88,6 +89,7 @@ public class HierarchyTree extends JTree implements TreeSelectionListener {
         ActionManager.getInstance().getDeleteNode().setEnabled(true);
 
         ActionManager.getInstance().getSaveProject().setEnabled(true);
+        ActionManager.getInstance().getSaveProjectAs().setEnabled(true);
 
         getContextMenu().enableForProject();
     }
@@ -98,6 +100,7 @@ public class HierarchyTree extends JTree implements TreeSelectionListener {
         ActionManager.getInstance().getDeleteNode().setEnabled(true);
 
         ActionManager.getInstance().getSaveProject().setEnabled(false);
+        ActionManager.getInstance().getSaveProjectAs().setEnabled(false);
 
         getContextMenu().enableForDocument();
     }
@@ -108,6 +111,7 @@ public class HierarchyTree extends JTree implements TreeSelectionListener {
         ActionManager.getInstance().getDeleteNode().setEnabled(true);
 
         ActionManager.getInstance().getSaveProject().setEnabled(false);
+        ActionManager.getInstance().getSaveProjectAs().setEnabled(false);
 
         getContextMenu().enableForPage();
     }
