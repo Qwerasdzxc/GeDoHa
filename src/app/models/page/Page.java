@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import app.models.AbstractNode;
+import app.models.slot.Slot;
 
 /**
  * Created by Qwerasdzxc on 11/12/2019.
@@ -13,14 +14,16 @@ public class Page extends AbstractNode implements PageObserver, Serializable {
 
     private transient List<PageListener> listeners;
 
+    private List<Slot> slots;
+
     public Page(String name) {
         super(name);
+
+        slots = new ArrayList<>();
     }
 
     @Override
     public AbstractNode addNewChild() {
-        // TODO: Adding Slots
-
         return null;
     }
 
@@ -29,6 +32,10 @@ public class Page extends AbstractNode implements PageObserver, Serializable {
         super.setName(name);
 
         notifyPageChangedName(name);
+    }
+
+    public void addSlot(Slot slot) {
+        this.slots.add(slot);
     }
 
     @Override

@@ -21,6 +21,7 @@ public class PageView extends JPanel implements ProjListener, DocListener, PageL
     private Page page;
 
     private JLabel pathLabel;
+    private TitledBorder pageTitleBorder;
     private JPanel content;
 
     public PageView(Page page) {
@@ -38,7 +39,7 @@ public class PageView extends JPanel implements ProjListener, DocListener, PageL
         setAlignmentY(CENTER_ALIGNMENT);
 
         EmptyBorder paddingBorder = new EmptyBorder(15, 0, 15, 0);
-        TitledBorder pageTitleBorder = BorderFactory.createTitledBorder(new EmptyBorder(0, 0, 0, 0), page.getName());
+        pageTitleBorder = BorderFactory.createTitledBorder(new EmptyBorder(0, 0, 0, 0), page.getName());
         pageTitleBorder.setTitlePosition(TitledBorder.ABOVE_TOP);
         pageTitleBorder.setTitleJustification(TitledBorder.CENTER);
         CompoundBorder border = new CompoundBorder(paddingBorder, pageTitleBorder);
@@ -50,10 +51,7 @@ public class PageView extends JPanel implements ProjListener, DocListener, PageL
         content.setBackground(Color.WHITE);
         add(content);
 
-//        Document doc = (Document) page.getParent();
-//        Project project = (Project) doc.getParent();
-//        pathLabel = new JLabel(project.getName() + " -> " + doc.getName() + " -> " + page.getName());
-//        add(pathLabel, BorderLayout.CENTER);
+        pathLabel = new JLabel();
 
         setVisible(true);
     }
@@ -79,6 +77,12 @@ public class PageView extends JPanel implements ProjListener, DocListener, PageL
     public void onPageChangedName(String name) {
         Project project = (Project) page.getParent().getParent();
         Document doc = (Document) page.getParent();
+
         pathLabel.setText(project.getName() + " -> " + doc.getName() + " -> " + name);
+        pageTitleBorder.setTitle(name);
+    }
+
+    public Page getPage() {
+        return page;
     }
 }
