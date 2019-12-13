@@ -11,6 +11,9 @@ public class ActionManager {
 	private ActNodeRename renameNode;
 	private ActNewNode newNode;
 
+	private ActSaveWorkspace saveWorkspace;
+	private ActSwitchWorkspace switchWorkspace;
+
 	private ActSaveProject saveProject;
 	private ActSaveProjectAs saveProjectAs;
 	private ActOpenProject openProject;
@@ -19,6 +22,8 @@ public class ActionManager {
     	deleteNode= new ActNodeDelete();
 		renameNode = new ActNodeRename();
 		newNode = new ActNewNode();
+		saveWorkspace = new ActSaveWorkspace();
+		switchWorkspace = new ActSwitchWorkspace();
 		saveProject = new ActSaveProject();
 		saveProjectAs = new ActSaveProjectAs();
 		openProject = new ActOpenProject();
@@ -41,6 +46,14 @@ public class ActionManager {
 
 	public ActNewNode getNewNode() {
 		return newNode;
+	}
+
+	public ActSaveWorkspace getSaveWorkspace() {
+		return saveWorkspace;
+	}
+
+	public ActSwitchWorkspace getSwitchWorkspace() {
+		return switchWorkspace;
 	}
 
 	public ActSaveProject getSaveProject() {

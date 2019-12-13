@@ -4,6 +4,7 @@ import javax.swing.*;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultTreeCellRenderer;
+import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 
 import app.actions.ActionManager;
@@ -12,6 +13,7 @@ import app.models.document.Document;
 import app.models.page.Page;
 import app.models.project.Project;
 import app.models.workspace.Workspace;
+import app.views.MainFrame;
 
 public class HierarchyTree extends JTree implements TreeSelectionListener {
 
@@ -70,6 +72,17 @@ public class HierarchyTree extends JTree implements TreeSelectionListener {
             }
         }
         return null;
+    }
+
+    public Workspace getActiveWorkspace() {
+        return (Workspace) getModel().getRoot();
+    }
+
+    public void switchWorkspace(Workspace newWorkspace) {
+        DefaultTreeModel treeModel = (DefaultTreeModel) getModel();
+
+        treeModel.setRoot(newWorkspace);
+        treeModel.reload();
     }
 
     private void enableForWorkspace() {

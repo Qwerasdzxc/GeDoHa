@@ -15,6 +15,9 @@ public class MenuBar extends JMenuBar{
 	public MenuBar() {
 		JMenu file = new JMenu("File");
 
+		file.add(ActionManager.getInstance().getSaveWorkspace());
+		file.add(ActionManager.getInstance().getSwitchWorkspace());
+		file.addSeparator();
 		file.add(ActionManager.getInstance().getSaveProject());
 		file.add(ActionManager.getInstance().getSaveProjectAs());
 		file.add(ActionManager.getInstance().getOpenProject());

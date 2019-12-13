@@ -1,6 +1,7 @@
 package app.actions;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -16,7 +17,7 @@ import app.views.MainFrame;
 public class ActSaveProjectAs extends GAbstractAction {
 
     public ActSaveProjectAs() {
-        putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_S, ActionEvent.CTRL_MASK));
+        putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.SHIFT_MASK));
         putValue(SMALL_ICON, loadIcon("images/save_as.png"));
         putValue(NAME, "Sačuvaj kao");
         putValue(SHORT_DESCRIPTION, "Sačuvaj projekat kao");

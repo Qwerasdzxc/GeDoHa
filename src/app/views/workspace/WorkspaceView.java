@@ -1,11 +1,13 @@
 package app.views.workspace;
 
+import app.models.AbstractNode;
 import app.models.document.Document;
 import app.models.project.ProjListener;
 import app.models.project.Project;
 import app.models.workspace.WSListener;
 import app.models.workspace.Workspace;
 import app.views.MainFrame;
+import app.views.document.DocumentView;
 import app.views.project.ProjectView;
 
 import javax.swing.*;
@@ -15,13 +17,26 @@ import java.awt.*;
 
 public class WorkspaceView extends JPanel implements WSListener, ProjListener {
 
-    Project activeProject;
+    private Workspace workspace;
+    private Project activeProject;
 
-    public WorkspaceView() {
+    public WorkspaceView(Workspace workspace) {
         super(new BorderLayout());
+
+        this.workspace = workspace;
+
+        workspace.addObserver(this);
+        attachProjectObservers();
 
         setBackground(Color.WHITE);
         setVisible(true);
+    }
+
+    private void attachProjectObservers() {
+        for (AbstractNode node : workspace.getChildren()) {
+            Project project = (Project) node;
+            project.addObserver(this);
+        }
     }
 
     @Override

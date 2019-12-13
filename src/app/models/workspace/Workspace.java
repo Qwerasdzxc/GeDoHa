@@ -13,7 +13,7 @@ import app.models.project.Project;
  */
 public class Workspace extends AbstractNode implements WSObserver, Serializable {
 
-    private List<WSListener> listeners;
+    private transient List<WSListener> listeners;
 
     private File file;
 

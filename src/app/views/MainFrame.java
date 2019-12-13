@@ -4,6 +4,7 @@ import javax.swing.*;
 import javax.swing.tree.DefaultTreeModel;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
@@ -22,7 +23,8 @@ public class MainFrame extends JFrame {
     private WorkspaceView workspaceView;
 
     private HierarchyTree hierarchyTree;
-    
+    private JSplitPane splitPane;
+
     private JDesktopPane desktop;
 
     private MainFrame() {
@@ -50,7 +52,7 @@ public class MainFrame extends JFrame {
 
         this.setLocationRelativeTo(null);
 
-        MenuBar menuBar= new MenuBar();
+        MenuBar menuBar = new MenuBar();
         this.setJMenuBar(menuBar);
 
         ToolBar toolBar = new ToolBar();
@@ -59,50 +61,83 @@ public class MainFrame extends JFrame {
         initialiseWorkspaceTree();
 
         JScrollPane scroll = new JScrollPane(hierarchyTree);
-        scroll.setMinimumSize(new Dimension(200,150));
-        JSplitPane sl = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, scroll, workspaceView);
-        sl.setOneTouchExpandable(true);
-        sl.setResizeWeight(0.1);
+        scroll.setMinimumSize(new Dimension(200, 150));
+        splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, scroll, workspaceView);
+        splitPane.setOneTouchExpandable(true);
+        splitPane.setResizeWeight(0.1);
 
         addWindowListener(new WindowListener() {
             @Override
-            public void windowClosed(WindowEvent e) {}
+            public void windowClosed(WindowEvent e) {
+            }
+
             @Override
-            public void windowOpened(WindowEvent e) {}
+            public void windowOpened(WindowEvent e) {
+                MainFrame frame = (MainFrame) e.getComponent();
+                int result = JOptionPane.showConfirmDialog(frame, "Da li želite da otvorite postojeće radno okruženje?",
+                        "Otvaranje radnog okruženja", JOptionPane.YES_NO_OPTION);
+                if (result == JOptionPane.YES_OPTION) {
+                    ActionManager.getInstance().getSwitchWorkspace().actionPerformed(
+                            new ActionEvent(this, ActionEvent.ACTION_PERFORMED, null));
+                }
+            }
+
             @Override
             public void windowClosing(WindowEvent e) {
                 MainFrame frame = (MainFrame) e.getComponent();
-                int result = JOptionPane.showConfirmDialog(frame, "Da li ste sigurni da želite da ugasite program?",
-                        "Gašenje programa", JOptionPane.YES_NO_OPTION);
-                if (result != JOptionPane.YES_OPTION) {
+                int result = JOptionPane.showConfirmDialog(frame, "Da li želite da sačuvate svoje radno okruženje?",
+                        "Gašenje programa", JOptionPane.YES_NO_CANCEL_OPTION);
+                if (result == JOptionPane.CANCEL_OPTION) {
                     frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-                } else {
+                } else if (result == JOptionPane.NO_OPTION) {
+                    frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+                } else if (result == JOptionPane.YES_OPTION) {
+                    ActionManager.getInstance().getSaveWorkspace().actionPerformed(
+                            new ActionEvent(this, ActionEvent.ACTION_PERFORMED, null));
+
                     frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
                 }
             }
+
             @Override
-            public void windowIconified(WindowEvent e) {}
+            public void windowIconified(WindowEvent e) {
+            }
+
             @Override
-            public void windowDeiconified(WindowEvent e) {}
+            public void windowDeiconified(WindowEvent e) {
+            }
+
             @Override
-            public void windowActivated(WindowEvent e) {}
+            public void windowActivated(WindowEvent e) {
+            }
+
             @Override
-            public void windowDeactivated(WindowEvent e) {}
+            public void windowDeactivated(WindowEvent e) {
+            }
         });
 
-        this.getContentPane().add(sl, BorderLayout.CENTER);
+        this.getContentPane().add(splitPane, BorderLayout.CENTER);
         this.setVisible(true);
     }
 
     public HierarchyTree getHierarchyTree() {
-		return hierarchyTree;
-	}
-    
-    private void initialiseWorkspaceTree() {
-        this.workspaceView = new WorkspaceView();
+        return hierarchyTree;
+    }
 
+    public WorkspaceView getWorkspaceView() {
+        return workspaceView;
+    }
+
+    public void setWorkspaceView(WorkspaceView workspaceView) {
+        this.workspaceView = workspaceView;
+
+        splitPane.setRightComponent(workspaceView);
+    }
+
+    private void initialiseWorkspaceTree() {
         Workspace workspace = new Workspace();
-        workspace.addObserver(workspaceView);
+
+        this.workspaceView = new WorkspaceView(workspace);
 
         this.hierarchyTree = new HierarchyTree();
         this.hierarchyTree.setModel(new DefaultTreeModel(workspace));
