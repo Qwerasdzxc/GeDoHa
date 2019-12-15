@@ -16,6 +16,10 @@ public class GraphicsActionManager {
         return new GActSelectAction(stateManager);
     }
 
+    public GActResizeAction getResizeAction(StateManager stateManager) {
+        return new GActResizeAction(stateManager);
+    }
+
     private GraphicsActionManager() {}
 
     public static GraphicsActionManager getInstance() {

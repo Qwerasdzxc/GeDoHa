@@ -7,7 +7,6 @@ import java.util.List;
 
 import app.graphics.elements.PageElement;
 import app.models.AbstractNode;
-import app.models.slot.Slot;
 
 /**
  * Created by Qwerasdzxc on 11/12/2019.
@@ -39,7 +38,13 @@ public class Page extends AbstractNode implements PageObserver, Serializable {
     public void addSlot(PageElement slot) {
         this.slots.add(slot);
 
-        notifySlotAdded();
+        notifySlotChanged();
+    }
+
+    public void removeSlot(PageElement slot) {
+        this.slots.remove(slot);
+
+//        notifySlotChanged();
     }
 
     public Iterator<PageElement> getSlotsIterator() {
@@ -79,11 +84,11 @@ public class Page extends AbstractNode implements PageObserver, Serializable {
     }
 
     @Override
-    public void notifySlotAdded() {
+    public void notifySlotChanged() {
         if (this.listeners == null)
             return;
 
         for (int i = 0; i < listeners.size(); i++)
-            listeners.get(i).onSlotAdded();
+            listeners.get(i).onSlotChanged();
     }
 }

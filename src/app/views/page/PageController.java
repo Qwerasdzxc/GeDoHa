@@ -3,6 +3,9 @@ package app.views.page;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.NoninvertibleTransformException;
+import java.awt.geom.Point2D;
 
 /**
  * Created by Qwerasdzxc on 14/12/2019.
@@ -30,4 +33,8 @@ public class PageController extends MouseAdapter implements MouseMotionListener 
         view.getStateManager().getCurrentState().onMouseDragged(e);
     }
 
+    @Override
+    public void mouseMoved(MouseEvent e) {
+        view.getStateManager().getCurrentState().onMouseMoved(e);
+    }
 }

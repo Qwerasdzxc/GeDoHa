@@ -6,5 +6,5 @@ public interface PageObserver {
 
     void notifyPageSelected(Page page);
     void notifyPageChangedName(String name);
-    void notifySlotAdded();
+    void notifySlotChanged();
 }

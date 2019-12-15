@@ -2,7 +2,9 @@ package app.views.page;
 
 import app.Utilities;
 import app.graphics.elements.PageElement;
+import app.graphics.elements.PageShape;
 import app.graphics.painters.ElementPainter;
+import app.graphics.painters.PagePainter;
 import app.models.document.DocListener;
 import app.models.document.Document;
 import app.models.page.Page;
@@ -18,6 +20,10 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
 import java.awt.*;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.Area;
+import java.awt.geom.NoninvertibleTransformException;
+import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -30,6 +36,8 @@ public class PageView extends JPanel implements ProjListener, DocListener, PageL
     private JPanel content;
 
     private PalleteBar palleteBar;
+
+    private AffineTransform affineTransform = new AffineTransform();
 
     private StateManager stateManager;
 
@@ -73,6 +81,22 @@ public class PageView extends JPanel implements ProjListener, DocListener, PageL
         setVisible(true);
     }
 
+    public void transformToUserSpace(Point2D p) {
+        try {
+            affineTransform.inverseTransform(p, p);
+        } catch (NoninvertibleTransformException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+
+    public void replaceCursor(Cursor cursor) {
+        if (cursor.getType() != getCursor().getType()) {
+            System.out.println("Cursor set");
+            setCursor(cursor);
+        }
+    }
+
     @Override
     public void paint(Graphics g) {
         super.paint(g);
@@ -89,12 +113,36 @@ public class PageView extends JPanel implements ProjListener, DocListener, PageL
         }
     }
 
+    public void updateElement(PageShape shape) {
+        page.removeSlot(shape);
+    }
+
+    public PageShape getOverlappedElement(Point2D mousePosition) {
+        Iterator<PageElement> it = page.getSlotsIterator();
+        while(it.hasNext()){
+            PageElement element = it.next();
+            PageShape shape = (PageShape) element;
+            Area area = new Area(((PagePainter) shape.getElementPainter()).getShape());
+
+            boolean inArea = mousePosition.getX() > area.getBounds2D().getX() &&
+                    mousePosition.getX() < area.getBounds2D().getX() + area.getBounds2D().getWidth() &&
+                    mousePosition.getY() > area.getBounds2D().getY() - area.getBounds2D().getHeight() &&
+                    mousePosition.getY() < area.getBounds2D().getY();
+
+            if (inArea)
+                return shape;
+        }
+
+        return null;
+    }
+
     public StateManager getStateManager() {
         return stateManager;
     }
 
     @Override
-    public void onSlotAdded() {
+    public void onSlotChanged() {
+        System.out.println("Repaint");
         repaint();
     }
 

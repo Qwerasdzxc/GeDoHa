@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
+import java.awt.geom.Point2D;
 
 import app.graphics.elements.PageElement;
 import app.graphics.elements.shapes.RectangleElement;
@@ -24,16 +25,11 @@ public class RectangleState extends State {
 
     @Override
     public void onMousePressed(MouseEvent e) {
-        Point position = e.getPoint();
+        Point2D position = (Point2D) e.getPoint().clone();
 
         if (e.getButton() == MouseEvent.BUTTON1) {
-            PageElement element = new RectangleElement(
-                    position,
-                    new Dimension(100, 50),
-                    new BasicStroke(1, BasicStroke.CAP_SQUARE, BasicStroke.JOIN_BEVEL),
-                    new Color(0,0,0,0),
-                    Color.RED
-            );
+            PageElement element = RectangleElement.createDefault(position);
+
             mediator.getPage().addSlot(element);
         }
     }

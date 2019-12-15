@@ -1,5 +1,6 @@
 package app.graphics.elements.shapes;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Paint;
@@ -18,5 +19,26 @@ public class RectangleElement extends PageShape {
         super(position, size, stroke, paint, color);
 
         elementPainter = new RectanglePainter(this);
+    }
+
+    public static RectangleElement createDefault(Point2D pos) {
+        Point2D position = (Point2D) pos.clone();
+
+        return new RectangleElement(position,
+                new Dimension(80, 80),
+                new BasicStroke((float) (2), BasicStroke.CAP_SQUARE, BasicStroke.JOIN_BEVEL),
+                Color.WHITE,
+                Color.BLACK);
+    }
+
+    public static RectangleElement createWithData(Point2D pos, Dimension dim) {
+        Point2D position = (Point2D) pos.clone();
+
+        return new RectangleElement(
+                position,
+                dim,
+                new BasicStroke((float) (2), BasicStroke.CAP_SQUARE, BasicStroke.JOIN_BEVEL),
+                Color.WHITE,
+                Color.BLACK);
     }
 }
