@@ -26,7 +26,10 @@ public class ResizeState extends State {
     private PageShape shape;
 
     private boolean dragging = true;
-    private final int PROX_DIST = 3;
+    private final int PROX_DIST = 5;
+    private int dy = 0;
+    private int dx = 0;
+    private Point2D oldPoint;
 
     public ResizeState(PageView mediator) {
         this.mediator = mediator;
@@ -37,36 +40,49 @@ public class ResizeState extends State {
         if (mediator.getCursor() != Cursor.getDefaultCursor()) {
             // If cursor is set for resizing, allow dragging.
             dragging = true;
+            oldPoint = (Point2D) e.getPoint().clone();
         }
     }
 
     @Override
     public void onMouseDragged(MouseEvent e) {
-        if (shape == null)
+        if (shape == null) {
+            dy = 0;
+            dx = 0;
             return;
+        }
 
         if (dragging) {
             Point p = e.getPoint();
+
+            dx = (int) p.getX() - (int) oldPoint.getX();
+            dy = (int) p.getY() - (int) oldPoint.getY();
+
+            System.out.println(dy);
+            oldPoint = (Point2D) e.getPoint().clone();
             int type = mediator.getCursor().getType();
-            int dx = p.x - (int) shape.getPosition().getX();
-            int dy = p.y - (int) shape.getPosition().getY();
 
             PageShape newElement = null;
 
             switch (type) {
                 case Cursor.N_RESIZE_CURSOR:
                     int height = (int) shape.getSize().getHeight() - dy;
+
+                    if (height < 5)
+                        break;
+
                     newElement = RectangleElement.createWithData(
-                            new Point2D.Double(shape.getPosition().getX(), shape.getPosition().getY()),
-                            new Dimension((int) shape.getSize().getWidth(), height)
+                            new Point2D.Double(shape.getPosition().getX(), shape.getPosition().getY() + dy),
+                            new Dimension((int) shape.getSize().getWidth(), height), shape.getAngle()
                     );
                     break;
                 case Cursor.NW_RESIZE_CURSOR:
                     int width = (int) shape.getSize().getWidth() - dx;
                     height = (int) shape.getSize().getHeight() - dy;
+
                     newElement = RectangleElement.createWithData(
-                            new Point2D.Double(shape.getPosition().getX(), shape.getPosition().getY()),
-                            new Dimension(width, height)
+                            new Point2D.Double(shape.getPosition().getX() + dx, shape.getPosition().getY() + dy),
+                            new Dimension(width, height), shape.getAngle()
                     );
                     break;
 //                case Cursor.W_RESIZE_CURSOR:
@@ -135,18 +151,21 @@ public class ResizeState extends State {
                 (int) shape.getSize().getWidth(), (int) shape.getSize().getHeight()
         );
 
+//        System.out.println(r.getY());
+
         // Locate cursor relative to center of rect.
         int outcode = getOutcode(p, r);
+//        System.out.println(outcode);
 
         switch (outcode) {
             case Rectangle.OUT_TOP:
-                if (Math.abs(p.y + r.height - r.y) < PROX_DIST) {
+                if (Math.abs(p.y - r.y) < PROX_DIST) {
                     mediator.replaceCursor(Cursor.getPredefinedCursor(
                             Cursor.N_RESIZE_CURSOR));
                 }
                 break;
             case Rectangle.OUT_TOP + Rectangle.OUT_LEFT:
-                if (Math.abs(p.y + r.height - r.y) < PROX_DIST &&
+                if (Math.abs(p.y - r.y) < PROX_DIST &&
                         Math.abs(p.x - r.x) < PROX_DIST) {
                     mediator.replaceCursor(Cursor.getPredefinedCursor(
                             Cursor.NW_RESIZE_CURSOR));
@@ -160,20 +179,20 @@ public class ResizeState extends State {
                 break;
             case Rectangle.OUT_LEFT + Rectangle.OUT_BOTTOM:
                 if (Math.abs(p.x - r.x) < PROX_DIST &&
-                        Math.abs(p.y - (r.y + r.height)) < PROX_DIST) {
+                        Math.abs(p.y - r.y) < PROX_DIST) {
                     mediator.replaceCursor(Cursor.getPredefinedCursor(
                             Cursor.SW_RESIZE_CURSOR));
                 }
                 break;
             case Rectangle.OUT_BOTTOM:
-                if (Math.abs(p.y - (r.y + r.height)) < PROX_DIST) {
+                if (Math.abs(p.y - r.y - r.height) < PROX_DIST) {
                     mediator.replaceCursor(Cursor.getPredefinedCursor(
                             Cursor.S_RESIZE_CURSOR));
                 }
                 break;
             case Rectangle.OUT_BOTTOM + Rectangle.OUT_RIGHT:
                 if (Math.abs(p.x - (r.x + r.width)) < PROX_DIST &&
-                        Math.abs(p.y - (r.y + r.height)) < PROX_DIST) {
+                        Math.abs(p.y - r.y - r.height) < PROX_DIST) {
                     mediator.replaceCursor(Cursor.getPredefinedCursor(
                             Cursor.SE_RESIZE_CURSOR));
                 }
@@ -201,7 +220,7 @@ public class ResizeState extends State {
      * cursor relative to the Rectangle center.
      */
     private int getOutcode(Point p, Rectangle r) {
-        r.grow(-PROX_DIST, -PROX_DIST);
+        r.grow(-2, -2);
         return r.outcode(p.x, p.y);
     }
 }

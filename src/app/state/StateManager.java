@@ -2,6 +2,7 @@ package app.state;
 
 import app.state.states.RectangleState;
 import app.state.states.ResizeState;
+import app.state.states.RotateState;
 import app.state.states.SelectState;
 import app.views.page.PageView;
 
@@ -16,11 +17,13 @@ public class StateManager {
 
     private SelectState selectState;
     private ResizeState resizeState;
+    private RotateState rotateState;
 
     public StateManager(PageView mediator) {
         rectangleState = new RectangleState(mediator);
         selectState = new SelectState(mediator);
         resizeState = new ResizeState(mediator);
+        rotateState = new RotateState(mediator);
 
         this.currentState = selectState;
     }
@@ -51,5 +54,13 @@ public class StateManager {
 
     public ResizeState getResizeState() {
         return resizeState;
+    }
+
+    public void startRotateState() {
+        currentState = rotateState;
+    }
+
+    public RotateState getRotateState() {
+        return rotateState;
     }
 }

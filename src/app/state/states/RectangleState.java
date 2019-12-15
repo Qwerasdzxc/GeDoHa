@@ -28,6 +28,7 @@ public class RectangleState extends State {
         Point2D position = (Point2D) e.getPoint().clone();
 
         if (e.getButton() == MouseEvent.BUTTON1) {
+            System.out.println("Create rectangle at: " + e.getPoint());
             PageElement element = RectangleElement.createDefault(position);
 
             mediator.getPage().addSlot(element);

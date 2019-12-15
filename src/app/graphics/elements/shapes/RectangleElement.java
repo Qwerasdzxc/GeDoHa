@@ -15,8 +15,8 @@ import app.graphics.painters.shapes.RectanglePainter;
  */
 public class RectangleElement extends PageShape {
 
-    public RectangleElement(Point2D position, Dimension size, Stroke stroke, Paint paint, Color color) {
-        super(position, size, stroke, paint, color);
+    public RectangleElement(Point2D position, Dimension size, Stroke stroke, Paint paint, Color color, int angle) {
+        super(position, size, stroke, paint, color, angle);
 
         elementPainter = new RectanglePainter(this);
     }
@@ -25,13 +25,14 @@ public class RectangleElement extends PageShape {
         Point2D position = (Point2D) pos.clone();
 
         return new RectangleElement(position,
-                new Dimension(80, 80),
+                new Dimension(80, 200),
                 new BasicStroke((float) (2), BasicStroke.CAP_SQUARE, BasicStroke.JOIN_BEVEL),
                 Color.WHITE,
-                Color.BLACK);
+                Color.BLACK,
+                0);
     }
 
-    public static RectangleElement createWithData(Point2D pos, Dimension dim) {
+    public static RectangleElement createWithData(Point2D pos, Dimension dim, int angle) {
         Point2D position = (Point2D) pos.clone();
 
         return new RectangleElement(
@@ -39,6 +40,7 @@ public class RectangleElement extends PageShape {
                 dim,
                 new BasicStroke((float) (2), BasicStroke.CAP_SQUARE, BasicStroke.JOIN_BEVEL),
                 Color.WHITE,
-                Color.BLACK);
+                Color.BLACK,
+                angle);
     }
 }

@@ -20,6 +20,10 @@ public class GraphicsActionManager {
         return new GActResizeAction(stateManager);
     }
 
+    public GActRotateAction getRotateAction(StateManager stateManager) {
+        return new GActRotateAction(stateManager);
+    }
+
     private GraphicsActionManager() {}
 
     public static GraphicsActionManager getInstance() {

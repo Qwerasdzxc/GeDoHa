@@ -23,5 +23,7 @@ public class SelectState extends State {
     public void onMouseDragged(MouseEvent e) {}
 
     @Override
-    public void onMouseReleased(MouseEvent e) {}
+    public void onMouseReleased(MouseEvent e) {
+        System.out.println("Click position: " + e.getPoint());
+    }
 }

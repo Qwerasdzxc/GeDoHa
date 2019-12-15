@@ -13,12 +13,14 @@ public abstract class PageShape extends PageElement {
 
     private Dimension size;
     private Point2D position;
+    private int angle;
 
-    public PageShape(Point2D position, Dimension size, Stroke stroke, Paint paint, Color color) {
+    public PageShape(Point2D position, Dimension size, Stroke stroke, Paint paint, Color color, int angle) {
         super(stroke, paint, color);
 
         this.position = position;
         this.size = size;
+        this.angle = angle;
     }
 
     public Dimension getSize() {
@@ -35,5 +37,16 @@ public abstract class PageShape extends PageElement {
 
     public void setPosition(Point2D position) {
         this.position = position;
+    }
+
+    public int getAngle() { return angle; }
+
+    public void setAngle(int angle) {
+        if (angle > 360)
+            angle = angle - 360;
+        if (angle < 0)
+            angle = 360 - angle;
+
+        this.angle = angle;
     }
 }

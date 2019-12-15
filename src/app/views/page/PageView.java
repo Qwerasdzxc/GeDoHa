@@ -66,7 +66,7 @@ public class PageView extends JPanel implements ProjListener, DocListener, PageL
 
         PageController controller = new PageController(this);
 
-        content = new JPanel();
+        content = new CanvasView(page);
         content.setBackground(Color.WHITE);
         content.addMouseListener(controller);
         content.addMouseMotionListener(controller);
@@ -97,22 +97,6 @@ public class PageView extends JPanel implements ProjListener, DocListener, PageL
         }
     }
 
-    @Override
-    public void paint(Graphics g) {
-        super.paint(g);
-
-        Graphics2D g2 = (Graphics2D) g;
-        g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.8f));
-
-        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        Iterator<PageElement> it = page.getSlotsIterator();
-        while(it.hasNext()){
-            PageElement element = it.next();
-            ElementPainter painter = element.getElementPainter();
-            painter.paint(g2, element);
-        }
-    }
-
     public void updateElement(PageShape shape) {
         page.removeSlot(shape);
     }
@@ -124,16 +108,37 @@ public class PageView extends JPanel implements ProjListener, DocListener, PageL
             PageShape shape = (PageShape) element;
             Area area = new Area(((PagePainter) shape.getElementPainter()).getShape());
 
-            boolean inArea = mousePosition.getX() > area.getBounds2D().getX() &&
-                    mousePosition.getX() < area.getBounds2D().getX() + area.getBounds2D().getWidth() &&
-                    mousePosition.getY() > area.getBounds2D().getY() - area.getBounds2D().getHeight() &&
-                    mousePosition.getY() < area.getBounds2D().getY();
+            Point2D rotatedPosition = rotatePoint(area.getBounds2D().getCenterX(), area.getBounds2D().getCenterY(), shape.getAngle(), mousePosition);
+
+            boolean inArea = rotatedPosition.getX() > area.getBounds2D().getX() &&
+                    rotatedPosition.getX() < area.getBounds2D().getX() + area.getBounds2D().getWidth() &&
+                    rotatedPosition.getY() > area.getBounds2D().getY() &&
+                    rotatedPosition.getY() < area.getBounds2D().getY() + area.getBounds2D().getHeight();
+
 
             if (inArea)
                 return shape;
         }
 
         return null;
+    }
+
+    public Point2D rotatePoint(double cx, double cy, int angle, Point2D point) {
+        point = (Point2D) point.clone();
+
+        angle = (int) Math.toDegrees(Math.acos(-Math.cos(Math.toRadians(angle))));
+
+        double s = Math.sin(Math.toRadians(angle));
+        double c = Math.cos(Math.toRadians(angle));
+
+        point.setLocation(point.getX() - cx, point.getY() - cy);
+
+        double xnew = point.getX() * c - point.getY() * s;
+        double ynew = point.getX() * s + point.getY() * c;
+
+        point.setLocation(xnew + cx, ynew + cy);
+
+        return point;
     }
 
     public StateManager getStateManager() {
@@ -143,7 +148,7 @@ public class PageView extends JPanel implements ProjListener, DocListener, PageL
     @Override
     public void onSlotChanged() {
         System.out.println("Repaint");
-        repaint();
+        content.repaint();
     }
 
     @Override
