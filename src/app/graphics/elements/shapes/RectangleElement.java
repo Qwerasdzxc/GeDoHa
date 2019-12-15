@@ -1,5 +1,6 @@
 package app.graphics.elements.shapes;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Paint;
 import java.awt.Stroke;
@@ -13,10 +14,9 @@ import app.graphics.painters.shapes.RectanglePainter;
  */
 public class RectangleElement extends PageShape {
 
-    public RectangleElement(Point2D position, Dimension size, Stroke stroke, Paint paint) {
-        super(position, size, stroke, paint);
+    public RectangleElement(Point2D position, Dimension size, Stroke stroke, Paint paint, Color color) {
+        super(position, size, stroke, paint, color);
 
         elementPainter = new RectanglePainter(this);
-        setName("Pravougaonik");
     }
 }

@@ -14,7 +14,7 @@ import app.views.page.PageView;
 /**
  * Created by Qwerasdzxc on 13/12/2019.
  */
-class RectangleState extends State {
+public class RectangleState extends State {
 
     private PageView mediator;
 
@@ -27,15 +27,14 @@ class RectangleState extends State {
         Point position = e.getPoint();
 
         if (e.getButton() == MouseEvent.BUTTON1) {
-//            if (mediator.getPage().getDeviceAtPosition(position) == -1){
             PageElement element = new RectangleElement(
                     position,
-                    new Dimension(50, 50),
-                    new BasicStroke(2, BasicStroke.CAP_SQUARE, BasicStroke.JOIN_BEVEL),
-                    Color.BLACK
+                    new Dimension(100, 50),
+                    new BasicStroke(1, BasicStroke.CAP_SQUARE, BasicStroke.JOIN_BEVEL),
+                    new Color(0,0,0,0),
+                    Color.RED
             );
             mediator.getPage().addSlot(element);
-//            }
         }
     }
 

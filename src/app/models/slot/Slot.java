@@ -2,7 +2,9 @@ package app.models.slot;
 
 import java.awt.Dimension;
 import java.awt.Point;
+import java.util.ArrayList;
 
+import app.graphics.elements.PageElement;
 import app.graphics.painters.ElementPainter;
 import app.models.page.Page;
 
@@ -13,7 +15,11 @@ public class Slot {
 
     private String name;
 
-    public Slot() {}
+    private ArrayList<PageElement> elements;
+
+    public Slot() {
+        this.elements = new ArrayList<>();
+    }
 
     public Slot(String name) {
         this.name = name;

@@ -20,21 +20,13 @@ public class PagePainter extends ElementPainter {
     }
 
     @Override
-    public void paint(Graphics2D g, PageElement element) {
-        g.setPaint(Color.RED);
+    public void paint(Graphics2D g2, PageElement element) {
+        g2.setPaint(element.getColor());
+        g2.setStroke(element.getStroke());
+        g2.draw(getShape());
 
-        g.setStroke(element.getStroke());
-        g.draw(getShape());
-        g.setPaint(element.getPaint());
-
-        g.fill(getShape());
-
-        if (element instanceof PageShape) {
-            g.setPaint(Color.BLACK);
-            PageShape device = (PageShape) element;
-            g.drawString("Page element", (int) device.getPosition().getX() + 10,
-                    (int) device.getPosition().getY() + 10);
-        }
+        g2.setPaint(element.getPaint());
+        g2.fill(getShape());
     }
 
     @Override

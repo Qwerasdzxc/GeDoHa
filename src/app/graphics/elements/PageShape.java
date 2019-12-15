@@ -1,5 +1,6 @@
 package app.graphics.elements;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Paint;
 import java.awt.Stroke;
@@ -13,8 +14,8 @@ public abstract class PageShape extends PageElement {
     private Dimension size;
     private Point2D position;
 
-    public PageShape(Point2D position, Dimension size, Stroke stroke, Paint paint) {
-        super(stroke, paint);
+    public PageShape(Point2D position, Dimension size, Stroke stroke, Paint paint, Color color) {
+        super(stroke, paint, color);
 
         this.position = position;
         this.size = size;

@@ -1,8 +1,5 @@
 package app.actions;
 
-
-import javax.swing.Action;
-
 public class ActionManager {
 
     private static ActionManager instance;
@@ -17,7 +14,7 @@ public class ActionManager {
 	private ActSaveProject saveProject;
 	private ActSaveProjectAs saveProjectAs;
 	private ActOpenProject openProject;
-    
+
     private ActionManager() {
     	deleteNode= new ActNodeDelete();
 		renameNode = new ActNodeRename();

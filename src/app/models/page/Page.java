@@ -2,8 +2,10 @@ package app.models.page;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
+import app.graphics.elements.PageElement;
 import app.models.AbstractNode;
 import app.models.slot.Slot;
 
@@ -14,7 +16,7 @@ public class Page extends AbstractNode implements PageObserver, Serializable {
 
     private transient List<PageListener> listeners;
 
-    private List<Slot> slots;
+    private ArrayList<PageElement> slots;
 
     public Page(String name) {
         super(name);
@@ -34,8 +36,14 @@ public class Page extends AbstractNode implements PageObserver, Serializable {
         notifyPageChangedName(name);
     }
 
-    public void addSlot(Slot slot) {
+    public void addSlot(PageElement slot) {
         this.slots.add(slot);
+
+        notifySlotAdded();
+    }
+
+    public Iterator<PageElement> getSlotsIterator() {
+        return slots.iterator();
     }
 
     @Override
@@ -68,5 +76,14 @@ public class Page extends AbstractNode implements PageObserver, Serializable {
 
         for (int i = 0; i < listeners.size(); i++)
             listeners.get(i).onPageChangedName(name);
+    }
+
+    @Override
+    public void notifySlotAdded() {
+        if (this.listeners == null)
+            return;
+
+        for (int i = 0; i < listeners.size(); i++)
+            listeners.get(i).onSlotAdded();
     }
 }
