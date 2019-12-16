@@ -1,25 +1,22 @@
 package app.state.states;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Point2D;
 
 import app.graphics.elements.PageElement;
+import app.graphics.elements.shapes.CircleElement;
 import app.graphics.elements.shapes.RectangleElement;
 import app.state.State;
 import app.views.page.PageView;
 
 /**
- * Created by Qwerasdzxc on 13/12/2019.
+ * Created by Qwerasdzxc on 16/12/2019.
  */
-public class RectangleState extends State {
+public class CircleState extends State {
 
     private PageView mediator;
 
-    public RectangleState(PageView mediator) {
+    public CircleState(PageView mediator) {
         this.mediator = mediator;
     }
 
@@ -28,7 +25,7 @@ public class RectangleState extends State {
         Point2D position = (Point2D) e.getPoint().clone();
 
         if (e.getButton() == MouseEvent.BUTTON1) {
-            PageElement element = RectangleElement.createDefault(position);
+            PageElement element = CircleElement.createDefault(position);
 
             mediator.getPage().addSlot(element);
         }

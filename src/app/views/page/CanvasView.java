@@ -35,9 +35,14 @@ public class CanvasView extends JPanel {
         Iterator<PageElement> it = page.getSlotsIterator();
         while(it.hasNext()){
             g2 = (Graphics2D) g.create();
+
             PageElement element = it.next();
             PageShape shape = (PageShape) element;
-            g2.rotate(Math.toRadians(-shape.getAngle()), shape.getPosition().getX() + shape.getSize().width / 2.0, shape.getPosition().getY() + shape.getSize().height / 2.0);
+
+            g2.rotate(Math.toRadians(-shape.getAngle()),
+                    shape.getPosition().getX() + shape.getSize().width / 2.0,
+                    shape.getPosition().getY() + shape.getSize().height / 2.0);
+
             ElementPainter painter = element.getElementPainter();
             painter.paint(g2, element);
             g2.dispose();

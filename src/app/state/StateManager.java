@@ -1,9 +1,11 @@
 package app.state;
 
+import app.state.states.CircleState;
 import app.state.states.RectangleState;
 import app.state.states.ResizeState;
 import app.state.states.RotateState;
 import app.state.states.SelectState;
+import app.state.states.TriangleState;
 import app.views.page.PageView;
 
 /**
@@ -14,6 +16,8 @@ public class StateManager {
     private State currentState;
 
     private RectangleState rectangleState;
+    private CircleState circleState;
+    private TriangleState triangleState;
 
     private SelectState selectState;
     private ResizeState resizeState;
@@ -21,6 +25,8 @@ public class StateManager {
 
     public StateManager(PageView mediator) {
         rectangleState = new RectangleState(mediator);
+        circleState = new CircleState(mediator);
+        triangleState = new TriangleState(mediator);
         selectState = new SelectState(mediator);
         resizeState = new ResizeState(mediator);
         rotateState = new RotateState(mediator);
@@ -34,6 +40,22 @@ public class StateManager {
 
     public void startRectangleState() {
         currentState = rectangleState;
+    }
+
+    public CircleState getCircleState() {
+        return circleState;
+    }
+
+    public void startCircleState() {
+        currentState = circleState;
+    }
+
+    public TriangleState getTriangleState() {
+        return triangleState;
+    }
+
+    public void startTriangleState() {
+        currentState = triangleState;
     }
 
     public SelectState getSelectState() {

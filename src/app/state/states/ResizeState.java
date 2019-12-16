@@ -12,7 +12,9 @@ import java.awt.geom.Point2D;
 
 import app.graphics.elements.PageElement;
 import app.graphics.elements.PageShape;
+import app.graphics.elements.shapes.CircleElement;
 import app.graphics.elements.shapes.RectangleElement;
+import app.graphics.elements.shapes.TriangleElement;
 import app.state.State;
 import app.views.page.PageView;
 
@@ -24,11 +26,13 @@ public class ResizeState extends State {
     private PageView mediator;
 
     private PageShape shape;
+    private ShapeType type;
 
     private boolean dragging = true;
     private final int PROX_DIST = 5;
     private double dy = 0;
     private double dx = 0;
+
     private Point2D oldPoint;
 
     public ResizeState(PageView mediator) {
@@ -62,7 +66,7 @@ public class ResizeState extends State {
             oldPoint = (Point2D) e.getPoint().clone();
             int type = mediator.getCursor().getType();
 
-            PageShape newElement = null;
+            PageShape newElement;
 
             switch (type) {
                 case Cursor.N_RESIZE_CURSOR:
@@ -78,10 +82,10 @@ public class ResizeState extends State {
                     double centerX2 = shape.getPosition().getX() + shape.getSize().getWidth() / 2.0;
                     double centerY2 = shape.getPosition().getY() + height / 2.0;
 
-
-                    newElement = RectangleElement.createWithData(
+                    newElement = recreateElement(
                             new Point2D.Double(shape.getPosition().getX(), shape.getPosition().getY() + dy),
-                            new Dimension((int) shape.getSize().getWidth(), (int) height), shape.getAngle()
+                            new Dimension((int) shape.getSize().getWidth(), (int) height),
+                            shape.getAngle()
                     );
 
                     break;
@@ -92,7 +96,7 @@ public class ResizeState extends State {
                     if (width < 10 || height < 10)
                         return;
 
-                    newElement = RectangleElement.createWithData(
+                    newElement = recreateElement(
                             new Point2D.Double(shape.getPosition().getX() + dx, shape.getPosition().getY() + dy),
                             new Dimension((int) width, (int) height), shape.getAngle()
                     );
@@ -104,7 +108,7 @@ public class ResizeState extends State {
                     if (width < 10)
                         return;
 
-                    newElement = RectangleElement.createWithData(
+                    newElement = recreateElement(
                             new Point2D.Double(shape.getPosition().getX() + dx, shape.getPosition().getY()),
                             new Dimension((int) width, (int) shape.getSize().getHeight()), shape.getAngle()
                     );
@@ -116,7 +120,7 @@ public class ResizeState extends State {
                     if (width < 10 || height < 10)
                         return;
 
-                    newElement = RectangleElement.createWithData(
+                    newElement = recreateElement(
                             new Point2D.Double(shape.getPosition().getX() + dx, shape.getPosition().getY()),
                             new Dimension((int) width, (int) height), shape.getAngle()
                     );
@@ -127,7 +131,7 @@ public class ResizeState extends State {
                     if (height < 10)
                         return;
 
-                    newElement = RectangleElement.createWithData(
+                    newElement = recreateElement(
                             new Point2D.Double(shape.getPosition().getX(), shape.getPosition().getY()),
                             new Dimension((int) shape.getSize().getWidth(), (int)height), shape.getAngle()
                     );
@@ -139,7 +143,7 @@ public class ResizeState extends State {
                     if (width < 10 || height < 10)
                         return;
 
-                    newElement = RectangleElement.createWithData(
+                    newElement = recreateElement(
                             new Point2D.Double(shape.getPosition().getX(), shape.getPosition().getY()),
                             new Dimension((int) width, (int) height), shape.getAngle()
                     );
@@ -150,7 +154,7 @@ public class ResizeState extends State {
                     if (width < 10)
                         return;
 
-                    newElement = RectangleElement.createWithData(
+                    newElement = recreateElement(
                             new Point2D.Double(shape.getPosition().getX(), shape.getPosition().getY()),
                             new Dimension((int) width, (int) shape.getSize().getHeight()), shape.getAngle()
                     );
@@ -162,7 +166,7 @@ public class ResizeState extends State {
                     if (width < 10 || height < 10)
                         return;
 
-                    newElement = RectangleElement.createWithData(
+                    newElement = recreateElement(
                             new Point2D.Double(shape.getPosition().getX(), shape.getPosition().getY() + dy),
                             new Dimension((int) width, (int) height), shape.getAngle()
                     );
@@ -189,6 +193,7 @@ public class ResizeState extends State {
         Point p = e.getPoint();
 
         shape = mediator.getOverlappedElement(p);
+        type = getShapeType(shape);
 
         if (shape == null) {
             if (mediator.getCursor() != Cursor.getDefaultCursor()) {
@@ -207,9 +212,7 @@ public class ResizeState extends State {
 
 
         // Locate cursor relative to center of rect.
-        int outcode = getOutcode(p, r, shape.getAngle());
-
-        System.out.println(outcode);
+        int outcode = getOutcode(p, r);
 
         switch (outcode) {
             case Rectangle.OUT_TOP:
@@ -219,6 +222,10 @@ public class ResizeState extends State {
                 }
                 break;
             case Rectangle.OUT_TOP + Rectangle.OUT_LEFT:
+                // Ignore handle for these types
+                if (type == ShapeType.CIRCLE || type == ShapeType.TRIANGLE)
+                    break;
+
                 if (Math.abs(p.y - r.y) < PROX_DIST &&
                         Math.abs(p.x - r.x) < PROX_DIST) {
                     mediator.replaceCursor(Cursor.getPredefinedCursor(
@@ -232,6 +239,10 @@ public class ResizeState extends State {
                 }
                 break;
             case Rectangle.OUT_LEFT + Rectangle.OUT_BOTTOM:
+                // Ignore handle for these types
+                if (type == ShapeType.CIRCLE || type == ShapeType.TRIANGLE)
+                    break;
+
                 if (Math.abs(p.x - r.x) < PROX_DIST &&
                         Math.abs(p.y - r.y) < PROX_DIST) {
                     mediator.replaceCursor(Cursor.getPredefinedCursor(
@@ -245,6 +256,10 @@ public class ResizeState extends State {
                 }
                 break;
             case Rectangle.OUT_BOTTOM + Rectangle.OUT_RIGHT:
+                // Ignore handle for these types
+                if (type == ShapeType.CIRCLE || type == ShapeType.TRIANGLE)
+                    break;
+
                 if (Math.abs(p.x - (r.x + r.width)) < PROX_DIST &&
                         Math.abs(p.y - r.y - r.height) < PROX_DIST) {
                     mediator.replaceCursor(Cursor.getPredefinedCursor(
@@ -258,6 +273,10 @@ public class ResizeState extends State {
                 }
                 break;
             case Rectangle.OUT_RIGHT + Rectangle.OUT_TOP:
+                // Ignore handle for these types
+                if (type == ShapeType.CIRCLE || type == ShapeType.TRIANGLE)
+                    break;
+
                 if (Math.abs(p.x - (r.x + r.width)) < PROX_DIST &&
                         Math.abs(p.y - r.y) < PROX_DIST) {
                     mediator.replaceCursor(Cursor.getPredefinedCursor(
@@ -273,8 +292,34 @@ public class ResizeState extends State {
      * Make a smaller Rectangle and use it to locate the
      * cursor relative to the Rectangle center.
      */
-    private int getOutcode(Point p, Rectangle r, int angle) {
+    private int getOutcode(Point p, Rectangle r) {
         r.grow(-2, -2);
         return r.outcode(p.getX(), p.getY());
+    }
+
+    private PageShape recreateElement(Point2D pos, Dimension dim, int angle) {
+        if (shape instanceof RectangleElement)
+            return RectangleElement.createWithData(pos, dim, angle);
+        else if (shape instanceof CircleElement)
+            return CircleElement.createWithData(pos, dim, angle);
+        else if (shape instanceof TriangleElement)
+            return TriangleElement.createWithData(pos, dim, angle);
+
+        return null;
+    }
+
+    private enum ShapeType {
+        RECTANGLE, CIRCLE, TRIANGLE
+    }
+
+    private ShapeType getShapeType(PageShape shape) {
+        if (shape instanceof RectangleElement)
+            return ShapeType.RECTANGLE;
+        else if (shape instanceof CircleElement)
+            return ShapeType.CIRCLE;
+        else if (shape instanceof TriangleElement)
+            return ShapeType.TRIANGLE;
+
+        return null;
     }
 }

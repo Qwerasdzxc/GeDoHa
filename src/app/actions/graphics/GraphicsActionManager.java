@@ -12,6 +12,14 @@ public class GraphicsActionManager {
         return new GActRectangleAction(stateManager);
     }
 
+    public GActCircleAction getCircleAction(StateManager stateManager) {
+        return new GActCircleAction(stateManager);
+    }
+
+    public GActTriangleAction getTriangleAction(StateManager stateManager) {
+        return new GActTriangleAction(stateManager);
+    }
+
     public GActSelectAction getSelectAction(StateManager stateManager) {
         return new GActSelectAction(stateManager);
     }

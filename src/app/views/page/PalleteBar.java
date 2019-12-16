@@ -22,6 +22,9 @@ public class PalleteBar extends JToolBar {
         add(GraphicsActionManager.getInstance().getSelectAction(stateManager));
         addSeparator();
         add(GraphicsActionManager.getInstance().getRectangleAction(stateManager));
+        add(GraphicsActionManager.getInstance().getCircleAction(stateManager));
+        add(GraphicsActionManager.getInstance().getTriangleAction(stateManager));
+        addSeparator();
         add(GraphicsActionManager.getInstance().getResizeAction(stateManager));
         add(GraphicsActionManager.getInstance().getRotateAction(stateManager));
 

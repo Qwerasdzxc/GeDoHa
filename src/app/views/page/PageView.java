@@ -37,8 +37,6 @@ public class PageView extends JPanel implements ProjListener, DocListener, PageL
 
     private PalleteBar palleteBar;
 
-    private AffineTransform affineTransform = new AffineTransform();
-
     private StateManager stateManager;
 
     public PageView(Page page) {
@@ -81,24 +79,10 @@ public class PageView extends JPanel implements ProjListener, DocListener, PageL
         setVisible(true);
     }
 
-    public void transformToUserSpace(Point2D p) {
-        try {
-            affineTransform.inverseTransform(p, p);
-        } catch (NoninvertibleTransformException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-    }
-
     public void replaceCursor(Cursor cursor) {
         if (cursor.getType() != getCursor().getType()) {
-            System.out.println("Cursor set");
             setCursor(cursor);
         }
-    }
-
-    public void updateElement(PageShape shape) {
-        page.removeSlot(shape);
     }
 
     public PageShape getOverlappedElement(Point2D mousePosition) {
@@ -106,7 +90,9 @@ public class PageView extends JPanel implements ProjListener, DocListener, PageL
         while(it.hasNext()){
             PageElement element = it.next();
             PageShape shape = (PageShape) element;
-            Area area = new Area(((PagePainter) shape.getElementPainter()).getShape());
+            PagePainter painter = (PagePainter) shape.getElementPainter();
+
+            Area area = new Area(painter.getShape());
 
             Point2D rotatedPosition = rotatePoint(area.getBounds2D().getCenterX(), area.getBounds2D().getCenterY(), shape.getAngle(), mousePosition);
 
@@ -115,8 +101,6 @@ public class PageView extends JPanel implements ProjListener, DocListener, PageL
                     rotatedPosition.getY() > area.getBounds2D().getY() &&
                     rotatedPosition.getY() < area.getBounds2D().getY() + area.getBounds2D().getHeight();
 
-
-//            System.out.println(inArea);
             if (inArea)
                 return shape;
         }

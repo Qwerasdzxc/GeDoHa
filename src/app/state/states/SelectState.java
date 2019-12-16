@@ -1,5 +1,6 @@
 package app.state.states;
 
+import java.awt.Cursor;
 import java.awt.event.MouseEvent;
 
 import app.state.State;
@@ -23,7 +24,11 @@ public class SelectState extends State {
     public void onMouseDragged(MouseEvent e) {}
 
     @Override
-    public void onMouseReleased(MouseEvent e) {
-        System.out.println("Click position: " + e.getPoint());
+    public void onMouseReleased(MouseEvent e) {}
+
+    @Override
+    public void onMouseMoved(MouseEvent e) {
+        if (mediator.getCursor() != Cursor.getDefaultCursor())
+            mediator.setCursor(Cursor.getDefaultCursor());
     }
 }

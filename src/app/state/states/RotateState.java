@@ -1,7 +1,9 @@
 package app.state.states;
 
 import app.graphics.elements.PageShape;
+import app.graphics.elements.shapes.CircleElement;
 import app.graphics.elements.shapes.RectangleElement;
+import app.graphics.elements.shapes.TriangleElement;
 import app.state.State;
 import app.views.page.PageView;
 
@@ -26,11 +28,8 @@ public class RotateState extends State {
 
     @Override
     public void onMousePressed(MouseEvent e) {
-        if (mediator.getCursor() == Cursor.getDefaultCursor()) {
-            // If cursor is set for resizing, allow dragging.
-            dragging = true;
-            oldPoint = (Point2D) e.getPoint().clone();
-        }
+        dragging = true;
+        oldPoint = (Point2D) e.getPoint().clone();
     }
 
     @Override
@@ -38,18 +37,14 @@ public class RotateState extends State {
         if (dragging) {
             Point p = e.getPoint();
 
-
             dx = (int) p.getX() - (int) oldPoint.getX();
             dy = (int) p.getY() - (int) oldPoint.getY();
 
             oldPoint = e.getPoint();
 
-            PageShape newElement = null;
+            shape.setAngle(shape.getAngle() - dx);
 
-            shape.setAngle(shape.getAngle() - dx); //setter limits the angle to be between 0 and 360
-//            System.out.println(shape.getAngle());
-
-            newElement = RectangleElement.createWithData(
+            PageShape newElement = recreateElement(
                     new Point2D.Double(shape.getPosition().getX(), shape.getPosition().getY()),
                     new Dimension((int) shape.getSize().getWidth(), (int) shape.getSize().getHeight()), shape.getAngle()
             );
@@ -71,7 +66,6 @@ public class RotateState extends State {
         dragging = false;
         dy = 0;
         dx = 0;
-
     }
 
     @Override
@@ -80,5 +74,18 @@ public class RotateState extends State {
 
         shape = mediator.getOverlappedElement(p);
 
+        if (mediator.getCursor() != Cursor.getPredefinedCursor(Cursor.HAND_CURSOR))
+            mediator.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+    }
+
+    private PageShape recreateElement(Point2D pos, Dimension dim, int angle) {
+        if (shape instanceof RectangleElement)
+            return RectangleElement.createWithData(pos, dim, angle);
+        else if (shape instanceof CircleElement)
+            return CircleElement.createWithData(pos, dim, angle);
+        else if (shape instanceof TriangleElement)
+            return TriangleElement.createWithData(pos, dim, angle);
+
+        return null;
     }
 }

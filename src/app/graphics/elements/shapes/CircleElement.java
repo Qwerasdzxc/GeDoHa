@@ -8,23 +8,23 @@ import java.awt.Stroke;
 import java.awt.geom.Point2D;
 
 import app.graphics.elements.PageShape;
-import app.graphics.painters.shapes.RectanglePainter;
+import app.graphics.painters.shapes.CirclePainter;
 
 /**
- * Created by Qwerasdzxc on 13/12/2019.
+ * Created by Qwerasdzxc on 16/12/2019.
  */
-public class RectangleElement extends PageShape {
+public class CircleElement extends PageShape {
 
-    public RectangleElement(Point2D position, Dimension size, Stroke stroke, Paint paint, Color color, int angle) {
+    public CircleElement(Point2D position, Dimension size, Stroke stroke, Paint paint, Color color, int angle) {
         super(position, size, stroke, paint, color, angle);
 
-        elementPainter = new RectanglePainter(this);
+        elementPainter = new CirclePainter(this);
     }
 
-    public static RectangleElement createDefault(Point2D pos) {
+    public static CircleElement createDefault(Point2D pos) {
         Point2D position = (Point2D) pos.clone();
 
-        return new RectangleElement(position,
+        return new CircleElement(position,
                 new Dimension(80, 80),
                 new BasicStroke((float) (2), BasicStroke.CAP_SQUARE, BasicStroke.JOIN_BEVEL),
                 Color.WHITE,
@@ -32,10 +32,10 @@ public class RectangleElement extends PageShape {
                 0);
     }
 
-    public static RectangleElement createWithData(Point2D pos, Dimension dim, int angle) {
+    public static CircleElement createWithData(Point2D pos, Dimension dim, int angle) {
         Point2D position = (Point2D) pos.clone();
 
-        return new RectangleElement(
+        return new CircleElement(
                 position,
                 dim,
                 new BasicStroke((float) (2), BasicStroke.CAP_SQUARE, BasicStroke.JOIN_BEVEL),
