@@ -116,6 +116,7 @@ public class PageView extends JPanel implements ProjListener, DocListener, PageL
                     rotatedPosition.getY() < area.getBounds2D().getY() + area.getBounds2D().getHeight();
 
 
+//            System.out.println(inArea);
             if (inArea)
                 return shape;
         }
@@ -125,8 +126,6 @@ public class PageView extends JPanel implements ProjListener, DocListener, PageL
 
     public Point2D rotatePoint(double cx, double cy, int angle, Point2D point) {
         point = (Point2D) point.clone();
-
-        angle = (int) Math.toDegrees(Math.acos(-Math.cos(Math.toRadians(angle))));
 
         double s = Math.sin(Math.toRadians(angle));
         double c = Math.cos(Math.toRadians(angle));
@@ -147,7 +146,6 @@ public class PageView extends JPanel implements ProjListener, DocListener, PageL
 
     @Override
     public void onSlotChanged() {
-        System.out.println("Repaint");
         content.repaint();
     }
 

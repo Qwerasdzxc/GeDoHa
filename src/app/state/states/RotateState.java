@@ -42,10 +42,12 @@ public class RotateState extends State {
             dx = (int) p.getX() - (int) oldPoint.getX();
             dy = (int) p.getY() - (int) oldPoint.getY();
 
+            oldPoint = e.getPoint();
+
             PageShape newElement = null;
 
-            shape.setAngle(shape.getAngle() + dx); //setter limits the angle to be between 0 and 360
-            System.out.println(shape.getAngle());
+            shape.setAngle(shape.getAngle() - dx); //setter limits the angle to be between 0 and 360
+//            System.out.println(shape.getAngle());
 
             newElement = RectangleElement.createWithData(
                     new Point2D.Double(shape.getPosition().getX(), shape.getPosition().getY()),

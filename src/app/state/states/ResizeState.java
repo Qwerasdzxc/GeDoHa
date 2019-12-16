@@ -27,8 +27,8 @@ public class ResizeState extends State {
 
     private boolean dragging = true;
     private final int PROX_DIST = 5;
-    private int dy = 0;
-    private int dx = 0;
+    private double dy = 0;
+    private double dx = 0;
     private Point2D oldPoint;
 
     public ResizeState(PageView mediator) {
@@ -55,8 +55,9 @@ public class ResizeState extends State {
         if (dragging) {
             Point p = e.getPoint();
 
-            dx = (int) p.getX() - (int) oldPoint.getX();
-            dy = (int) p.getY() - (int) oldPoint.getY();
+
+            dx = p.getX() - oldPoint.getX();
+            dy = p.getY() - oldPoint.getY();
 
             oldPoint = (Point2D) e.getPoint().clone();
             int type = mediator.getCursor().getType();
@@ -65,18 +66,27 @@ public class ResizeState extends State {
 
             switch (type) {
                 case Cursor.N_RESIZE_CURSOR:
-                    int height = (int) shape.getSize().getHeight() - dy;
+
+                    double height = (int) (shape.getSize().getHeight() - dy);
 
                     if (height < 10)
                         return;
 
+                    double centerX = shape.getPosition().getX() + shape.getSize().getWidth() / 2.0;
+                    double centerY = shape.getPosition().getY() + shape.getSize().getHeight() / 2.0;
+
+                    double centerX2 = shape.getPosition().getX() + shape.getSize().getWidth() / 2.0;
+                    double centerY2 = shape.getPosition().getY() + height / 2.0;
+
+
                     newElement = RectangleElement.createWithData(
                             new Point2D.Double(shape.getPosition().getX(), shape.getPosition().getY() + dy),
-                            new Dimension((int) shape.getSize().getWidth(), height), shape.getAngle()
+                            new Dimension((int) shape.getSize().getWidth(), (int) height), shape.getAngle()
                     );
+
                     break;
                 case Cursor.NW_RESIZE_CURSOR:
-                    int width = (int) shape.getSize().getWidth() - dx;
+                    double width = (int) shape.getSize().getWidth() - dx;
                     height = (int) shape.getSize().getHeight() - dy;
 
                     if (width < 10 || height < 10)
@@ -84,8 +94,9 @@ public class ResizeState extends State {
 
                     newElement = RectangleElement.createWithData(
                             new Point2D.Double(shape.getPosition().getX() + dx, shape.getPosition().getY() + dy),
-                            new Dimension(width, height), shape.getAngle()
+                            new Dimension((int) width, (int) height), shape.getAngle()
                     );
+
                     break;
                 case Cursor.W_RESIZE_CURSOR:
                     width = (int) shape.getSize().getWidth() - dx;
@@ -95,7 +106,7 @@ public class ResizeState extends State {
 
                     newElement = RectangleElement.createWithData(
                             new Point2D.Double(shape.getPosition().getX() + dx, shape.getPosition().getY()),
-                            new Dimension(width, (int) shape.getSize().getHeight()), shape.getAngle()
+                            new Dimension((int) width, (int) shape.getSize().getHeight()), shape.getAngle()
                     );
                     break;
                 case Cursor.SW_RESIZE_CURSOR:
@@ -107,7 +118,7 @@ public class ResizeState extends State {
 
                     newElement = RectangleElement.createWithData(
                             new Point2D.Double(shape.getPosition().getX() + dx, shape.getPosition().getY()),
-                            new Dimension(width, height), shape.getAngle()
+                            new Dimension((int) width, (int) height), shape.getAngle()
                     );
                     break;
                 case Cursor.S_RESIZE_CURSOR:
@@ -118,7 +129,7 @@ public class ResizeState extends State {
 
                     newElement = RectangleElement.createWithData(
                             new Point2D.Double(shape.getPosition().getX(), shape.getPosition().getY()),
-                            new Dimension((int) shape.getSize().getWidth(), height), shape.getAngle()
+                            new Dimension((int) shape.getSize().getWidth(), (int)height), shape.getAngle()
                     );
                     break;
                 case Cursor.SE_RESIZE_CURSOR:
@@ -130,7 +141,7 @@ public class ResizeState extends State {
 
                     newElement = RectangleElement.createWithData(
                             new Point2D.Double(shape.getPosition().getX(), shape.getPosition().getY()),
-                            new Dimension(width, height), shape.getAngle()
+                            new Dimension((int) width, (int) height), shape.getAngle()
                     );
                     break;
                 case Cursor.E_RESIZE_CURSOR:
@@ -141,7 +152,7 @@ public class ResizeState extends State {
 
                     newElement = RectangleElement.createWithData(
                             new Point2D.Double(shape.getPosition().getX(), shape.getPosition().getY()),
-                            new Dimension(width, (int) shape.getSize().getHeight()), shape.getAngle()
+                            new Dimension((int) width, (int) shape.getSize().getHeight()), shape.getAngle()
                     );
                     break;
                 case Cursor.NE_RESIZE_CURSOR:
@@ -153,7 +164,7 @@ public class ResizeState extends State {
 
                     newElement = RectangleElement.createWithData(
                             new Point2D.Double(shape.getPosition().getX(), shape.getPosition().getY() + dy),
-                            new Dimension(width, height), shape.getAngle()
+                            new Dimension((int) width, (int) height), shape.getAngle()
                     );
                     break;
                 default:
@@ -192,8 +203,13 @@ public class ResizeState extends State {
                 (int) shape.getSize().getWidth(), (int) shape.getSize().getHeight()
         );
 
+        p = (Point) mediator.rotatePoint(r.getCenterX(), r.getCenterY(), shape.getAngle(), (Point2D) p.clone());
+
+
         // Locate cursor relative to center of rect.
-        int outcode = getOutcode(p, r);
+        int outcode = getOutcode(p, r, shape.getAngle());
+
+        System.out.println(outcode);
 
         switch (outcode) {
             case Rectangle.OUT_TOP:
@@ -257,8 +273,8 @@ public class ResizeState extends State {
      * Make a smaller Rectangle and use it to locate the
      * cursor relative to the Rectangle center.
      */
-    private int getOutcode(Point p, Rectangle r) {
+    private int getOutcode(Point p, Rectangle r, int angle) {
         r.grow(-2, -2);
-        return r.outcode(p.x, p.y);
+        return r.outcode(p.getX(), p.getY());
     }
 }
