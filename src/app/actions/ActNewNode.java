@@ -11,6 +11,13 @@ import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 
 import app.models.AbstractNode;
+import app.models.document.Document;
+import app.models.node_factory.DocumentFactory;
+import app.models.node_factory.NodeFactory;
+import app.models.node_factory.PageFactory;
+import app.models.node_factory.ProjectFactory;
+import app.models.project.Project;
+import app.models.workspace.Workspace;
 import app.views.MainFrame;
 
 /**
@@ -37,7 +44,8 @@ public class ActNewNode extends GAbstractAction {
         Object selectedComponent = hierarchy.getLastSelectedPathComponent();
 
         AbstractNode selectedNode = (AbstractNode) selectedComponent;
-        TreeNode child = selectedNode.addNewChild();
+
+        TreeNode child = returnNodeFactory(selectedNode).deliverNode(selectedNode);
 
         hierarchy.setSelectionPath(createTreePathFromNode(child));
     }
@@ -54,5 +62,17 @@ public class ActNewNode extends GAbstractAction {
         }
 
         return new TreePath(nodes.toArray());
+    }
+
+    private static NodeFactory returnNodeFactory(AbstractNode selectedNode) {
+        if (selectedNode instanceof Workspace)
+            return new ProjectFactory();
+        else if (selectedNode instanceof Project)
+            return new DocumentFactory();
+        else if (selectedNode instanceof Document)
+            return new PageFactory();
+
+        return null;
+
     }
 }

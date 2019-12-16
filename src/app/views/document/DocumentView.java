@@ -7,10 +7,8 @@ import app.models.page.Page;
 import app.models.page.PageListener;
 import app.models.project.ProjListener;
 import app.models.project.Project;
-import app.state.StateManager;
 import app.views.MainFrame;
 import app.views.page.PageView;
-import app.views.page.PalleteBar;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;

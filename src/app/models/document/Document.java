@@ -12,20 +12,15 @@ import app.models.page.Page;
  */
 public class Document extends AbstractNode implements DocObserver, Serializable {
 
-    public Document(String name) {
-        super(name);
-    }
-
     private transient List<DocListener> listeners;
 
+    public Document(int number) {
+        super("Dokument " + number);
+    }
+
     @Override
-    public AbstractNode addNewChild() {
-        Page page = new Page("Page " + (getChildCount() + 1));
-        this.addChild(page);
-
-        notifyPageCreated(page);
-
-        return page;
+    protected void onChildAdded(AbstractNode childNode) {
+        notifyPageCreated((Page) childNode);
     }
 
     public void setSelected() {

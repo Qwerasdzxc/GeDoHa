@@ -7,7 +7,6 @@ import java.io.Serializable;
 
 import app.graphics.SerializableStroke;
 import app.graphics.painters.ElementPainter;
-import app.models.slot.Slot;
 
 /**
  * Created by Qwerasdzxc on 13/12/2019.

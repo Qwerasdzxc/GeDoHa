@@ -22,13 +22,8 @@ public class Workspace extends AbstractNode implements WSObserver, Serializable 
     }
 
     @Override
-    public AbstractNode addNewChild() {
-        Project project = new Project("Projekat " + (getChildCount() + 1));
-        this.addChild(project);
-
-        notifyProjectCreated(project);
-
-        return project;
+    protected void onChildAdded(AbstractNode childNode) {
+        notifyProjectCreated((Project) childNode);
     }
 
     public void loadExistingProject(Project project) {

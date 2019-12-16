@@ -13,7 +13,6 @@ import app.models.document.Document;
 import app.models.page.Page;
 import app.models.project.Project;
 import app.models.workspace.Workspace;
-import app.views.MainFrame;
 
 public class HierarchyTree extends JTree implements TreeSelectionListener {
 

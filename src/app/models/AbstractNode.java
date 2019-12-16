@@ -11,7 +11,7 @@ import javax.swing.tree.TreeNode;
 /**
  * Created by Qwerasdzxc on 11/12/2019.
  */
-public abstract class AbstractNode implements MutableTreeNode, Serializable  {
+public abstract class AbstractNode implements MutableTreeNode, Serializable {
 
     private String name;
 
@@ -24,12 +24,14 @@ public abstract class AbstractNode implements MutableTreeNode, Serializable  {
         this.children = new ArrayList<>();
     }
 
-    public abstract AbstractNode addNewChild();
-
     public void addChild(AbstractNode childNode) {
         childNode.parent = this;
         this.children.add(childNode);
+
+        onChildAdded(childNode);
     }
+
+    protected void onChildAdded(AbstractNode childNode) {}
 
     public List<AbstractNode> getChildren() {
         return children;

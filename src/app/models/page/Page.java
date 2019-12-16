@@ -17,15 +17,10 @@ public class Page extends AbstractNode implements PageObserver, Serializable {
 
     private ArrayList<PageElement> slots;
 
-    public Page(String name) {
-        super(name);
+    public Page(int number) {
+        super("Stranica " + number);
 
         slots = new ArrayList<>();
-    }
-
-    @Override
-    public AbstractNode addNewChild() {
-        return null;
     }
 
     @Override

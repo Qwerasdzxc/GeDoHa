@@ -17,19 +17,14 @@ public class Project extends AbstractNode implements ProjObserver, Serializable 
 
     private transient List<ProjListener> listeners;
 
-    public Project(String name) {
-        super(name);
+    public Project(int number) {
+        super("Projekat " + number);
         this.file = null;
     }
 
     @Override
-    public AbstractNode addNewChild() {
-        Document document = new Document("Document " + (getChildCount() + 1));
-        this.addChild(document);
-
-        notifyDocumentCreated(document);
-
-        return document;
+    protected void onChildAdded(AbstractNode childNode) {
+        notifyDocumentCreated((Document) childNode);
     }
 
     public File getFile() {
