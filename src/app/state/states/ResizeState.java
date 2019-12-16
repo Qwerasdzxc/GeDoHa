@@ -58,7 +58,6 @@ public class ResizeState extends State {
             dx = (int) p.getX() - (int) oldPoint.getX();
             dy = (int) p.getY() - (int) oldPoint.getY();
 
-            System.out.println(dy);
             oldPoint = (Point2D) e.getPoint().clone();
             int type = mediator.getCursor().getType();
 
@@ -68,8 +67,8 @@ public class ResizeState extends State {
                 case Cursor.N_RESIZE_CURSOR:
                     int height = (int) shape.getSize().getHeight() - dy;
 
-                    if (height < 5)
-                        break;
+                    if (height < 10)
+                        return;
 
                     newElement = RectangleElement.createWithData(
                             new Point2D.Double(shape.getPosition().getX(), shape.getPosition().getY() + dy),
@@ -80,44 +79,86 @@ public class ResizeState extends State {
                     int width = (int) shape.getSize().getWidth() - dx;
                     height = (int) shape.getSize().getHeight() - dy;
 
+                    if (width < 10 || height < 10)
+                        return;
+
                     newElement = RectangleElement.createWithData(
                             new Point2D.Double(shape.getPosition().getX() + dx, shape.getPosition().getY() + dy),
                             new Dimension(width, height), shape.getAngle()
                     );
                     break;
-//                case Cursor.W_RESIZE_CURSOR:
-//                    width = r.width - dx;
-//                    r.setRect(r.x+dx, r.y, width, r.height);
-//                    break;
-//                case Cursor.SW_RESIZE_CURSOR:
-//                    width = r.width - dx;
-//                    height = dy;
-//                    r.setRect(r.x+dx, r.y, width, height);
-//                    break;
-//                case Cursor.S_RESIZE_CURSOR:
-//                    height = dy;
-//                    r.setRect(r.x, r.y, r.width, height);
-//                    break;
-//                case Cursor.SE_RESIZE_CURSOR:
-//                    width = dx;
-//                    height = dy;
-//                    r.setRect(r.x, r.y, width, height);
-//                    break;
-//                case Cursor.E_RESIZE_CURSOR:
-//                    width = dx;
-//                    r.setRect(r.x, r.y, width, r.height);
-//                    break;
-//                case Cursor.NE_RESIZE_CURSOR:
-//                    width = dx;
-//                    height = r.height - dy;
-//                    r.setRect(r.x, r.y+dy, width, height);
-//                    break;
-                default:
-                    System.out.println("unexpected type: " + type);
-            }
+                case Cursor.W_RESIZE_CURSOR:
+                    width = (int) shape.getSize().getWidth() - dx;
 
-            if (newElement == null)
-                return;
+                    if (width < 10)
+                        return;
+
+                    newElement = RectangleElement.createWithData(
+                            new Point2D.Double(shape.getPosition().getX() + dx, shape.getPosition().getY()),
+                            new Dimension(width, (int) shape.getSize().getHeight()), shape.getAngle()
+                    );
+                    break;
+                case Cursor.SW_RESIZE_CURSOR:
+                    width = (int) shape.getSize().getWidth() - dx;
+                    height = (int) shape.getSize().getHeight() + dy;
+
+                    if (width < 10 || height < 10)
+                        return;
+
+                    newElement = RectangleElement.createWithData(
+                            new Point2D.Double(shape.getPosition().getX() + dx, shape.getPosition().getY()),
+                            new Dimension(width, height), shape.getAngle()
+                    );
+                    break;
+                case Cursor.S_RESIZE_CURSOR:
+                    height = (int) shape.getSize().getHeight() + dy;
+
+                    if (height < 10)
+                        return;
+
+                    newElement = RectangleElement.createWithData(
+                            new Point2D.Double(shape.getPosition().getX(), shape.getPosition().getY()),
+                            new Dimension((int) shape.getSize().getWidth(), height), shape.getAngle()
+                    );
+                    break;
+                case Cursor.SE_RESIZE_CURSOR:
+                    width = (int) shape.getSize().getWidth() + dx;
+                    height = (int) shape.getSize().getHeight() + dy;
+
+                    if (width < 10 || height < 10)
+                        return;
+
+                    newElement = RectangleElement.createWithData(
+                            new Point2D.Double(shape.getPosition().getX(), shape.getPosition().getY()),
+                            new Dimension(width, height), shape.getAngle()
+                    );
+                    break;
+                case Cursor.E_RESIZE_CURSOR:
+                    width = (int) shape.getSize().getWidth() + dx;
+
+                    if (width < 10)
+                        return;
+
+                    newElement = RectangleElement.createWithData(
+                            new Point2D.Double(shape.getPosition().getX(), shape.getPosition().getY()),
+                            new Dimension(width, (int) shape.getSize().getHeight()), shape.getAngle()
+                    );
+                    break;
+                case Cursor.NE_RESIZE_CURSOR:
+                    width = (int) shape.getSize().getWidth() + dx;
+                    height = (int) shape.getSize().getHeight() - dy;
+
+                    if (width < 10 || height < 10)
+                        return;
+
+                    newElement = RectangleElement.createWithData(
+                            new Point2D.Double(shape.getPosition().getX(), shape.getPosition().getY() + dy),
+                            new Dimension(width, height), shape.getAngle()
+                    );
+                    break;
+                default:
+                    return;
+            }
 
             mediator.getPage().removeSlot(shape);
             mediator.getPage().addSlot(newElement);
@@ -151,11 +192,8 @@ public class ResizeState extends State {
                 (int) shape.getSize().getWidth(), (int) shape.getSize().getHeight()
         );
 
-//        System.out.println(r.getY());
-
         // Locate cursor relative to center of rect.
         int outcode = getOutcode(p, r);
-//        System.out.println(outcode);
 
         switch (outcode) {
             case Rectangle.OUT_TOP:
@@ -210,7 +248,7 @@ public class ResizeState extends State {
                             Cursor.NE_RESIZE_CURSOR));
                 }
                 break;
-            default:    // center
+            default:
                 mediator.replaceCursor(Cursor.getDefaultCursor());
         }
     }
