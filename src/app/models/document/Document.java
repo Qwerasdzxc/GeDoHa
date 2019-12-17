@@ -7,9 +7,6 @@ import java.util.List;
 import app.models.AbstractNode;
 import app.models.page.Page;
 
-/**
- * Created by Qwerasdzxc on 11/12/2019.
- */
 public class Document extends AbstractNode implements DocObserver, Serializable {
 
     private transient List<DocListener> listeners;

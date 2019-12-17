@@ -7,9 +7,6 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.NoninvertibleTransformException;
 import java.awt.geom.Point2D;
 
-/**
- * Created by Qwerasdzxc on 14/12/2019.
- */
 public class PageController extends MouseAdapter implements MouseMotionListener {
 
     private PageView view;

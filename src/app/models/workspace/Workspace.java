@@ -8,9 +8,6 @@ import java.util.List;
 import app.models.AbstractNode;
 import app.models.project.Project;
 
-/**
- * Created by Qwerasdzxc on 11/12/2019.
- */
 public class Workspace extends AbstractNode implements WSObserver, Serializable {
 
     private transient List<WSListener> listeners;

@@ -12,7 +12,6 @@ import app.models.project.Project;
 import app.models.workspace.Workspace;
 import app.views.MainFrame;
 import app.views.hierarchy.HierarchyTree;
-import app.views.hierarchy.HierarchyTreeEditor;
 
 
 public class ActNodeRename extends GAbstractAction {
@@ -51,8 +50,7 @@ public class ActNodeRename extends GAbstractAction {
             	return;
 
             if (newName.trim().isEmpty())
-                JOptionPane.showMessageDialog(null, "Naziv ne može biti prazan!",
-						"Greška", JOptionPane.ERROR_MESSAGE);
+                ErrorHandler.showRenameError();
             else {
 				if (selectedComponent instanceof Project) {
 

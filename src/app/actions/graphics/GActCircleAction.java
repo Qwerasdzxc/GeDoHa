@@ -5,9 +5,6 @@ import java.awt.event.ActionEvent;
 import app.actions.GAbstractAction;
 import app.state.StateManager;
 
-/**
- * Created by Qwerasdzxc on 16/12/2019.
- */
 class GActCircleAction extends GAbstractAction {
 
     private StateManager stateManager;

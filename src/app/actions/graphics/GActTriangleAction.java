@@ -5,9 +5,6 @@ import java.awt.event.ActionEvent;
 import app.actions.GAbstractAction;
 import app.state.StateManager;
 
-/**
- * Created by Qwerasdzxc on 17/12/2019.
- */
 public class GActTriangleAction extends GAbstractAction {
 
     private StateManager stateManager;

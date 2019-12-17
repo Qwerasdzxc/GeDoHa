@@ -1,16 +1,11 @@
 package app.graphics.painters;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Shape;
 
 import app.graphics.elements.PageElement;
-import app.graphics.elements.PageShape;
 
-/**
- * Created by Qwerasdzxc on 13/12/2019.
- */
 public class PagePainter extends ElementPainter {
 
     protected Shape shape;

@@ -7,7 +7,6 @@ import java.io.FileInputStream;
 import java.io.ObjectInputStream;
 
 import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 
 import app.models.AbstractNode;
@@ -41,8 +40,9 @@ public class ActOpenProject extends GAbstractAction {
             try {
                 project = (Project) os.readObject();
                 project.setFile(selected);
-            } catch (ClassNotFoundException ee) {
-                JOptionPane.showMessageDialog(MainFrame.getInstance(), "Greška u otvaranju izabranog file-a.");
+            } catch (Exception exc) {
+                exc.printStackTrace();
+                ErrorHandler.showFileError();
             }
 
             for (AbstractNode doc : project.getChildren()) {

@@ -9,9 +9,6 @@ import app.graphics.elements.shapes.RectangleElement;
 import app.state.State;
 import app.views.page.PageView;
 
-/**
- * Created by Qwerasdzxc on 16/12/2019.
- */
 public class CircleState extends State {
 
     private PageView mediator;

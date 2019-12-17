@@ -6,9 +6,6 @@ import java.awt.Paint;
 import java.awt.Stroke;
 import java.awt.geom.Point2D;
 
-/**
- * Created by Qwerasdzxc on 13/12/2019.
- */
 public abstract class PageShape extends PageElement {
 
     private Dimension size;

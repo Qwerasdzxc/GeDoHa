@@ -8,9 +8,6 @@ import app.graphics.elements.shapes.CircleElement;
 import app.graphics.elements.shapes.RectangleElement;
 import app.graphics.painters.PagePainter;
 
-/**
- * Created by Qwerasdzxc on 16/12/2019.
- */
 public class CirclePainter extends PagePainter {
 
     public CirclePainter(PageElement element) {

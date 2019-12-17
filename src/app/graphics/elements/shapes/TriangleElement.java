@@ -8,12 +8,8 @@ import java.awt.Stroke;
 import java.awt.geom.Point2D;
 
 import app.graphics.elements.PageShape;
-import app.graphics.painters.shapes.CirclePainter;
 import app.graphics.painters.shapes.TrianglePainter;
 
-/**
- * Created by Qwerasdzxc on 17/12/2019.
- */
 public class TriangleElement extends PageShape {
 
     public TriangleElement(Point2D position, Dimension size, Stroke stroke, Paint paint, Color color, int angle) {
@@ -26,7 +22,7 @@ public class TriangleElement extends PageShape {
         Point2D position = (Point2D) pos.clone();
 
         return new TriangleElement(position,
-                new Dimension(80, 80),
+                new Dimension(90, 90),
                 new BasicStroke((float) (2), BasicStroke.CAP_SQUARE, BasicStroke.JOIN_BEVEL),
                 Color.WHITE,
                 Color.BLACK,

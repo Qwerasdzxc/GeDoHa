@@ -8,9 +8,6 @@ import java.util.List;
 import app.graphics.elements.PageElement;
 import app.models.AbstractNode;
 
-/**
- * Created by Qwerasdzxc on 11/12/2019.
- */
 public class Page extends AbstractNode implements PageObserver, Serializable {
 
     private transient List<PageListener> listeners;

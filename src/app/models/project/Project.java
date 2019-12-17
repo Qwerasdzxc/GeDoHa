@@ -8,9 +8,6 @@ import java.util.List;
 import app.models.AbstractNode;
 import app.models.document.Document;
 
-/**
- * Created by Qwerasdzxc on 11/12/2019.
- */
 public class Project extends AbstractNode implements ProjObserver, Serializable {
 
     private File file;

@@ -35,8 +35,9 @@ public class ActSwitchWorkspace extends GAbstractAction {
             try {
                 ws = (Workspace) os.readObject();
                 ws.setFile(selected);
-            } catch (ClassNotFoundException ee) {
-                JOptionPane.showMessageDialog(MainFrame.getInstance(), "Greška u otvaranju izabranog file-a.");
+            } catch (Exception exc) {
+                exc.printStackTrace();
+                ErrorHandler.showFileError();
             }
 
             for (AbstractNode proj : ws.getChildren()) {

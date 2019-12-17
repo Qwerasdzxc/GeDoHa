@@ -9,9 +9,6 @@ import app.graphics.elements.shapes.TriangleElement;
 import app.state.State;
 import app.views.page.PageView;
 
-/**
- * Created by Qwerasdzxc on 17/12/2019.
- */
 public class TriangleState extends State {
 
     private PageView mediator;

@@ -10,9 +10,6 @@ import java.awt.geom.Point2D;
 import app.graphics.elements.PageShape;
 import app.graphics.painters.shapes.CirclePainter;
 
-/**
- * Created by Qwerasdzxc on 16/12/2019.
- */
 public class CircleElement extends PageShape {
 
     public CircleElement(Point2D position, Dimension size, Stroke stroke, Paint paint, Color color, int angle) {

@@ -22,11 +22,6 @@ public class CanvasView extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-    }
-
-    @Override
-    public void paint(Graphics g) {
-        super.paint(g);
 
         Graphics2D g2 = (Graphics2D) g.create();
         g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.8f));

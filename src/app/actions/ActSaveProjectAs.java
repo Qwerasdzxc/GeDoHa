@@ -28,7 +28,7 @@ public class ActSaveProjectAs extends GAbstractAction {
     @Override
     public void actionPerformed(ActionEvent e) {
         JFileChooser jfc = new JFileChooser(new File(System.getProperty("user.dir")));
-        jfc.setFileFilter(new DocumentFileFilter());
+//        jfc.setFileFilter(new DocumentFileFilter());
         jfc.setAcceptAllFileFilterUsed(false);
 
         Project project = MainFrame.getInstance().getHierarchyTree().getCurrentProject();

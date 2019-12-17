@@ -18,9 +18,6 @@ import app.graphics.elements.shapes.TriangleElement;
 import app.state.State;
 import app.views.page.PageView;
 
-/**
- * Created by Qwerasdzxc on 15/12/2019.
- */
 public class ResizeState extends State {
 
     private PageView mediator;
@@ -42,7 +39,6 @@ public class ResizeState extends State {
     @Override
     public void onMousePressed(MouseEvent e) {
         if (mediator.getCursor() != Cursor.getDefaultCursor()) {
-            // If cursor is set for resizing, allow dragging.
             dragging = true;
             oldPoint = (Point2D) e.getPoint().clone();
         }
@@ -75,12 +71,6 @@ public class ResizeState extends State {
 
                     if (height < 10)
                         return;
-
-                    double centerX = shape.getPosition().getX() + shape.getSize().getWidth() / 2.0;
-                    double centerY = shape.getPosition().getY() + shape.getSize().getHeight() / 2.0;
-
-                    double centerX2 = shape.getPosition().getX() + shape.getSize().getWidth() / 2.0;
-                    double centerY2 = shape.getPosition().getY() + height / 2.0;
 
                     newElement = recreateElement(
                             new Point2D.Double(shape.getPosition().getX(), shape.getPosition().getY() + dy),
@@ -209,7 +199,6 @@ public class ResizeState extends State {
         );
 
         p = (Point) mediator.rotatePoint(r.getCenterX(), r.getCenterY(), shape.getAngle(), (Point2D) p.clone());
-
 
         // Locate cursor relative to center of rect.
         int outcode = getOutcode(p, r);

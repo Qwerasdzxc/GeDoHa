@@ -6,9 +6,6 @@ import java.awt.event.MouseEvent;
 import app.state.State;
 import app.views.page.PageView;
 
-/**
- * Created by Qwerasdzxc on 14/12/2019.
- */
 public class SelectState extends State {
 
     private PageView mediator;

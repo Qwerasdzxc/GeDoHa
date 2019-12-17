@@ -20,9 +20,6 @@ import app.models.project.Project;
 import app.models.workspace.Workspace;
 import app.views.MainFrame;
 
-/**
- * Created by Qwerasdzxc on 11/12/2019.
- */
 public class ActNewNode extends GAbstractAction {
 
     public ActNewNode() {

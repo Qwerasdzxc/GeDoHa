@@ -34,7 +34,7 @@ public class RotateState extends State {
 
     @Override
     public void onMouseDragged(MouseEvent e) {
-        if (dragging) {
+        if (dragging && shape != null) {
             Point p = e.getPoint();
 
             dx = (int) p.getX() - (int) oldPoint.getX();

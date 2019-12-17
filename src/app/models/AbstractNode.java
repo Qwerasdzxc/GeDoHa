@@ -8,9 +8,6 @@ import java.util.List;
 import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreeNode;
 
-/**
- * Created by Qwerasdzxc on 11/12/2019.
- */
 public abstract class AbstractNode implements MutableTreeNode, Serializable {
 
     private String name;

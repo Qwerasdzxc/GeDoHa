@@ -4,11 +4,7 @@ import javax.swing.*;
 import java.net.URL;
 
 public abstract class GAbstractAction extends AbstractAction {
-    /**
-     * Kreira ikonu na osnovu zadatog imena
-     * @param fileName
-     * @return
-     */
+
     public Icon loadIcon(String fileName){
         URL imageURL = getClass().getResource(fileName);
         Icon icon = null;

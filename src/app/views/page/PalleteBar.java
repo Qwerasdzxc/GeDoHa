@@ -8,9 +8,6 @@ import javax.swing.JToolBar;
 import app.actions.graphics.GraphicsActionManager;
 import app.state.StateManager;
 
-/**
- * Created by Qwerasdzxc on 14/12/2019.
- */
 public class PalleteBar extends JToolBar {
 
     public PalleteBar(StateManager stateManager) {
@@ -27,15 +24,5 @@ public class PalleteBar extends JToolBar {
         addSeparator();
         add(GraphicsActionManager.getInstance().getResizeAction(stateManager));
         add(GraphicsActionManager.getInstance().getRotateAction(stateManager));
-
-
-//        JToggleButton btn4 = new JToggleButton(AppCore.getInstance().getActionManager().getpCircleAction());
-//        group.add(btn4);
-//        add(btn4);
-//
-//
-//        JToggleButton btn5 = new JToggleButton(AppCore.getInstance().getActionManager().getpTriangleAction());
-//        group.add(btn5);
-//        add(btn5);
     }
 }

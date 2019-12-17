@@ -8,9 +8,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
-/**
- * Created by Qwerasdzxc on 15/12/2019.
- */
 public class SerializableStroke implements Stroke, Serializable {
 
     private Stroke stroke;

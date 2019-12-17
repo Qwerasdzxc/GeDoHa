@@ -8,9 +8,6 @@ import javax.swing.KeyStroke;
 import app.actions.GAbstractAction;
 import app.state.StateManager;
 
-/**
- * Created by Qwerasdzxc on 14/12/2019.
- */
 public class GActRectangleAction extends GAbstractAction {
 
     private StateManager stateManager;

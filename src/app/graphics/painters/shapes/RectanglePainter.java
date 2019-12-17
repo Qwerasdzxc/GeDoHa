@@ -7,9 +7,6 @@ import app.graphics.elements.PageElement;
 import app.graphics.elements.shapes.RectangleElement;
 import app.graphics.painters.PagePainter;
 
-/**
- * Created by Qwerasdzxc on 13/12/2019.
- */
 public class RectanglePainter extends PagePainter {
 
     public RectanglePainter(PageElement element) {

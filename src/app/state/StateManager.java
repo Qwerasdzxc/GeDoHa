@@ -8,9 +8,6 @@ import app.state.states.SelectState;
 import app.state.states.TriangleState;
 import app.views.page.PageView;
 
-/**
- * Created by Qwerasdzxc on 14/12/2019.
- */
 public class StateManager {
 
     private State currentState;

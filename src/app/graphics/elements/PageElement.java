@@ -8,9 +8,6 @@ import java.io.Serializable;
 import app.graphics.SerializableStroke;
 import app.graphics.painters.ElementPainter;
 
-/**
- * Created by Qwerasdzxc on 13/12/2019.
- */
 public abstract class PageElement implements Serializable {
 
     protected Paint paint;
