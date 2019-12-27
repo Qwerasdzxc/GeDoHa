@@ -20,6 +20,10 @@ public class Page extends AbstractNode implements PageObserver, Serializable {
         slots = new ArrayList<>();
     }
 
+    public void setSelected() {
+        notifyPageSelected(this);
+    }
+
     @Override
     public void setName(String name) {
         super.setName(name);
@@ -41,11 +45,6 @@ public class Page extends AbstractNode implements PageObserver, Serializable {
 
     public Iterator<PageElement> getSlotsIterator() {
         return slots.iterator();
-    }
-
-    @Override
-    public void notifyPageSelected(Page page) {
-        // TODO
     }
 
     @Override
@@ -73,6 +72,15 @@ public class Page extends AbstractNode implements PageObserver, Serializable {
 
         for (int i = 0; i < listeners.size(); i++)
             listeners.get(i).onPageChangedName(name);
+    }
+
+    @Override
+    public void notifyPageSelected(Page page) {
+        if (this.listeners == null)
+            return;
+
+        for (int i = 0; i < listeners.size(); i++)
+            listeners.get(i).onPageSelected(page);
     }
 
     @Override

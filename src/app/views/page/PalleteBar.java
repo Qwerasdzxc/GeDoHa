@@ -17,6 +17,7 @@ public class PalleteBar extends JToolBar {
         setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 
         add(GraphicsActionManager.getInstance().getSelectAction(stateManager));
+        add(GraphicsActionManager.getInstance().getMoveAction(stateManager));
         addSeparator();
         add(GraphicsActionManager.getInstance().getRectangleAction(stateManager));
         add(GraphicsActionManager.getInstance().getCircleAction(stateManager));

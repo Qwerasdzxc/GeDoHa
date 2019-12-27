@@ -15,16 +15,22 @@ import javax.swing.border.EmptyBorder;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 public class DocumentView extends JPanel implements ProjListener, DocListener, PageListener {
 
     public Document document;
 
+    private Page activePage;
+
+    private JPanel pageStripPanel;
     private JPanel body;
     private JLabel pathLabel;
 
-    private ArrayList<PageView> pageViews = new ArrayList<>();
+    private ArrayList<PageThumbnail> thumbnails = new ArrayList<>();
 
     public DocumentView(Document document) {
         super();
@@ -39,11 +45,20 @@ public class DocumentView extends JPanel implements ProjListener, DocListener, P
         body.setBackground(Color.LIGHT_GRAY);
         body.setBorder(new EmptyBorder(10, 0, 0, 10));
 
-        this.setLayout(new BorderLayout());
-        JScrollPane scrollBar = new JScrollPane(body, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
-                ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        scrollBar.getVerticalScrollBar().setUnitIncrement(15);
-        this.add(scrollBar);
+        JScrollPane bodyScroll = new JScrollPane(body);
+
+        pageStripPanel = new JPanel();
+        pageStripPanel.setLayout(new BoxLayout(pageStripPanel, BoxLayout.Y_AXIS));
+        pageStripPanel.setBackground(Color.LIGHT_GRAY);
+
+        JScrollPane scroll = new JScrollPane(pageStripPanel);
+        scroll.setMinimumSize(new Dimension(200, 150));
+        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, scroll, bodyScroll);
+        splitPane.setOneTouchExpandable(true);
+        splitPane.setResizeWeight(0.1);
+
+        setLayout(new BorderLayout());
+        add(splitPane);
 
         addExistingPages();
 
@@ -57,10 +72,15 @@ public class DocumentView extends JPanel implements ProjListener, DocListener, P
             Page page = (Page) node;
             page.addObserver(this);
 
-            PageView pageView = new PageView(page);
-            pageViews.add(pageView);
-            body.add(pageView);
-            body.scrollRectToVisible(pageView.getBounds());
+            PageThumbnail thumbnail = new PageThumbnail(page);
+            thumbnail.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    page.setSelected();
+                }
+            });
+            thumbnails.add(thumbnail);
+            pageStripPanel.add(thumbnail);
             repaint();
         }
     }
@@ -71,13 +91,21 @@ public class DocumentView extends JPanel implements ProjListener, DocListener, P
 
     @Override
     public void onPageCreated(Page page) {
+        activePage = page;
         page.addObserver(this);
 
-        PageView pageView = new PageView(page);
-        pageViews.add(pageView);
+        PageThumbnail thumbnail = new PageThumbnail(page);
+        thumbnail.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                page.setSelected();
+            }
+        });
+        thumbnails.add(thumbnail);
+        pageStripPanel.add(thumbnail);
 
-        body.add(pageView);
-        body.scrollRectToVisible(pageView.getBounds());
+        body.removeAll();
+        body.add(new PageView(page));
 
         revalidate();
 
@@ -88,14 +116,30 @@ public class DocumentView extends JPanel implements ProjListener, DocListener, P
     public void onPageDeleted(Page page, int index) {
         page.removeObserver(this);
 
-        PageView pageView = pageViews.get(index);
-        body.remove(pageView);
-        pageViews.remove(pageView);
+        PageThumbnail thumbnail = thumbnails.get(index);
+        pageStripPanel.remove(thumbnail);
+        thumbnails.remove(thumbnail);
+
+        if (activePage == page) {
+            body.removeAll();
+            activePage = null;
+        }
 
         revalidate();
         repaint();
 
         SwingUtilities.updateComponentTreeUI(MainFrame.getInstance().getHierarchyTree());
+    }
+
+    @Override
+    public void onPageSelected(Page page) {
+        activePage = page;
+
+        body.removeAll();
+        body.add(new PageView(page));
+
+        revalidate();
+        repaint();
     }
 
     @Override

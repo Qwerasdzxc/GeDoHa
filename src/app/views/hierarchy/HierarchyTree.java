@@ -55,7 +55,7 @@ public class HierarchyTree extends JTree implements TreeSelectionListener {
             enableForPage();
 
             Page page = (Page) selectedComponent;
-            // Ovde idu akcije vezane za rad sa page-om
+            page.setSelected();
         }
     }
 

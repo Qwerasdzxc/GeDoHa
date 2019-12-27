@@ -1,6 +1,7 @@
 package app.state;
 
 import app.state.states.CircleState;
+import app.state.states.MoveState;
 import app.state.states.RectangleState;
 import app.state.states.ResizeState;
 import app.state.states.RotateState;
@@ -17,6 +18,7 @@ public class StateManager {
     private TriangleState triangleState;
 
     private SelectState selectState;
+    private MoveState moveState;
     private ResizeState resizeState;
     private RotateState rotateState;
 
@@ -25,6 +27,7 @@ public class StateManager {
         circleState = new CircleState(mediator);
         triangleState = new TriangleState(mediator);
         selectState = new SelectState(mediator);
+        moveState = new MoveState(mediator);
         resizeState = new ResizeState(mediator);
         rotateState = new RotateState(mediator);
 
@@ -61,6 +64,14 @@ public class StateManager {
 
     public void startSelectState() {
         currentState = selectState;
+    }
+
+    public MoveState getMoveState() {
+        return moveState;
+    }
+
+    public void startMoveState() {
+        currentState = moveState;
     }
 
     public State getCurrentState() {

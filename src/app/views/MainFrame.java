@@ -18,14 +18,11 @@ import app.views.workspace.WorkspaceView;
 public class MainFrame extends JFrame {
 
     private static MainFrame instance = null;
-    private ActionManager actionManager;
 
     private WorkspaceView workspaceView;
 
     private HierarchyTree hierarchyTree;
     private JSplitPane splitPane;
-
-    private JDesktopPane desktop;
 
     private MainFrame() {
 
@@ -122,10 +119,6 @@ public class MainFrame extends JFrame {
 
     public HierarchyTree getHierarchyTree() {
         return hierarchyTree;
-    }
-
-    public WorkspaceView getWorkspaceView() {
-        return workspaceView;
     }
 
     public void setWorkspaceView(WorkspaceView workspaceView) {
