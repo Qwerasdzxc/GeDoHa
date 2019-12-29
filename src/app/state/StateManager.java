@@ -1,6 +1,9 @@
 package app.state;
 
+import java.awt.geom.Point2D;
+
 import app.state.states.CircleState;
+import app.state.states.LassoState;
 import app.state.states.MoveState;
 import app.state.states.RectangleState;
 import app.state.states.ResizeState;
@@ -18,6 +21,7 @@ public class StateManager {
     private TriangleState triangleState;
 
     private SelectState selectState;
+    private LassoState lassoState;
     private MoveState moveState;
     private ResizeState resizeState;
     private RotateState rotateState;
@@ -27,6 +31,7 @@ public class StateManager {
         circleState = new CircleState(mediator);
         triangleState = new TriangleState(mediator);
         selectState = new SelectState(mediator);
+        lassoState = new LassoState(mediator);
         moveState = new MoveState(mediator);
         resizeState = new ResizeState(mediator);
         rotateState = new RotateState(mediator);
@@ -34,63 +39,40 @@ public class StateManager {
         this.currentState = selectState;
     }
 
-    public RectangleState getRectangleState() {
-        return rectangleState;
+    public State getCurrentState() {
+        return currentState;
     }
 
     public void startRectangleState() {
         currentState = rectangleState;
     }
 
-    public CircleState getCircleState() {
-        return circleState;
-    }
-
     public void startCircleState() {
         currentState = circleState;
-    }
-
-    public TriangleState getTriangleState() {
-        return triangleState;
     }
 
     public void startTriangleState() {
         currentState = triangleState;
     }
 
-    public SelectState getSelectState() {
-        return selectState;
-    }
-
     public void startSelectState() {
         currentState = selectState;
     }
 
-    public MoveState getMoveState() {
-        return moveState;
+    public void startLassoState(Point2D startingPoint) {
+        lassoState.updateStartingPoint(startingPoint);
+        currentState = lassoState;
     }
 
     public void startMoveState() {
         currentState = moveState;
     }
 
-    public State getCurrentState() {
-        return currentState;
-    }
-
     public void startResizeState() {
         currentState = resizeState;
     }
 
-    public ResizeState getResizeState() {
-        return resizeState;
-    }
-
     public void startRotateState() {
         currentState = rotateState;
-    }
-
-    public RotateState getRotateState() {
-        return rotateState;
     }
 }

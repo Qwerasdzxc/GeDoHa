@@ -7,6 +7,7 @@ import app.graphics.painters.ElementPainter;
 import app.graphics.painters.PagePainter;
 import app.models.document.DocListener;
 import app.models.document.Document;
+import app.models.element_selection.ElementSelectionListener;
 import app.models.page.Page;
 import app.models.page.PageListener;
 import app.models.project.ProjListener;
@@ -24,16 +25,17 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Area;
 import java.awt.geom.NoninvertibleTransformException;
 import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class PageView extends JPanel implements ProjListener, DocListener, PageListener {
+public class PageView extends JPanel implements ProjListener, DocListener, PageListener, ElementSelectionListener {
 
     private Page page;
 
     private JLabel pathLabel;
     private TitledBorder pageTitleBorder;
-    private JPanel content;
+    private CanvasView content;
 
     private PalleteBar palleteBar;
 
@@ -42,6 +44,7 @@ public class PageView extends JPanel implements ProjListener, DocListener, PageL
     public PageView(Page page) {
         this.page = page;
         this.page.addObserver(this);
+        this.page.getSelectionModel().addObserver(this);
         ((Document) this.page.getParent()).addObserver(this);
         ((Project) this.page.getParent().getParent()).addObserver(this);
 
@@ -124,12 +127,21 @@ public class PageView extends JPanel implements ProjListener, DocListener, PageL
         return point;
     }
 
+    public void updateSelectionRectangle(Rectangle2D selectionRectangle) {
+        content.setSelectionRectangle(selectionRectangle);
+    }
+
     public StateManager getStateManager() {
         return stateManager;
     }
 
     @Override
     public void onSlotChanged() {
+        content.repaint();
+    }
+
+    @Override
+    public void onSelectionChanged() {
         content.repaint();
     }
 

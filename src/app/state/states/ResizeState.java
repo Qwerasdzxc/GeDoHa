@@ -9,6 +9,7 @@ import java.awt.Rectangle;
 import java.awt.Shape;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Point2D;
+import java.util.ArrayList;
 
 import app.graphics.elements.PageElement;
 import app.graphics.elements.PageShape;
@@ -31,6 +32,7 @@ public class ResizeState extends State {
     private double dx = 0;
 
     private Point2D oldPoint;
+    private boolean singleElement;
 
     public ResizeState(PageView mediator) {
         this.mediator = mediator;
@@ -53,8 +55,15 @@ public class ResizeState extends State {
         }
 
         if (dragging) {
-            Point p = e.getPoint();
 
+            if (!singleElement) {
+                if (mediator.getPage().getSelectionModel().getSelectionList().isEmpty()) {
+                    mediator.getPage().getSelectionModel().addToSelectionList(shape);
+                    singleElement = true;
+                }
+            }
+
+            Point p = e.getPoint();
 
             dx = p.getX() - oldPoint.getX();
             dy = p.getY() - oldPoint.getY();
@@ -62,118 +71,228 @@ public class ResizeState extends State {
             oldPoint = (Point2D) e.getPoint().clone();
             int type = mediator.getCursor().getType();
 
-            PageShape newElement;
+            ArrayList<PageElement> selectedElements = mediator.getPage().getSelectionModel().getSelectionList();
+            ArrayList<PageShape> newElements = new ArrayList<>();
 
             switch (type) {
                 case Cursor.N_RESIZE_CURSOR:
+                    for (PageElement element : selectedElements) {
 
-                    double height = (int) (shape.getSize().getHeight() - dy);
+                        PageShape shape = (PageShape) element;
 
-                    if (height < 10)
-                        return;
+                        double height = (int) (shape.getSize().getHeight() - dy);
 
-                    newElement = recreateElement(
-                            new Point2D.Double(shape.getPosition().getX(), shape.getPosition().getY() + dy),
-                            new Dimension((int) shape.getSize().getWidth(), (int) height),
-                            shape.getAngle()
-                    );
+                        // Stop the resize if the height gets too small:
+                        if (height < 10) {
+                            height = 10;
+                            dy = 0;
+                        }
 
+                        PageShape newElement = recreateElement(
+                                new Point2D.Double(shape.getPosition().getX(), shape.getPosition().getY() + dy),
+                                new Dimension((int) shape.getSize().getWidth(), (int) height),
+                                shape.getAngle()
+                        );
+
+                        newElements.add(newElement);
+                    }
                     break;
                 case Cursor.NW_RESIZE_CURSOR:
-                    double width = (int) shape.getSize().getWidth() - dx;
-                    height = (int) shape.getSize().getHeight() - dy;
+                    for (PageElement element : selectedElements) {
 
-                    if (width < 10 || height < 10)
-                        return;
+                        PageShape shape = (PageShape) element;
 
-                    newElement = recreateElement(
-                            new Point2D.Double(shape.getPosition().getX() + dx, shape.getPosition().getY() + dy),
-                            new Dimension((int) width, (int) height), shape.getAngle()
-                    );
+                        double width = (int) shape.getSize().getWidth() - dx;
+                        double height = (int) shape.getSize().getHeight() - dy;
 
+                        // Stop the resize if the height gets too small:
+                        if (height < 10) {
+                            height = 10;
+                            dy = 0;
+                        }
+                        if (width < 10) {
+                            width = 10;
+                            dx = 0;
+                        }
+
+                        PageShape newElement = recreateElement(
+                                new Point2D.Double(shape.getPosition().getX() + dx, shape.getPosition().getY() + dy),
+                                new Dimension((int) width, (int) height),
+                                shape.getAngle()
+                        );
+
+                        newElements.add(newElement);
+                    }
                     break;
                 case Cursor.W_RESIZE_CURSOR:
-                    width = (int) shape.getSize().getWidth() - dx;
+                    for (PageElement element : selectedElements) {
 
-                    if (width < 10)
-                        return;
+                        PageShape shape = (PageShape) element;
 
-                    newElement = recreateElement(
-                            new Point2D.Double(shape.getPosition().getX() + dx, shape.getPosition().getY()),
-                            new Dimension((int) width, (int) shape.getSize().getHeight()), shape.getAngle()
-                    );
+                        double width = (int) shape.getSize().getWidth() - dx;
+
+                        if (width < 10) {
+                            width = 10;
+                            dx = 0;
+                        }
+
+                        PageShape newElement = recreateElement(
+                                new Point2D.Double(shape.getPosition().getX() + dx, shape.getPosition().getY()),
+                                new Dimension((int) width, (int) shape.getSize().getHeight()),
+                                shape.getAngle()
+                        );
+
+                        newElements.add(newElement);
+                    }
                     break;
                 case Cursor.SW_RESIZE_CURSOR:
-                    width = (int) shape.getSize().getWidth() - dx;
-                    height = (int) shape.getSize().getHeight() + dy;
+                    for (PageElement element : selectedElements) {
 
-                    if (width < 10 || height < 10)
-                        return;
+                        PageShape shape = (PageShape) element;
 
-                    newElement = recreateElement(
-                            new Point2D.Double(shape.getPosition().getX() + dx, shape.getPosition().getY()),
-                            new Dimension((int) width, (int) height), shape.getAngle()
-                    );
+                        double width = (int) shape.getSize().getWidth() - dx;
+                        double height = (int) shape.getSize().getHeight() + dy;
+
+                        // Stop the resize if the height gets too small:
+                        if (height < 10) {
+                            height = 10;
+                            dy = 0;
+                        }
+                        if (width < 10) {
+                            width = 10;
+                            dx = 0;
+                        }
+
+                        PageShape newElement = recreateElement(
+                                new Point2D.Double(shape.getPosition().getX() + dx, shape.getPosition().getY()),
+                                new Dimension((int) width, (int) height),
+                                shape.getAngle()
+                        );
+
+                        newElements.add(newElement);
+                    }
                     break;
                 case Cursor.S_RESIZE_CURSOR:
-                    height = (int) shape.getSize().getHeight() + dy;
+                    for (PageElement element : selectedElements) {
 
-                    if (height < 10)
-                        return;
+                        PageShape shape = (PageShape) element;
 
-                    newElement = recreateElement(
-                            new Point2D.Double(shape.getPosition().getX(), shape.getPosition().getY()),
-                            new Dimension((int) shape.getSize().getWidth(), (int)height), shape.getAngle()
-                    );
+                        double height = (int) shape.getSize().getHeight() + dy;
+
+                        // Stop the resize if the height gets too small:
+                        if (height < 10) {
+                            height = 10;
+                            dy = 0;
+                        }
+
+                        PageShape newElement = recreateElement(
+                                new Point2D.Double(shape.getPosition().getX(), shape.getPosition().getY()),
+                                new Dimension((int) shape.getSize().getWidth(), (int) height),
+                                shape.getAngle()
+                        );
+
+                        newElements.add(newElement);
+                    }
                     break;
                 case Cursor.SE_RESIZE_CURSOR:
-                    width = (int) shape.getSize().getWidth() + dx;
-                    height = (int) shape.getSize().getHeight() + dy;
+                    for (PageElement element : selectedElements) {
 
-                    if (width < 10 || height < 10)
-                        return;
+                        PageShape shape = (PageShape) element;
 
-                    newElement = recreateElement(
-                            new Point2D.Double(shape.getPosition().getX(), shape.getPosition().getY()),
-                            new Dimension((int) width, (int) height), shape.getAngle()
-                    );
+                        double width = (int) shape.getSize().getWidth() + dx;
+                        double height = (int) shape.getSize().getHeight() + dy;
+
+                        // Stop the resize if the height gets too small:
+                        if (height < 10) {
+                            height = 10;
+                            dy = 0;
+                        }
+                        if (width < 10) {
+                            width = 10;
+                            dx = 0;
+                        }
+
+                        PageShape newElement = recreateElement(
+                                new Point2D.Double(shape.getPosition().getX(), shape.getPosition().getY()),
+                                new Dimension((int) width, (int) height),
+                                shape.getAngle()
+                        );
+
+                        newElements.add(newElement);
+                    }
                     break;
                 case Cursor.E_RESIZE_CURSOR:
-                    width = (int) shape.getSize().getWidth() + dx;
+                    for (PageElement element : selectedElements) {
 
-                    if (width < 10)
-                        return;
+                        PageShape shape = (PageShape) element;
 
-                    newElement = recreateElement(
-                            new Point2D.Double(shape.getPosition().getX(), shape.getPosition().getY()),
-                            new Dimension((int) width, (int) shape.getSize().getHeight()), shape.getAngle()
-                    );
+                        double width = (int) shape.getSize().getWidth() + dx;
+
+                        if (width < 10) {
+                            width = 10;
+                            dx = 0;
+                        }
+
+                        PageShape newElement = recreateElement(
+                                new Point2D.Double(shape.getPosition().getX(), shape.getPosition().getY()),
+                                new Dimension((int) width, (int) shape.getSize().getHeight()),
+                                shape.getAngle()
+                        );
+
+                        newElements.add(newElement);
+                    }
                     break;
                 case Cursor.NE_RESIZE_CURSOR:
-                    width = (int) shape.getSize().getWidth() + dx;
-                    height = (int) shape.getSize().getHeight() - dy;
+                    for (PageElement element : selectedElements) {
 
-                    if (width < 10 || height < 10)
-                        return;
+                        PageShape shape = (PageShape) element;
 
-                    newElement = recreateElement(
-                            new Point2D.Double(shape.getPosition().getX(), shape.getPosition().getY() + dy),
-                            new Dimension((int) width, (int) height), shape.getAngle()
-                    );
+                        double width = (int) shape.getSize().getWidth() + dx;
+                        double height = (int) shape.getSize().getHeight() - dy;
+
+                        // Stop the resize if the height gets too small:
+                        if (height < 10) {
+                            height = 10;
+                            dy = 0;
+                        }
+                        if (width < 10) {
+                            width = 10;
+                            dx = 0;
+                        }
+
+                        PageShape newElement = recreateElement(
+                                new Point2D.Double(shape.getPosition().getX(), shape.getPosition().getY() + dy),
+                                new Dimension((int) width, (int) height),
+                                shape.getAngle()
+                        );
+
+                        newElements.add(newElement);
+                    }
                     break;
                 default:
                     return;
             }
 
-            mediator.getPage().removeSlot(shape);
-            mediator.getPage().addSlot(newElement);
+            for (int i = 0; i < selectedElements.size(); i++) {
+                mediator.getPage().removeSlot(selectedElements.get(i));
+                mediator.getPage().addSlot(newElements.get(i));
+            }
 
-            shape = newElement;
+            mediator.getPage().getSelectionModel().removeAllFromSelectionList();
+
+            // Add the overlapped element to the selected elements list:
+            mediator.getPage().getSelectionModel().addToSelectionList(newElements);
         }
     }
 
     @Override
     public void onMouseReleased(MouseEvent e) {
+        if (singleElement) {
+            // Remove the transformed element from the selected elements list:
+            mediator.getPage().getSelectionModel().removeAllFromSelectionList();
+            singleElement = false;
+        }
+
         dragging = false;
         shape = null;
     }

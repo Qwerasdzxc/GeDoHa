@@ -7,11 +7,14 @@ import app.models.page.Page;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.geom.Rectangle2D;
 import java.util.Iterator;
 
 public class CanvasView extends JPanel {
 
     private Page page;
+
+    private Rectangle2D selectionRectangle;
 
     public CanvasView(Page page) {
         super();
@@ -40,7 +43,19 @@ public class CanvasView extends JPanel {
 
             ElementPainter painter = element.getElementPainter();
             painter.paint(g2, element);
+
+            if (selectionRectangle != null) {
+                g2.setPaint(Color.BLACK);
+                g2.setStroke(new BasicStroke((float) 1, BasicStroke.CAP_SQUARE,
+                        BasicStroke.JOIN_BEVEL, 1f, new float[]{(float) 3, (float) 6}, 0));
+                g2.draw(selectionRectangle);
+            }
+
             g2.dispose();
         }
+    }
+
+    public void setSelectionRectangle(Rectangle2D selectionRectangle) {
+        this.selectionRectangle = selectionRectangle;
     }
 }

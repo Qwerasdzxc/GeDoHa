@@ -7,12 +7,15 @@ import java.util.List;
 
 import app.graphics.elements.PageElement;
 import app.models.AbstractNode;
+import app.models.element_selection.ElementSelectionModel;
 
 public class Page extends AbstractNode implements PageObserver, Serializable {
 
     private transient List<PageListener> listeners;
 
     private ArrayList<PageElement> slots;
+
+    private ElementSelectionModel selectionModel;
 
     public Page(int number) {
         super("Stranica " + number);
@@ -40,11 +43,15 @@ public class Page extends AbstractNode implements PageObserver, Serializable {
     public void removeSlot(PageElement slot) {
         this.slots.remove(slot);
 
-//        notifySlotChanged();
+        notifySlotChanged();
     }
 
     public Iterator<PageElement> getSlotsIterator() {
         return slots.iterator();
+    }
+
+    public ArrayList<PageElement> getSlots() {
+        return slots;
     }
 
     @Override
@@ -90,5 +97,11 @@ public class Page extends AbstractNode implements PageObserver, Serializable {
 
         for (int i = 0; i < listeners.size(); i++)
             listeners.get(i).onSlotChanged();
+    }
+
+    public ElementSelectionModel getSelectionModel() {
+        if(selectionModel == null)
+            selectionModel = new ElementSelectionModel();
+        return selectionModel;
     }
 }

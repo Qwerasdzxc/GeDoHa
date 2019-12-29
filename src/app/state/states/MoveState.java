@@ -76,8 +76,8 @@ public class MoveState extends State {
 
         shape = mediator.getOverlappedElement(p);
 
-        if (mediator.getCursor() != Cursor.getPredefinedCursor(Cursor.HAND_CURSOR))
-            mediator.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        if (mediator.getCursor() != Cursor.getPredefinedCursor(Cursor.MOVE_CURSOR))
+            mediator.setCursor(Cursor.getPredefinedCursor(Cursor.MOVE_CURSOR));
     }
 
     private PageShape recreateElement(Point2D pos, Dimension dim, int angle) {
