@@ -17,7 +17,7 @@ public class GActMoveAction extends GAbstractAction {
 
         putValue(SMALL_ICON, loadIcon("images/move.png"));
         putValue(NAME, "Pomeri");
-        putValue(SHORT_DESCRIPTION, "Pomeri element");
+        putValue(SHORT_DESCRIPTION, "Pomeri izabrane elemente");
     }
 
     @Override

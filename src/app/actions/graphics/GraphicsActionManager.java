@@ -2,6 +2,7 @@ package app.actions.graphics;
 
 import app.actions.ActionManager;
 import app.state.StateManager;
+import app.views.page.PageView;
 
 public class GraphicsActionManager {
 
@@ -31,6 +32,10 @@ public class GraphicsActionManager {
 
     public GActRotateAction getRotateAction(StateManager stateManager) {
         return new GActRotateAction(stateManager);
+    }
+
+    public GActDeleteAction getDeleteAction(PageView pageView) {
+        return new GActDeleteAction(pageView);
     }
 
     private GraphicsActionManager() {}

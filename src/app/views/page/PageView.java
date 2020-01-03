@@ -74,7 +74,7 @@ public class PageView extends JPanel implements ProjListener, DocListener, PageL
         add(content);
 
         stateManager = new StateManager(this);
-        palleteBar = new PalleteBar(stateManager);
+        palleteBar = new PalleteBar(stateManager, this);
         add(palleteBar, BorderLayout.NORTH);
 
         pathLabel = new JLabel();

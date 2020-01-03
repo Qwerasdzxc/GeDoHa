@@ -11,6 +11,7 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
+import app.Utilities;
 import app.graphics.elements.PageElement;
 import app.graphics.elements.PageShape;
 import app.graphics.elements.shapes.CircleElement;
@@ -19,12 +20,15 @@ import app.graphics.elements.shapes.TriangleElement;
 import app.state.State;
 import app.views.page.PageView;
 
+import static app.Utilities.getShapeType;
+import static app.Utilities.recreateElement;
+
 public class ResizeState extends State {
 
     private PageView mediator;
 
     private PageShape shape;
-    private ShapeType type;
+    private Utilities.ShapeType type;
 
     private boolean dragging = true;
     private final int PROX_DIST = 5;
@@ -56,6 +60,8 @@ public class ResizeState extends State {
 
         if (dragging) {
 
+            // Support for single element transformation.
+            // That element doesn't need to be selected using the Lasso select.
             if (!singleElement) {
                 if (mediator.getPage().getSelectionModel().getSelectionList().isEmpty()) {
                     mediator.getPage().getSelectionModel().addToSelectionList(shape);
@@ -91,7 +97,7 @@ public class ResizeState extends State {
                         PageShape newElement = recreateElement(
                                 new Point2D.Double(shape.getPosition().getX(), shape.getPosition().getY() + dy),
                                 new Dimension((int) shape.getSize().getWidth(), (int) height),
-                                shape.getAngle()
+                                shape.getAngle(), getShapeType(shape)
                         );
 
                         newElements.add(newElement);
@@ -118,7 +124,7 @@ public class ResizeState extends State {
                         PageShape newElement = recreateElement(
                                 new Point2D.Double(shape.getPosition().getX() + dx, shape.getPosition().getY() + dy),
                                 new Dimension((int) width, (int) height),
-                                shape.getAngle()
+                                shape.getAngle(), getShapeType(shape)
                         );
 
                         newElements.add(newElement);
@@ -139,7 +145,7 @@ public class ResizeState extends State {
                         PageShape newElement = recreateElement(
                                 new Point2D.Double(shape.getPosition().getX() + dx, shape.getPosition().getY()),
                                 new Dimension((int) width, (int) shape.getSize().getHeight()),
-                                shape.getAngle()
+                                shape.getAngle(), getShapeType(shape)
                         );
 
                         newElements.add(newElement);
@@ -166,7 +172,7 @@ public class ResizeState extends State {
                         PageShape newElement = recreateElement(
                                 new Point2D.Double(shape.getPosition().getX() + dx, shape.getPosition().getY()),
                                 new Dimension((int) width, (int) height),
-                                shape.getAngle()
+                                shape.getAngle(), getShapeType(shape)
                         );
 
                         newElements.add(newElement);
@@ -188,7 +194,7 @@ public class ResizeState extends State {
                         PageShape newElement = recreateElement(
                                 new Point2D.Double(shape.getPosition().getX(), shape.getPosition().getY()),
                                 new Dimension((int) shape.getSize().getWidth(), (int) height),
-                                shape.getAngle()
+                                shape.getAngle(), getShapeType(shape)
                         );
 
                         newElements.add(newElement);
@@ -215,7 +221,7 @@ public class ResizeState extends State {
                         PageShape newElement = recreateElement(
                                 new Point2D.Double(shape.getPosition().getX(), shape.getPosition().getY()),
                                 new Dimension((int) width, (int) height),
-                                shape.getAngle()
+                                shape.getAngle(), getShapeType(shape)
                         );
 
                         newElements.add(newElement);
@@ -236,7 +242,7 @@ public class ResizeState extends State {
                         PageShape newElement = recreateElement(
                                 new Point2D.Double(shape.getPosition().getX(), shape.getPosition().getY()),
                                 new Dimension((int) width, (int) shape.getSize().getHeight()),
-                                shape.getAngle()
+                                shape.getAngle(), getShapeType(shape)
                         );
 
                         newElements.add(newElement);
@@ -263,7 +269,7 @@ public class ResizeState extends State {
                         PageShape newElement = recreateElement(
                                 new Point2D.Double(shape.getPosition().getX(), shape.getPosition().getY() + dy),
                                 new Dimension((int) width, (int) height),
-                                shape.getAngle()
+                                shape.getAngle(), getShapeType(shape)
                         );
 
                         newElements.add(newElement);
@@ -331,7 +337,7 @@ public class ResizeState extends State {
                 break;
             case Rectangle.OUT_TOP + Rectangle.OUT_LEFT:
                 // Ignore handle for these types
-                if (type == ShapeType.CIRCLE || type == ShapeType.TRIANGLE)
+                if (type == Utilities.ShapeType.CIRCLE || type == Utilities.ShapeType.TRIANGLE)
                     break;
 
                 if (Math.abs(p.y - r.y) < PROX_DIST &&
@@ -348,7 +354,7 @@ public class ResizeState extends State {
                 break;
             case Rectangle.OUT_LEFT + Rectangle.OUT_BOTTOM:
                 // Ignore handle for these types
-                if (type == ShapeType.CIRCLE || type == ShapeType.TRIANGLE)
+                if (type == Utilities.ShapeType.CIRCLE || type == Utilities.ShapeType.TRIANGLE)
                     break;
 
                 if (Math.abs(p.x - r.x) < PROX_DIST &&
@@ -365,7 +371,7 @@ public class ResizeState extends State {
                 break;
             case Rectangle.OUT_BOTTOM + Rectangle.OUT_RIGHT:
                 // Ignore handle for these types
-                if (type == ShapeType.CIRCLE || type == ShapeType.TRIANGLE)
+                if (type == Utilities.ShapeType.CIRCLE || type == Utilities.ShapeType.TRIANGLE)
                     break;
 
                 if (Math.abs(p.x - (r.x + r.width)) < PROX_DIST &&
@@ -382,7 +388,7 @@ public class ResizeState extends State {
                 break;
             case Rectangle.OUT_RIGHT + Rectangle.OUT_TOP:
                 // Ignore handle for these types
-                if (type == ShapeType.CIRCLE || type == ShapeType.TRIANGLE)
+                if (type == Utilities.ShapeType.CIRCLE || type == Utilities.ShapeType.TRIANGLE)
                     break;
 
                 if (Math.abs(p.x - (r.x + r.width)) < PROX_DIST &&
@@ -405,29 +411,4 @@ public class ResizeState extends State {
         return r.outcode(p.getX(), p.getY());
     }
 
-    private PageShape recreateElement(Point2D pos, Dimension dim, int angle) {
-        if (shape instanceof RectangleElement)
-            return RectangleElement.createWithData(pos, dim, angle);
-        else if (shape instanceof CircleElement)
-            return CircleElement.createWithData(pos, dim, angle);
-        else if (shape instanceof TriangleElement)
-            return TriangleElement.createWithData(pos, dim, angle);
-
-        return null;
-    }
-
-    private enum ShapeType {
-        RECTANGLE, CIRCLE, TRIANGLE
-    }
-
-    private ShapeType getShapeType(PageShape shape) {
-        if (shape instanceof RectangleElement)
-            return ShapeType.RECTANGLE;
-        else if (shape instanceof CircleElement)
-            return ShapeType.CIRCLE;
-        else if (shape instanceof TriangleElement)
-            return ShapeType.TRIANGLE;
-
-        return null;
-    }
 }

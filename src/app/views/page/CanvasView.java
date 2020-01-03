@@ -44,14 +44,16 @@ public class CanvasView extends JPanel {
             ElementPainter painter = element.getElementPainter();
             painter.paint(g2, element);
 
-            if (selectionRectangle != null) {
-                g2.setPaint(Color.BLACK);
-                g2.setStroke(new BasicStroke((float) 1, BasicStroke.CAP_SQUARE,
-                        BasicStroke.JOIN_BEVEL, 1f, new float[]{(float) 3, (float) 6}, 0));
-                g2.draw(selectionRectangle);
-            }
-
             g2.dispose();
+        }
+
+        g2 = (Graphics2D) g.create();
+
+        if (selectionRectangle != null) {
+            g2.setPaint(Color.BLACK);
+            g2.setStroke(new BasicStroke((float) 1, BasicStroke.CAP_SQUARE,
+                    BasicStroke.JOIN_BEVEL, 1f, new float[]{(float) 3, (float) 6}, 0));
+            g2.draw(selectionRectangle);
         }
     }
 

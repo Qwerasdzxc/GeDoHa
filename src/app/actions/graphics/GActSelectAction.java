@@ -14,7 +14,7 @@ public class GActSelectAction extends GAbstractAction {
 
         putValue(SMALL_ICON, loadIcon("images/cursor.png"));
         putValue(NAME, "Izaberi");
-        putValue(SHORT_DESCRIPTION, "Izaberi element");
+        putValue(SHORT_DESCRIPTION, "Izaberi elemente");
     }
 
     @Override

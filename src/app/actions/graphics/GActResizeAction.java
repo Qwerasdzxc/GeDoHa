@@ -14,7 +14,7 @@ public class GActResizeAction extends GAbstractAction {
 
         putValue(SMALL_ICON, loadIcon("images/resize.png"));
         putValue(NAME, "Transformiši");
-        putValue(SHORT_DESCRIPTION, "Transformiši element");
+        putValue(SHORT_DESCRIPTION, "Transformiši izabrane elemente");
     }
 
     @Override

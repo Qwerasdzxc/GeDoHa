@@ -14,7 +14,7 @@ public class GActRotateAction extends GAbstractAction {
 
         putValue(SMALL_ICON, loadIcon("images/rotate.png"));
         putValue(NAME, "Rotiraj");
-        putValue(SHORT_DESCRIPTION, "Rotiraj element");
+        putValue(SHORT_DESCRIPTION, "Rotiraj izabrane elemente");
     }
 
     @Override

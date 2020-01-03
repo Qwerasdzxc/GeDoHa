@@ -5,7 +5,9 @@ import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Point2D;
+import java.util.ArrayList;
 
+import app.graphics.elements.PageElement;
 import app.graphics.elements.PageShape;
 import app.graphics.elements.shapes.CircleElement;
 import app.graphics.elements.shapes.RectangleElement;
@@ -13,9 +15,9 @@ import app.graphics.elements.shapes.TriangleElement;
 import app.state.State;
 import app.views.page.PageView;
 
-/**
- * Created by Qwerasdzxc on 27/12/2019.
- */
+import static app.Utilities.getShapeType;
+import static app.Utilities.recreateElement;
+
 public class MoveState extends State {
 
     private PageView mediator;
@@ -26,6 +28,8 @@ public class MoveState extends State {
     private int dy = 0;
     private int dx = 0;
     private Point2D oldPoint;
+
+    private boolean singleElement;
 
     public MoveState(PageView mediator) {
         this.mediator = mediator;
@@ -40,32 +44,60 @@ public class MoveState extends State {
     @Override
     public void onMouseDragged(MouseEvent e) {
         if (dragging && shape != null) {
+
+            // Support for single element transformation.
+            // That element doesn't need to be selected using the Lasso select.
+            if (!singleElement) {
+                if (mediator.getPage().getSelectionModel().getSelectionList().isEmpty()) {
+                    mediator.getPage().getSelectionModel().addToSelectionList(shape);
+                    singleElement = true;
+                }
+            }
+
             Point p = e.getPoint();
 
             dx = (int) p.getX() - (int) oldPoint.getX();
             dy = (int) p.getY() - (int) oldPoint.getY();
 
-            oldPoint = e.getPoint();
+            oldPoint = (Point2D) e.getPoint().clone();
 
-            PageShape newElement = recreateElement(
-                    new Point2D.Double(shape.getPosition().getX() + dx, shape.getPosition().getY() + dy),
-                    new Dimension((int) shape.getSize().getWidth(), (int) shape.getSize().getHeight()), shape.getAngle()
-            );
+            ArrayList<PageElement> selectedElements = mediator.getPage().getSelectionModel().getSelectionList();
+            ArrayList<PageShape> newElements = new ArrayList<>();
 
-            if (newElement == null)
-                return;
+            for (PageElement element : selectedElements) {
 
-            mediator.getPage().removeSlot(shape);
-            mediator.getPage().addSlot(newElement);
+                PageShape shape = (PageShape) element;
 
-            shape = newElement;
+                PageShape newElement = recreateElement(
+                        new Point2D.Double(shape.getPosition().getX() + dx, shape.getPosition().getY() + dy),
+                        new Dimension((int) shape.getSize().getWidth(), (int) shape.getSize().getHeight()), shape.getAngle(), getShapeType(shape)
+                );
 
+                newElements.add(newElement);
+            }
+
+            for (int i = 0; i < selectedElements.size(); i++) {
+                mediator.getPage().removeSlot(selectedElements.get(i));
+                mediator.getPage().addSlot(newElements.get(i));
+            }
+
+            mediator.getPage().getSelectionModel().removeAllFromSelectionList();
+
+            // Add the overlapped element to the selected elements list:
+            mediator.getPage().getSelectionModel().addToSelectionList(newElements);
         }
     }
 
     @Override
     public void onMouseReleased(MouseEvent e) {
+        if (singleElement) {
+            // Remove the transformed element from the selected elements list:
+            mediator.getPage().getSelectionModel().removeAllFromSelectionList();
+            singleElement = false;
+        }
+
         dragging = false;
+        shape = null;
         dy = 0;
         dx = 0;
     }
@@ -78,16 +110,5 @@ public class MoveState extends State {
 
         if (mediator.getCursor() != Cursor.getPredefinedCursor(Cursor.MOVE_CURSOR))
             mediator.setCursor(Cursor.getPredefinedCursor(Cursor.MOVE_CURSOR));
-    }
-
-    private PageShape recreateElement(Point2D pos, Dimension dim, int angle) {
-        if (shape instanceof RectangleElement)
-            return RectangleElement.createWithData(pos, dim, angle);
-        else if (shape instanceof CircleElement)
-            return CircleElement.createWithData(pos, dim, angle);
-        else if (shape instanceof TriangleElement)
-            return TriangleElement.createWithData(pos, dim, angle);
-
-        return null;
     }
 }
