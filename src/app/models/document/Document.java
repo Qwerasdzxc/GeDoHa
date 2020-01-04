@@ -15,6 +15,10 @@ public class Document extends AbstractNode implements DocObserver, Serializable 
         super("Dokument " + number);
     }
 
+    public Document(Document document) {
+        super(document);
+    }
+
     @Override
     protected void onChildAdded(AbstractNode childNode) {
         notifyPageCreated((Page) childNode);
@@ -94,5 +98,10 @@ public class Document extends AbstractNode implements DocObserver, Serializable 
 
         for (int i = 0; i < listeners.size(); i++)
             listeners.get(i).onDocumentChangedName(this);
+    }
+
+    @Override
+    public AbstractNode clone() {
+        return new Document(this);
     }
 }

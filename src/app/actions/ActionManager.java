@@ -15,9 +15,13 @@ public class ActionManager {
 	private ActSaveProjectAs saveProjectAs;
 	private ActOpenProject openProject;
 
-	private ActCut cut;
-	private ActCopy copy;
-	private ActPaste paste;
+	private ActSlotsCut slotsCut;
+	private ActSlotsCopy slotsCopy;
+	private ActSlotsPaste slotsPaste;
+
+	private ActDocumentCut documentCut;
+	private ActDocumentCopy documentCopy;
+	private ActDocumentPaste documentPaste;
 
     private ActionManager() {
     	deleteNode= new ActNodeDelete();
@@ -28,9 +32,12 @@ public class ActionManager {
 		saveProject = new ActSaveProject();
 		saveProjectAs = new ActSaveProjectAs();
 		openProject = new ActOpenProject();
-		cut = new ActCut();
-		copy = new ActCopy();
-		paste = new ActPaste();
+		slotsCut = new ActSlotsCut();
+		slotsCopy = new ActSlotsCopy();
+		slotsPaste = new ActSlotsPaste();
+		documentCut = new ActDocumentCut();
+		documentCopy = new ActDocumentCopy();
+		documentPaste = new ActDocumentPaste();
     }
     
     public static ActionManager getInstance() {
@@ -72,15 +79,27 @@ public class ActionManager {
 		return saveProjectAs;
 	}
 
-	public ActCut getCut() {
-		return cut;
+	public ActSlotsCut getSlotsCut() {
+		return slotsCut;
 	}
 
-	public ActCopy getCopy() {
-		return copy;
+	public ActSlotsCopy getSlotsCopy() {
+		return slotsCopy;
 	}
 
-	public ActPaste getPaste() {
-    	return paste;
+	public ActSlotsPaste getSlotsPaste() {
+    	return slotsPaste;
+	}
+
+	public ActDocumentCut getDocumentCut() {
+    	return documentCut;
+	}
+
+	public ActDocumentCopy getDocumentCopy() {
+		return documentCopy;
+	}
+
+	public ActDocumentPaste getDocumentPaste() {
+		return documentPaste;
 	}
 }

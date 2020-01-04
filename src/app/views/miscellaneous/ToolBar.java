@@ -2,11 +2,6 @@ package app.views.miscellaneous;
 
 import app.actions.ActionManager;
 
-import java.awt.Image;
-
-import javax.swing.Action;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JToolBar;
 import javax.swing.SwingConstants;
 
@@ -32,8 +27,8 @@ public class ToolBar extends JToolBar {
 
 		addSeparator();
 
-		add(ActionManager.getInstance().getCut());
-		add(ActionManager.getInstance().getCopy());
-		add(ActionManager.getInstance().getPaste());
+		add(ActionManager.getInstance().getSlotsCut());
+		add(ActionManager.getInstance().getSlotsCopy());
+		add(ActionManager.getInstance().getSlotsPaste());
 	}
 }

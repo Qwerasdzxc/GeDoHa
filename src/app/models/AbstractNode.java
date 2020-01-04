@@ -1,5 +1,8 @@
 package app.models;
 
+import app.graphics.elements.PageElement;
+import app.models.slot.Slot;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -8,7 +11,7 @@ import java.util.List;
 import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreeNode;
 
-public abstract class AbstractNode implements MutableTreeNode, Serializable {
+public abstract class AbstractNode implements MutableTreeNode, Serializable, Cloneable {
 
     private String name;
 
@@ -19,6 +22,14 @@ public abstract class AbstractNode implements MutableTreeNode, Serializable {
     public AbstractNode(String name) {
         this.setName(name);
         this.children = new ArrayList<>();
+    }
+
+    public AbstractNode(AbstractNode node) {
+        this.name = node.name;
+        this.parent = node.parent;
+
+        this.children = new ArrayList<>();
+        this.children.addAll(node.getChildren());
     }
 
     public void addChild(AbstractNode childNode) {
@@ -109,4 +120,6 @@ public abstract class AbstractNode implements MutableTreeNode, Serializable {
     public String toString() {
         return name;
     }
+
+    public abstract AbstractNode clone();
 }

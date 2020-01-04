@@ -24,6 +24,15 @@ public class Page extends AbstractNode implements PageObserver, Serializable {
         slots = new ArrayList<>();
     }
 
+    public Page(Page page) {
+        super(page);
+
+        this.slots = new ArrayList<>();
+        this.slots.addAll(page.slots);
+
+        this.selectionModel = new ElementSelectionModel();
+    }
+
     public void setSelected() {
         notifyPageSelected(this);
     }
@@ -117,5 +126,10 @@ public class Page extends AbstractNode implements PageObserver, Serializable {
         if(selectionModel == null)
             selectionModel = new ElementSelectionModel();
         return selectionModel;
+    }
+
+    @Override
+    public AbstractNode clone() {
+        return new Page(this);
     }
 }

@@ -109,4 +109,9 @@ public class Project extends AbstractNode implements ProjObserver, Serializable 
         for (ProjListener listener : listeners)
             listener.onProjectChangedName(name);
     }
+
+    @Override
+    public AbstractNode clone() {
+        return null;
+    }
 }

@@ -24,6 +24,10 @@ public class MenuBar extends JMenuBar{
 		file.addSeparator();
 		file.add(ActionManager.getInstance().getNewNode());
 		file.addSeparator();
+		file.add(ActionManager.getInstance().getDocumentCut());
+		file.add(ActionManager.getInstance().getDocumentCopy());
+		file.add(ActionManager.getInstance().getDocumentPaste());
+		file.addSeparator();
 		file.add(ActionManager.getInstance().getRenameNode());
 		file.add(ActionManager.getInstance().getDeleteNode());
 
@@ -45,6 +49,5 @@ public class MenuBar extends JMenuBar{
 		this.add(file);
 		this.add(help);
 		this.add(about);
-
 	}
 }

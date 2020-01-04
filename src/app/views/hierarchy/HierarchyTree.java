@@ -92,6 +92,14 @@ public class HierarchyTree extends JTree implements TreeSelectionListener {
         ActionManager.getInstance().getSaveProject().setEnabled(false);
         ActionManager.getInstance().getSaveProjectAs().setEnabled(false);
 
+        ActionManager.getInstance().getDocumentCut().setEnabled(false);
+        ActionManager.getInstance().getDocumentCopy().setEnabled(false);
+        ActionManager.getInstance().getDocumentPaste().setEnabled(false);
+
+        ActionManager.getInstance().getSlotsCut().setEnabled(false);
+        ActionManager.getInstance().getSlotsCopy().setEnabled(false);
+        ActionManager.getInstance().getSlotsPaste().setEnabled(false);
+
         getContextMenu().enableForWorkspace();
     }
 
@@ -102,6 +110,14 @@ public class HierarchyTree extends JTree implements TreeSelectionListener {
 
         ActionManager.getInstance().getSaveProject().setEnabled(true);
         ActionManager.getInstance().getSaveProjectAs().setEnabled(true);
+
+        ActionManager.getInstance().getDocumentCut().setEnabled(false);
+        ActionManager.getInstance().getDocumentCopy().setEnabled(false);
+        ActionManager.getInstance().getDocumentPaste().setEnabled(true);
+
+        ActionManager.getInstance().getSlotsCut().setEnabled(false);
+        ActionManager.getInstance().getSlotsCopy().setEnabled(false);
+        ActionManager.getInstance().getSlotsPaste().setEnabled(false);
 
         getContextMenu().enableForProject();
     }
@@ -114,6 +130,14 @@ public class HierarchyTree extends JTree implements TreeSelectionListener {
         ActionManager.getInstance().getSaveProject().setEnabled(false);
         ActionManager.getInstance().getSaveProjectAs().setEnabled(false);
 
+        ActionManager.getInstance().getDocumentCut().setEnabled(true);
+        ActionManager.getInstance().getDocumentCopy().setEnabled(true);
+        ActionManager.getInstance().getDocumentPaste().setEnabled(false);
+
+        ActionManager.getInstance().getSlotsCut().setEnabled(false);
+        ActionManager.getInstance().getSlotsCopy().setEnabled(false);
+        ActionManager.getInstance().getSlotsPaste().setEnabled(false);
+
         getContextMenu().enableForDocument();
     }
 
@@ -124,6 +148,14 @@ public class HierarchyTree extends JTree implements TreeSelectionListener {
 
         ActionManager.getInstance().getSaveProject().setEnabled(false);
         ActionManager.getInstance().getSaveProjectAs().setEnabled(false);
+
+        ActionManager.getInstance().getDocumentCut().setEnabled(false);
+        ActionManager.getInstance().getDocumentCopy().setEnabled(false);
+        ActionManager.getInstance().getDocumentPaste().setEnabled(false);
+
+        ActionManager.getInstance().getSlotsCut().setEnabled(true);
+        ActionManager.getInstance().getSlotsCopy().setEnabled(true);
+        ActionManager.getInstance().getSlotsPaste().setEnabled(true);
 
         getContextMenu().enableForPage();
     }

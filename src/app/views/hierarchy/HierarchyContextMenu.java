@@ -9,6 +9,9 @@ public class HierarchyContextMenu extends JPopupMenu {
     private JMenuItem save;
     private JMenuItem saveAs;
     private JMenuItem create;
+    private JMenuItem cutDocument;
+    private JMenuItem copyDocument;
+    private JMenuItem pasteDocument;
     private JMenuItem rename;
     private JMenuItem delete;
 
@@ -22,6 +25,15 @@ public class HierarchyContextMenu extends JPopupMenu {
         this.create = new JMenuItem("Napravi");
         this.create.addActionListener(ActionManager.getInstance().getNewNode());
 
+        this.cutDocument = new JMenuItem("Iseci dokument");
+        this.cutDocument.addActionListener(ActionManager.getInstance().getDocumentCut());
+
+        this.copyDocument = new JMenuItem("Kopiraj dokument");
+        this.copyDocument.addActionListener(ActionManager.getInstance().getDocumentCopy());
+
+        this.pasteDocument = new JMenuItem("Nalepi dokument");
+        this.pasteDocument.addActionListener(ActionManager.getInstance().getDocumentPaste());
+
         this.rename = new JMenuItem("Preimenuj");
         this.rename.addActionListener(ActionManager.getInstance().getRenameNode());
 
@@ -33,6 +45,10 @@ public class HierarchyContextMenu extends JPopupMenu {
         addSeparator();
         add(create);
         addSeparator();
+        add(cutDocument);
+        add(copyDocument);
+        add(pasteDocument);
+        addSeparator();
         add(rename);
         add(delete);
     }
@@ -41,6 +57,9 @@ public class HierarchyContextMenu extends JPopupMenu {
         save.setEnabled(false);
         saveAs.setEnabled(false);
         create.setEnabled(true);
+        cutDocument.setEnabled(false);
+        copyDocument.setEnabled(false);
+        pasteDocument.setEnabled(false);
         rename.setEnabled(false);
         delete.setEnabled(false);
     }
@@ -49,6 +68,9 @@ public class HierarchyContextMenu extends JPopupMenu {
         save.setEnabled(true);
         saveAs.setEnabled(true);
         create.setEnabled(true);
+        cutDocument.setEnabled(false);
+        copyDocument.setEnabled(false);
+        pasteDocument.setEnabled(true);
         rename.setEnabled(true);
         delete.setEnabled(true);
     }
@@ -57,6 +79,9 @@ public class HierarchyContextMenu extends JPopupMenu {
         save.setEnabled(false);
         saveAs.setEnabled(false);
         create.setEnabled(true);
+        cutDocument.setEnabled(true);
+        copyDocument.setEnabled(true);
+        pasteDocument.setEnabled(false);
         rename.setEnabled(true);
         delete.setEnabled(true);
     }
@@ -65,6 +90,9 @@ public class HierarchyContextMenu extends JPopupMenu {
         save.setEnabled(false);
         saveAs.setEnabled(false);
         create.setEnabled(false);
+        cutDocument.setEnabled(false);
+        copyDocument.setEnabled(false);
+        pasteDocument.setEnabled(false);
         rename.setEnabled(true);
         delete.setEnabled(true);
     }

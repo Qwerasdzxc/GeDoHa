@@ -13,15 +13,17 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
-public class ActCopy extends GAbstractAction {
+public class ActSlotsCopy extends GAbstractAction {
 
-    public ActCopy() {
+    public ActSlotsCopy() {
         putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(
                 KeyEvent.VK_C, ActionEvent.CTRL_MASK));
         putValue(MNEMONIC_KEY, KeyEvent.VK_C);
         putValue(SMALL_ICON, loadIcon("images/copy.png"));
-        putValue(NAME, "Kopiraj");
-        putValue(SHORT_DESCRIPTION, "Kopiraj izabranu stavku");
+        putValue(NAME, "Kopiraj slotove");
+        putValue(SHORT_DESCRIPTION, "Kopiraj izabrane slotove");
+
+        setEnabled(false);
     }
 
     public void actionPerformed(ActionEvent e) {

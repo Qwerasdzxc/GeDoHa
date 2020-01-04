@@ -15,15 +15,17 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
-public class ActCut extends GAbstractAction {
+public class ActSlotsCut extends GAbstractAction {
 
-    public ActCut() {
+    public ActSlotsCut() {
         putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(
                 KeyEvent.VK_C, ActionEvent.CTRL_MASK));
         putValue(MNEMONIC_KEY, KeyEvent.VK_C);
         putValue(SMALL_ICON, loadIcon("images/cut.png"));
-        putValue(NAME, "Iseci");
-        putValue(SHORT_DESCRIPTION, "Iseci izabranu stavku");
+        putValue(NAME, "Iseci slotove");
+        putValue(SHORT_DESCRIPTION, "Iseci izabrane slotove");
+
+        setEnabled(false);
     }
 
     public void actionPerformed(ActionEvent e) {

@@ -12,15 +12,17 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 
-public class ActPaste extends GAbstractAction {
+public class ActSlotsPaste extends GAbstractAction {
 
-    public ActPaste() {
+    public ActSlotsPaste() {
         putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(
                 KeyEvent.VK_V, ActionEvent.CTRL_MASK));
         putValue(MNEMONIC_KEY, KeyEvent.VK_V);
         putValue(SMALL_ICON, loadIcon("images/paste.png"));
-        putValue(NAME, "Nalepi");
-        putValue(SHORT_DESCRIPTION, "Nalepi kopiranu stavku");
+        putValue(NAME, "Nalepi slotove");
+        putValue(SHORT_DESCRIPTION, "Nalepi izabrane slotove");
+
+        setEnabled(false);
     }
 
     public void actionPerformed(ActionEvent e) {

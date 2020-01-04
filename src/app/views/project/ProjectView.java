@@ -1,15 +1,26 @@
 package app.views.project;
 
+import app.graphics.elements.PageShape;
+import app.graphics.elements.shapes.CircleElement;
+import app.graphics.elements.shapes.RectangleElement;
+import app.graphics.painters.shapes.CirclePainter;
+import app.graphics.painters.shapes.RectanglePainter;
 import app.models.AbstractNode;
 import app.models.document.DocListener;
 import app.models.document.Document;
+import app.models.document.DocumentSelection;
 import app.models.project.ProjListener;
 import app.models.project.Project;
+import app.models.slot.Slot;
+import app.models.slot.SlotSelection;
 import app.views.MainFrame;
 import app.views.document.DocumentView;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.datatransfer.Transferable;
+import java.awt.geom.Point2D;
+import java.util.List;
 
 public class ProjectView extends JPanel implements ProjListener, DocListener {
 
@@ -86,6 +97,22 @@ public class ProjectView extends JPanel implements ProjListener, DocListener {
 
     public DocumentView getActiveDocumentView() {
         return (DocumentView) tabbedPane.getSelectedComponent();
+    }
+
+    public void pasteDocument() {
+        Transferable clipboardContent = MainFrame.getInstance().getClipboard().getContents(MainFrame.getInstance());
+
+        if ((clipboardContent != null) &&
+                (clipboardContent.isDataFlavorSupported(SlotSelection.flavor))) {
+            try {
+                Document document = (Document) clipboardContent.getTransferData(DocumentSelection.flavor);
+                document = (Document) document.clone();
+
+//                project.
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
     }
 
     @Override

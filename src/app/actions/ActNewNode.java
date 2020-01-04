@@ -47,7 +47,7 @@ public class ActNewNode extends GAbstractAction {
         hierarchy.setSelectionPath(createTreePathFromNode(child));
     }
 
-    private TreePath createTreePathFromNode(TreeNode node) {
+    public static TreePath createTreePathFromNode(TreeNode node) {
         List<Object> nodes = new ArrayList<Object>();
 
         nodes.add(node);

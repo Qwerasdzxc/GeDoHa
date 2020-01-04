@@ -43,6 +43,8 @@ public class ActOpenProject extends GAbstractAction {
             } catch (Exception exc) {
                 exc.printStackTrace();
                 ErrorHandler.showFileError();
+
+                return;
             }
 
             for (AbstractNode doc : project.getChildren()) {

@@ -81,4 +81,9 @@ public class Workspace extends AbstractNode implements WSObserver, Serializable 
     public void setFile(File file) {
         this.file = file;
     }
+
+    @Override
+    public AbstractNode clone() {
+        return null;
+    }
 }
