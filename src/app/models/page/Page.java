@@ -8,12 +8,13 @@ import java.util.List;
 import app.graphics.elements.PageElement;
 import app.models.AbstractNode;
 import app.models.element_selection.ElementSelectionModel;
+import app.models.slot.Slot;
 
 public class Page extends AbstractNode implements PageObserver, Serializable {
 
     private transient List<PageListener> listeners;
 
-    private ArrayList<PageElement> slots;
+    private ArrayList<Slot> slots;
 
     private ElementSelectionModel selectionModel;
 
@@ -34,23 +35,36 @@ public class Page extends AbstractNode implements PageObserver, Serializable {
         notifyPageChangedName(name);
     }
 
-    public void addSlot(PageElement slot) {
+    public void addSlot(PageElement element) {
+        Slot newSlot = new Slot(element);
+        element.setParent(newSlot);
+        slots.add(newSlot);
+
+        notifySlotChanged();
+    }
+
+    public void addSlot(Slot slot) {
         this.slots.add(slot);
 
         notifySlotChanged();
     }
 
-    public void removeSlot(PageElement slot) {
-        this.slots.remove(slot);
+    public void removeSlot(PageElement element) {
+        for (int i = 0; i < slots.size(); i ++) {
+            if (slots.get(i).getElement() == element) {
+                slots.remove(slots.get(i));
+                break;
+            }
+        }
 
         notifySlotChanged();
     }
 
-    public Iterator<PageElement> getSlotsIterator() {
+    public Iterator<Slot> getSlotsIterator() {
         return slots.iterator();
     }
 
-    public ArrayList<PageElement> getSlots() {
+    public ArrayList<Slot> getSlots() {
         return slots;
     }
 

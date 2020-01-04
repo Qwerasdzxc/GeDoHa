@@ -84,6 +84,10 @@ public class ProjectView extends JPanel implements ProjListener, DocListener {
         }
     }
 
+    public DocumentView getActiveDocumentView() {
+        return (DocumentView) tabbedPane.getSelectedComponent();
+    }
+
     @Override
     public void onDocumentCreated(Document document) {
        document.addObserver(this);

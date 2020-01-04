@@ -16,6 +16,7 @@ public class WorkspaceView extends JPanel implements WSListener, ProjListener {
 
     private Workspace workspace;
     private Project activeProject;
+    private ProjectView activeProjectView;
 
     public WorkspaceView(Workspace workspace) {
         super(new BorderLayout());
@@ -36,10 +37,14 @@ public class WorkspaceView extends JPanel implements WSListener, ProjListener {
         }
     }
 
+    public ProjectView getActiveProjectView() {
+        return activeProjectView;
+    }
+
     @Override
     public void onProjectCreated(Project project) {
         activeProject = project;
-        ProjectView activeProjectView = new ProjectView(project);
+        activeProjectView = new ProjectView(project);
 
         removeAll();
         add(activeProjectView, BorderLayout.CENTER);

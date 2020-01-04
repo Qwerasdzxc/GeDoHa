@@ -7,14 +7,21 @@ import java.awt.Paint;
 import java.awt.Stroke;
 import java.awt.geom.Point2D;
 
+import app.graphics.elements.PageElement;
 import app.graphics.elements.PageShape;
 import app.graphics.painters.shapes.CirclePainter;
+import app.graphics.painters.shapes.RectanglePainter;
 
 public class CircleElement extends PageShape {
 
     public CircleElement(Point2D position, Dimension size, Stroke stroke, Paint paint, Color color, int angle) {
         super(position, size, stroke, paint, color, angle);
 
+        elementPainter = new CirclePainter(this);
+    }
+
+    public CircleElement(CircleElement circle) {
+        super(circle);
         elementPainter = new CirclePainter(this);
     }
 
@@ -39,5 +46,10 @@ public class CircleElement extends PageShape {
                 Color.WHITE,
                 Color.BLACK,
                 angle);
+    }
+
+    @Override
+    public PageElement clone() {
+        return new CircleElement(this);
     }
 }

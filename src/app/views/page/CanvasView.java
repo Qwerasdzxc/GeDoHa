@@ -4,6 +4,7 @@ import app.graphics.elements.PageElement;
 import app.graphics.elements.PageShape;
 import app.graphics.painters.ElementPainter;
 import app.models.page.Page;
+import app.models.slot.Slot;
 
 import javax.swing.*;
 import java.awt.*;
@@ -30,11 +31,11 @@ public class CanvasView extends JPanel {
         g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.8f));
 
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        Iterator<PageElement> it = page.getSlotsIterator();
+        Iterator<Slot> it = page.getSlotsIterator();
         while(it.hasNext()){
             g2 = (Graphics2D) g.create();
 
-            PageElement element = it.next();
+            PageElement element = it.next().getElement();
             PageShape shape = (PageShape) element;
 
             g2.rotate(Math.toRadians(-shape.getAngle()),

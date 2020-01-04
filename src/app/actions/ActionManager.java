@@ -15,6 +15,10 @@ public class ActionManager {
 	private ActSaveProjectAs saveProjectAs;
 	private ActOpenProject openProject;
 
+	private ActCut cut;
+	private ActCopy copy;
+	private ActPaste paste;
+
     private ActionManager() {
     	deleteNode= new ActNodeDelete();
 		renameNode = new ActNodeRename();
@@ -24,6 +28,9 @@ public class ActionManager {
 		saveProject = new ActSaveProject();
 		saveProjectAs = new ActSaveProjectAs();
 		openProject = new ActOpenProject();
+		cut = new ActCut();
+		copy = new ActCopy();
+		paste = new ActPaste();
     }
     
     public static ActionManager getInstance() {
@@ -63,5 +70,17 @@ public class ActionManager {
 
 	public ActSaveProjectAs getSaveProjectAs() {
 		return saveProjectAs;
+	}
+
+	public ActCut getCut() {
+		return cut;
+	}
+
+	public ActCopy getCopy() {
+		return copy;
+	}
+
+	public ActPaste getPaste() {
+    	return paste;
 	}
 }

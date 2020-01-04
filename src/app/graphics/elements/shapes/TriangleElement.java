@@ -7,7 +7,9 @@ import java.awt.Paint;
 import java.awt.Stroke;
 import java.awt.geom.Point2D;
 
+import app.graphics.elements.PageElement;
 import app.graphics.elements.PageShape;
+import app.graphics.painters.shapes.RectanglePainter;
 import app.graphics.painters.shapes.TrianglePainter;
 
 public class TriangleElement extends PageShape {
@@ -15,6 +17,11 @@ public class TriangleElement extends PageShape {
     public TriangleElement(Point2D position, Dimension size, Stroke stroke, Paint paint, Color color, int angle) {
         super(position, size, stroke, paint, color, angle);
 
+        elementPainter = new TrianglePainter(this);
+    }
+
+    public TriangleElement(TriangleElement triangle) {
+        super(triangle);
         elementPainter = new TrianglePainter(this);
     }
 
@@ -39,5 +46,10 @@ public class TriangleElement extends PageShape {
                 Color.WHITE,
                 Color.BLACK,
                 angle);
+    }
+
+    @Override
+    public PageElement clone() {
+        return new TriangleElement(this);
     }
 }

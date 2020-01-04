@@ -20,6 +20,13 @@ public abstract class PageShape extends PageElement {
         this.angle = angle;
     }
 
+    public PageShape(PageShape shape) {
+        super(shape);
+        this.size = shape.size;
+        this.position = shape.position;
+        this.angle = shape.angle;
+    }
+
     public Dimension getSize() {
         return size;
     }
@@ -36,7 +43,9 @@ public abstract class PageShape extends PageElement {
         this.position = position;
     }
 
-    public int getAngle() { return angle; }
+    public int getAngle() {
+        return angle;
+    }
 
     public void setAngle(int angle) {
         if (angle > 360)

@@ -7,6 +7,7 @@ import java.awt.Paint;
 import java.awt.Stroke;
 import java.awt.geom.Point2D;
 
+import app.graphics.elements.PageElement;
 import app.graphics.elements.PageShape;
 import app.graphics.painters.shapes.RectanglePainter;
 
@@ -15,6 +16,11 @@ public class RectangleElement extends PageShape {
     public RectangleElement(Point2D position, Dimension size, Stroke stroke, Paint paint, Color color, int angle) {
         super(position, size, stroke, paint, color, angle);
 
+        elementPainter = new RectanglePainter(this);
+    }
+
+    public RectangleElement(RectangleElement rectangle) {
+        super(rectangle);
         elementPainter = new RectanglePainter(this);
     }
 
@@ -39,5 +45,10 @@ public class RectangleElement extends PageShape {
                 Color.WHITE,
                 Color.BLACK,
                 angle);
+    }
+
+    @Override
+    public PageElement clone() {
+        return new RectangleElement(this);
     }
 }

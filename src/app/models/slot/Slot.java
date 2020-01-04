@@ -2,34 +2,42 @@ package app.models.slot;
 
 import java.awt.Dimension;
 import java.awt.Point;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import app.graphics.elements.PageElement;
 import app.graphics.painters.ElementPainter;
 import app.models.page.Page;
 
-/**
- * Created by Qwerasdzxc on 13/12/2019.
- */
-public class Slot {
+public class Slot implements Serializable, Cloneable {
 
-    private String name;
+    private PageElement element;
 
-    private ArrayList<PageElement> elements;
-
-    public Slot() {
-        this.elements = new ArrayList<>();
+    public Slot(PageElement element) {
+        this.element = element;
     }
 
-    public Slot(String name) {
-        this.name = name;
+    public PageElement getElement() {
+        return element;
     }
 
-    public String getName() {
-        return name;
+    public void setElement(PageElement element) {
+        this.element = element;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    @Override
+    public Object clone() {
+        Slot slot;
+        try {
+            slot = (Slot) super.clone();
+        } catch (CloneNotSupportedException e) {
+            slot = new Slot(this.getElement());
+            this.getElement().setParent(slot);
+        }
+        PageElement el = (PageElement) this.element.clone();
+        slot.setElement(el);
+        el.setParent(slot);
+
+        return slot;
     }
 }

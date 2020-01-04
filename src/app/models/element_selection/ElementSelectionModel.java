@@ -14,10 +14,8 @@ import app.graphics.elements.shapes.CircleElement;
 import app.graphics.elements.shapes.RectangleElement;
 import app.graphics.elements.shapes.TriangleElement;
 import app.models.page.PageListener;
+import app.models.slot.Slot;
 
-/**
- * Created by Qwerasdzxc on 29/12/2019.
- */
 public class ElementSelectionModel extends DefaultSingleSelectionModel implements ElementSelectionObserver {
 
     private transient List<ElementSelectionListener> listeners;
@@ -84,36 +82,15 @@ public class ElementSelectionModel extends DefaultSingleSelectionModel implement
         return selectionList.contains(element);
     }
 
-    public void selectElements(Rectangle2D rec, ArrayList<PageElement> elements) {
-        for (PageElement element : elements) {
+    public void selectElements(Rectangle2D rec, ArrayList<Slot> elements) {
+        for (Slot slot : elements) {
+            PageElement element = slot.getElement();
             PageShape shape = (PageShape) element;
             if (rec.intersects(shape.getPosition().getX(), shape.getPosition().getY(),
                     shape.getSize().getWidth(), shape.getSize().getHeight())) {
                 if (!isElementSelected(shape))
                     addToSelectionList(shape);
             }
-//            if (element instanceof RectangleElement) {
-//                RectangleElement el = (RectangleElement) element;
-//                if (rec.intersects(el.getPosition().getX(), el.getPosition().getY(),
-//                        el.getSize().getWidth(), el.getSize().getHeight())) {
-//                    if (!isElementSelected(el))
-//                        selectionList.add(el);
-//                }
-//            } else if (element instanceof CircleElement) {
-//                CircleElement el = (CircleElement) element;
-//                if (rec.intersects(el.getPosition().getX(), el.getPosition().getY(),
-//                        el.getSize().getWidth(), link.getSize().getHeight())) {
-//                    if (!isElementSelected(el))
-//                        selectionList.add(el);
-//                }
-//            } else {
-//                TriangleElement link = (TriangleElement) element;
-//                if (rec.intersects(link.getPosition().getX(), link.getPosition().getY(),
-//                        link.getSize().getWidth(), link.getSize().getHeight())) {
-//                    if (!isElementSelected(link))
-//                        selectionList.add(link);
-//                }
-//            }
         }
     }
 

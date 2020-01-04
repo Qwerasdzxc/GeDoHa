@@ -25,6 +25,7 @@ public class DocumentView extends JPanel implements ProjListener, DocListener, P
     public Document document;
 
     private Page activePage;
+    private PageView activePageView;
 
     private JPanel pageStripPanel;
     private JPanel body;
@@ -89,6 +90,14 @@ public class DocumentView extends JPanel implements ProjListener, DocListener, P
         return document;
     }
 
+    public Page getActivePage() {
+        return activePage;
+    }
+
+    public PageView getActivePageView() {
+        return activePageView;
+    }
+
     @Override
     public void onPageCreated(Page page) {
         activePage = page;
@@ -105,7 +114,8 @@ public class DocumentView extends JPanel implements ProjListener, DocListener, P
         pageStripPanel.add(thumbnail);
 
         body.removeAll();
-        body.add(new PageView(page));
+        activePageView = new PageView(page);
+        body.add(activePageView);
 
         revalidate();
 
@@ -122,6 +132,7 @@ public class DocumentView extends JPanel implements ProjListener, DocListener, P
 
         if (activePage == page) {
             body.removeAll();
+            activePageView = null;
             activePage = null;
         }
 
@@ -136,7 +147,8 @@ public class DocumentView extends JPanel implements ProjListener, DocListener, P
         activePage = page;
 
         body.removeAll();
-        body.add(new PageView(page));
+        activePageView = new PageView(page);
+        body.add(activePageView);
 
         revalidate();
         repaint();

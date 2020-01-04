@@ -4,6 +4,9 @@ import javax.swing.*;
 import javax.swing.tree.DefaultTreeModel;
 
 import java.awt.*;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.ClipboardOwner;
+import java.awt.datatransfer.Transferable;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
@@ -15,7 +18,7 @@ import app.views.miscellaneous.MenuBar;
 import app.views.miscellaneous.ToolBar;
 import app.views.workspace.WorkspaceView;
 
-public class MainFrame extends JFrame {
+public class MainFrame extends JFrame implements ClipboardOwner {
 
     private static MainFrame instance = null;
 
@@ -23,6 +26,8 @@ public class MainFrame extends JFrame {
 
     private HierarchyTree hierarchyTree;
     private JSplitPane splitPane;
+
+    private Clipboard clipboard = new Clipboard("CB");
 
     private MainFrame() {
 
@@ -121,6 +126,10 @@ public class MainFrame extends JFrame {
         return hierarchyTree;
     }
 
+    public WorkspaceView getWorkspaceView() {
+        return workspaceView;
+    }
+
     public void setWorkspaceView(WorkspaceView workspaceView) {
         this.workspaceView = workspaceView;
 
@@ -135,4 +144,11 @@ public class MainFrame extends JFrame {
         this.hierarchyTree = new HierarchyTree();
         this.hierarchyTree.setModel(new DefaultTreeModel(workspace));
     }
+
+    public Clipboard getClipboard() {
+        return clipboard;
+    }
+
+    @Override
+    public void lostOwnership(Clipboard clipboard, Transferable contents) {}
 }

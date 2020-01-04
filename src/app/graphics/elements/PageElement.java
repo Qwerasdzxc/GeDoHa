@@ -7,8 +7,11 @@ import java.io.Serializable;
 
 import app.graphics.SerializableStroke;
 import app.graphics.painters.ElementPainter;
+import app.models.slot.Slot;
 
-public abstract class PageElement implements Serializable {
+public abstract class PageElement implements Serializable, Cloneable {
+
+    protected Slot parent;
 
     protected Paint paint;
     protected Color color;
@@ -16,10 +19,26 @@ public abstract class PageElement implements Serializable {
 
     protected ElementPainter elementPainter;
 
-    public PageElement(Stroke stroke, Paint paint, Color color){
+    public PageElement(Stroke stroke, Paint paint, Color color) {
         this.stroke = new SerializableStroke(stroke);
         this.paint = paint;
         this.color = color;
+    }
+
+    public PageElement(PageElement element) {
+        this.parent = element.parent;
+        this.stroke = element.stroke;
+        this.color = element.color;
+        this.paint = element.paint;
+        this.elementPainter = element.elementPainter;
+    }
+
+    public Slot getParent() {
+        return parent;
+    }
+
+    public void setParent(Slot parent) {
+        this.parent = parent;
     }
 
     public Paint getPaint() {
@@ -49,4 +68,10 @@ public abstract class PageElement implements Serializable {
     public ElementPainter getElementPainter() {
         return elementPainter;
     }
+
+    public void setElementPainter(ElementPainter elementPainter) {
+        this.elementPainter = elementPainter;
+    }
+
+    public abstract PageElement clone();
 }

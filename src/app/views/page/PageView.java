@@ -3,8 +3,12 @@ package app.views.page;
 import app.Utilities;
 import app.graphics.elements.PageElement;
 import app.graphics.elements.PageShape;
+import app.graphics.elements.shapes.CircleElement;
+import app.graphics.elements.shapes.RectangleElement;
 import app.graphics.painters.ElementPainter;
 import app.graphics.painters.PagePainter;
+import app.graphics.painters.shapes.CirclePainter;
+import app.graphics.painters.shapes.RectanglePainter;
 import app.models.document.DocListener;
 import app.models.document.Document;
 import app.models.element_selection.ElementSelectionListener;
@@ -12,7 +16,10 @@ import app.models.page.Page;
 import app.models.page.PageListener;
 import app.models.project.ProjListener;
 import app.models.project.Project;
+import app.models.slot.Slot;
+import app.models.slot.SlotSelection;
 import app.state.StateManager;
+import app.views.MainFrame;
 
 import javax.swing.*;
 import javax.swing.border.CompoundBorder;
@@ -21,6 +28,7 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
 import java.awt.*;
+import java.awt.datatransfer.Transferable;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Area;
 import java.awt.geom.NoninvertibleTransformException;
@@ -28,6 +36,7 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 public class PageView extends JPanel implements ProjListener, DocListener, PageListener, ElementSelectionListener {
 
@@ -89,9 +98,9 @@ public class PageView extends JPanel implements ProjListener, DocListener, PageL
     }
 
     public PageShape getOverlappedElement(Point2D mousePosition) {
-        Iterator<PageElement> it = page.getSlotsIterator();
-        while(it.hasNext()){
-            PageElement element = it.next();
+        Iterator<Slot> it = page.getSlotsIterator();
+        while (it.hasNext()) {
+            PageElement element = it.next().getElement();
             PageShape shape = (PageShape) element;
             PagePainter painter = (PagePainter) shape.getElementPainter();
 
@@ -129,6 +138,40 @@ public class PageView extends JPanel implements ProjListener, DocListener, PageL
 
     public void updateSelectionRectangle(Rectangle2D selectionRectangle) {
         content.setSelectionRectangle(selectionRectangle);
+    }
+
+    public void paste() {
+        Transferable clipboardContent = MainFrame.getInstance().getClipboard().getContents(MainFrame.getInstance());
+
+        if ((clipboardContent != null) &&
+                (clipboardContent.isDataFlavorSupported(SlotSelection.flavor))) {
+            try {
+                Slot slot;
+                java.util.List<Slot> tempElements = (List<Slot>) clipboardContent.getTransferData(SlotSelection.flavor);
+                int newElementCount = tempElements.size();
+                for (int i = 0; i < newElementCount; i++) {
+                    if (tempElements.get(i) != null) {
+                        slot = (Slot) tempElements.get(i).clone();
+
+                        PageShape shape = (PageShape) slot.getElement();
+
+                        Point2D newLocation = (Point2D) shape.getPosition().clone();
+                        newLocation.setLocation(shape.getPosition().getX() + 20, shape.getPosition().getY() + 20);
+                        shape.setPosition(newLocation);
+
+                        if (shape instanceof CircleElement)
+                            slot.getElement().setElementPainter(new CirclePainter(shape));
+                        else if (shape instanceof RectangleElement)
+                            slot.getElement().setElementPainter(new RectanglePainter(shape));
+
+                        page.addSlot(slot);
+                        page.getSelectionModel().addToSelectionList(slot.getElement());
+                    }
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
     }
 
     public StateManager getStateManager() {
