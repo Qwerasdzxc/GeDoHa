@@ -94,7 +94,7 @@ public class ResizeState extends State {
                             dy = 0;
                         }
 
-                        PageShape newElement = recreateElement(
+                        PageShape newElement = recreateElement(shape.getId(),
                                 new Point2D.Double(shape.getPosition().getX(), shape.getPosition().getY() + dy),
                                 new Dimension((int) shape.getSize().getWidth(), (int) height),
                                 shape.getAngle(), getShapeType(shape)
@@ -121,7 +121,7 @@ public class ResizeState extends State {
                             dx = 0;
                         }
 
-                        PageShape newElement = recreateElement(
+                        PageShape newElement = recreateElement(shape.getId(),
                                 new Point2D.Double(shape.getPosition().getX() + dx, shape.getPosition().getY() + dy),
                                 new Dimension((int) width, (int) height),
                                 shape.getAngle(), getShapeType(shape)
@@ -142,7 +142,7 @@ public class ResizeState extends State {
                             dx = 0;
                         }
 
-                        PageShape newElement = recreateElement(
+                        PageShape newElement = recreateElement(shape.getId(),
                                 new Point2D.Double(shape.getPosition().getX() + dx, shape.getPosition().getY()),
                                 new Dimension((int) width, (int) shape.getSize().getHeight()),
                                 shape.getAngle(), getShapeType(shape)
@@ -169,7 +169,7 @@ public class ResizeState extends State {
                             dx = 0;
                         }
 
-                        PageShape newElement = recreateElement(
+                        PageShape newElement = recreateElement(shape.getId(),
                                 new Point2D.Double(shape.getPosition().getX() + dx, shape.getPosition().getY()),
                                 new Dimension((int) width, (int) height),
                                 shape.getAngle(), getShapeType(shape)
@@ -191,7 +191,7 @@ public class ResizeState extends State {
                             dy = 0;
                         }
 
-                        PageShape newElement = recreateElement(
+                        PageShape newElement = recreateElement(shape.getId(),
                                 new Point2D.Double(shape.getPosition().getX(), shape.getPosition().getY()),
                                 new Dimension((int) shape.getSize().getWidth(), (int) height),
                                 shape.getAngle(), getShapeType(shape)
@@ -218,7 +218,7 @@ public class ResizeState extends State {
                             dx = 0;
                         }
 
-                        PageShape newElement = recreateElement(
+                        PageShape newElement = recreateElement(shape.getId(),
                                 new Point2D.Double(shape.getPosition().getX(), shape.getPosition().getY()),
                                 new Dimension((int) width, (int) height),
                                 shape.getAngle(), getShapeType(shape)
@@ -239,7 +239,7 @@ public class ResizeState extends State {
                             dx = 0;
                         }
 
-                        PageShape newElement = recreateElement(
+                        PageShape newElement = recreateElement(shape.getId(),
                                 new Point2D.Double(shape.getPosition().getX(), shape.getPosition().getY()),
                                 new Dimension((int) width, (int) shape.getSize().getHeight()),
                                 shape.getAngle(), getShapeType(shape)
@@ -266,7 +266,7 @@ public class ResizeState extends State {
                             dx = 0;
                         }
 
-                        PageShape newElement = recreateElement(
+                        PageShape newElement = recreateElement(shape.getId(),
                                 new Point2D.Double(shape.getPosition().getX(), shape.getPosition().getY() + dy),
                                 new Dimension((int) width, (int) height),
                                 shape.getAngle(), getShapeType(shape)
@@ -287,7 +287,7 @@ public class ResizeState extends State {
             mediator.getPage().getSelectionModel().removeAllFromSelectionList();
 
             // Add the overlapped element to the selected elements list:
-            mediator.getPage().getSelectionModel().addToSelectionList(newElements);
+            mediator.getPage().getSelectionModel().addShapesToSelectionList(newElements);
         }
     }
 

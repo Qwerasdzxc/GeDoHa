@@ -7,11 +7,10 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
+import app.commands.CommandManager;
+import app.commands.MoveSlotsCommand;
 import app.graphics.elements.PageElement;
 import app.graphics.elements.PageShape;
-import app.graphics.elements.shapes.CircleElement;
-import app.graphics.elements.shapes.RectangleElement;
-import app.graphics.elements.shapes.TriangleElement;
 import app.state.State;
 import app.views.page.PageView;
 
@@ -25,8 +24,12 @@ public class MoveState extends State {
     private PageShape shape;
 
     private boolean dragging = true;
-    private int dy = 0;
+
+    private int originalX;
+    private int originalY;
     private int dx = 0;
+    private int dy = 0;
+
     private Point2D oldPoint;
 
     private boolean singleElement;
@@ -54,6 +57,10 @@ public class MoveState extends State {
                 }
             }
 
+            // TODO: Save first element's coordinates for dx and xy
+//            originalX = (int) ((Point2D) shape.getPosition().clone()).getX();
+//            originalY = (int) ((Point2D) shape.getPosition().clone()).getY();
+
             Point p = e.getPoint();
 
             dx = (int) p.getX() - (int) oldPoint.getX();
@@ -68,7 +75,7 @@ public class MoveState extends State {
 
                 PageShape shape = (PageShape) element;
 
-                PageShape newElement = recreateElement(
+                PageShape newElement = recreateElement(shape.getId(),
                         new Point2D.Double(shape.getPosition().getX() + dx, shape.getPosition().getY() + dy),
                         new Dimension((int) shape.getSize().getWidth(), (int) shape.getSize().getHeight()), shape.getAngle(), getShapeType(shape)
                 );
@@ -84,12 +91,19 @@ public class MoveState extends State {
             mediator.getPage().getSelectionModel().removeAllFromSelectionList();
 
             // Add the overlapped element to the selected elements list:
-            mediator.getPage().getSelectionModel().addToSelectionList(newElements);
+            mediator.getPage().getSelectionModel().addShapesToSelectionList(newElements);
         }
     }
 
     @Override
     public void onMouseReleased(MouseEvent e) {
+
+        CommandManager.getInstance().addCommand(
+                new MoveSlotsCommand(mediator.getPage(),
+                        (int) shape.getPosition().getX() - originalX,
+                        (int) shape.getPosition().getY() - originalY)
+        );
+
         if (singleElement) {
             // Remove the transformed element from the selected elements list:
             mediator.getPage().getSelectionModel().removeAllFromSelectionList();
@@ -100,6 +114,8 @@ public class MoveState extends State {
         shape = null;
         dy = 0;
         dx = 0;
+        originalX = 0;
+        originalY = 0;
     }
 
     @Override

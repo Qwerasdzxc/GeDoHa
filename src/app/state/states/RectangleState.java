@@ -3,6 +3,8 @@ package app.state.states;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Point2D;
 
+import app.commands.AddSlotCommand;
+import app.commands.CommandManager;
 import app.graphics.elements.PageElement;
 import app.graphics.elements.shapes.RectangleElement;
 import app.state.State;
@@ -23,7 +25,7 @@ public class RectangleState extends State {
         if (e.getButton() == MouseEvent.BUTTON1) {
             PageElement element = RectangleElement.createDefault(position);
 
-            mediator.getPage().addSlot(element);
+            CommandManager.getInstance().addCommand(new AddSlotCommand(mediator.getPage(), element));
         }
     }
 

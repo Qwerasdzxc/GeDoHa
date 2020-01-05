@@ -60,7 +60,7 @@ public class Page extends AbstractNode implements PageObserver, Serializable {
 
     public void removeSlot(PageElement element) {
         for (int i = 0; i < slots.size(); i ++) {
-            if (slots.get(i).getElement() == element) {
+            if (slots.get(i).getElement() == element || slots.get(i).getElement().getId().equals(element.getId())) {
                 slots.remove(slots.get(i));
                 break;
             }

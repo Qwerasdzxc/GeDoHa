@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.Paint;
 import java.awt.Stroke;
 import java.awt.geom.Point2D;
+import java.util.UUID;
 
 import app.graphics.elements.PageElement;
 import app.graphics.elements.PageShape;
@@ -35,16 +36,20 @@ public class RectangleElement extends PageShape {
                 0);
     }
 
-    public static RectangleElement createWithData(Point2D pos, Dimension dim, int angle) {
+    public static RectangleElement createWithData(UUID id, Point2D pos, Dimension dim, int angle) {
         Point2D position = (Point2D) pos.clone();
 
-        return new RectangleElement(
+        RectangleElement copy = new RectangleElement(
                 position,
                 dim,
                 new BasicStroke((float) (2), BasicStroke.CAP_SQUARE, BasicStroke.JOIN_BEVEL),
                 Color.WHITE,
                 Color.BLACK,
                 angle);
+
+        copy.setId(id);
+
+        return copy;
     }
 
     @Override

@@ -23,6 +23,9 @@ public class ActionManager {
 	private ActDocumentCopy documentCopy;
 	private ActDocumentPaste documentPaste;
 
+	private ActUndo undo;
+	private ActRedo redo;
+
     private ActionManager() {
     	deleteNode= new ActNodeDelete();
 		renameNode = new ActNodeRename();
@@ -38,6 +41,8 @@ public class ActionManager {
 		documentCut = new ActDocumentCut();
 		documentCopy = new ActDocumentCopy();
 		documentPaste = new ActDocumentPaste();
+		undo = new ActUndo();
+		redo = new ActRedo();
     }
     
     public static ActionManager getInstance() {
@@ -101,5 +106,13 @@ public class ActionManager {
 
 	public ActDocumentPaste getDocumentPaste() {
 		return documentPaste;
+	}
+
+	public ActUndo getUndo() {
+		return undo;
+	}
+
+	public ActRedo getRedo() {
+		return redo;
 	}
 }

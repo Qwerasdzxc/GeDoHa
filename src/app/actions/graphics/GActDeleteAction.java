@@ -1,12 +1,12 @@
 package app.actions.graphics;
 
 import app.actions.GAbstractAction;
-import app.graphics.elements.PageElement;
-import app.models.element_selection.ElementSelectionModel;
-import app.state.StateManager;
+import app.commands.CommandManager;
+import app.commands.DeleteSlotsCommand;
 import app.views.page.PageView;
 
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
 
 public class GActDeleteAction extends GAbstractAction {
 
@@ -22,14 +22,18 @@ public class GActDeleteAction extends GAbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        int elementsToDelete = pageView.getPage().getSelectionModel().getSelectionListSize();
-
-        for (int i = 0; i < elementsToDelete; i++) {
-            PageElement toBeRemoved = pageView.getPage().getSelectionModel().getElementFromSelectionListAt(i);
-
-            pageView.getPage().removeSlot(toBeRemoved);
-        }
-
-        pageView.getPage().getSelectionModel().removeAllFromSelectionList();
+        CommandManager.getInstance().addCommand(
+                new DeleteSlotsCommand(pageView.getPage(),
+                new ArrayList<>(pageView.getPage().getSelectionModel().getSelectionList()))
+        );
+//        int elementsToDelete = pageView.getPage().getSelectionModel().getSelectionListSize();
+//
+//        for (int i = 0; i < elementsToDelete; i++) {
+//            PageElement toBeRemoved = pageView.getPage().getSelectionModel().getElementFromSelectionListAt(i);
+//
+//            pageView.getPage().removeSlot(toBeRemoved);
+//        }
+//
+//        pageView.getPage().getSelectionModel().removeAllFromSelectionList();
     }
 }

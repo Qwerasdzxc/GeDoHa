@@ -67,7 +67,7 @@ public class RotateState extends State {
 
                 shape.setAngle(shape.getAngle() - dx);
 
-                PageShape newElement = recreateElement(
+                PageShape newElement = recreateElement(shape.getId(),
                         new Point2D.Double(shape.getPosition().getX(), shape.getPosition().getY()),
                         new Dimension((int) shape.getSize().getWidth(), (int) shape.getSize().getHeight()), shape.getAngle(), getShapeType(shape)
                 );
@@ -83,7 +83,7 @@ public class RotateState extends State {
             mediator.getPage().getSelectionModel().removeAllFromSelectionList();
 
             // Add the overlapped element to the selected elements list:
-            mediator.getPage().getSelectionModel().addToSelectionList(newElements);
+            mediator.getPage().getSelectionModel().addShapesToSelectionList(newElements);
         }
     }
 

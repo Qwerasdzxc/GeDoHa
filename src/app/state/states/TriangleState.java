@@ -3,6 +3,8 @@ package app.state.states;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Point2D;
 
+import app.commands.AddSlotCommand;
+import app.commands.CommandManager;
 import app.graphics.elements.PageElement;
 import app.graphics.elements.shapes.CircleElement;
 import app.graphics.elements.shapes.TriangleElement;
@@ -24,7 +26,7 @@ public class TriangleState extends State {
         if (e.getButton() == MouseEvent.BUTTON1) {
             PageElement element = TriangleElement.createDefault(position);
 
-            mediator.getPage().addSlot(element);
+            CommandManager.getInstance().addCommand(new AddSlotCommand(mediator.getPage(), element));
         }
     }
 

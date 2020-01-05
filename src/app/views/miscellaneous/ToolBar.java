@@ -30,5 +30,10 @@ public class ToolBar extends JToolBar {
 		add(ActionManager.getInstance().getSlotsCut());
 		add(ActionManager.getInstance().getSlotsCopy());
 		add(ActionManager.getInstance().getSlotsPaste());
+
+		addSeparator();
+
+		add(ActionManager.getInstance().getUndo());
+		add(ActionManager.getInstance().getRedo());
 	}
 }

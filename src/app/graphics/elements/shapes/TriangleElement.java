@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.Paint;
 import java.awt.Stroke;
 import java.awt.geom.Point2D;
+import java.util.UUID;
 
 import app.graphics.elements.PageElement;
 import app.graphics.elements.PageShape;
@@ -36,16 +37,20 @@ public class TriangleElement extends PageShape {
                 0);
     }
 
-    public static TriangleElement createWithData(Point2D pos, Dimension dim, int angle) {
+    public static TriangleElement createWithData(UUID id, Point2D pos, Dimension dim, int angle) {
         Point2D position = (Point2D) pos.clone();
 
-        return new TriangleElement(
+        TriangleElement copy = new TriangleElement(
                 position,
                 dim,
                 new BasicStroke((float) (2), BasicStroke.CAP_SQUARE, BasicStroke.JOIN_BEVEL),
                 Color.WHITE,
                 Color.BLACK,
                 angle);
+
+        copy.setId(id);
+
+        return copy;
     }
 
     @Override

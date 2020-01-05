@@ -4,12 +4,16 @@ import java.awt.Color;
 import java.awt.Paint;
 import java.awt.Stroke;
 import java.io.Serializable;
+import java.util.UUID;
 
 import app.graphics.SerializableStroke;
 import app.graphics.painters.ElementPainter;
 import app.models.slot.Slot;
 
 public abstract class PageElement implements Serializable, Cloneable {
+
+    // Id for keeping track of recreated elements:
+    protected UUID id;
 
     protected Slot parent;
 
@@ -20,12 +24,14 @@ public abstract class PageElement implements Serializable, Cloneable {
     protected ElementPainter elementPainter;
 
     public PageElement(Stroke stroke, Paint paint, Color color) {
+        this.id = UUID.randomUUID();
         this.stroke = new SerializableStroke(stroke);
         this.paint = paint;
         this.color = color;
     }
 
     public PageElement(PageElement element) {
+        this.id = element.id;
         this.parent = element.parent;
         this.stroke = element.stroke;
         this.color = element.color;
@@ -39,6 +45,14 @@ public abstract class PageElement implements Serializable, Cloneable {
 
     public void setParent(Slot parent) {
         this.parent = parent;
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
     }
 
     public Paint getPaint() {

@@ -30,12 +30,22 @@ public class ElementSelectionModel extends DefaultSingleSelectionModel implement
         notifySelectionChanged();
     }
 
-    public void addToSelectionList(ArrayList<PageShape> elements) {
+    public void addToSelectionList(ArrayList<PageElement> elements) {
         // Setting the "selected element" color:
         for (PageElement el : elements)
             el.setColor(Color.ORANGE);
 
         selectionList.addAll(elements);
+
+        notifySelectionChanged();
+    }
+
+    public void addShapesToSelectionList(ArrayList<PageShape> shapes) {
+        // Setting the "selected element" color:
+        for (PageElement el : shapes)
+            el.setColor(Color.ORANGE);
+
+        selectionList.addAll(shapes);
 
         notifySelectionChanged();
     }
