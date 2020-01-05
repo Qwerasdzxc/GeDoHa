@@ -15,6 +15,8 @@ public class ActUndo extends GAbstractAction {
         putValue(SMALL_ICON, loadIcon("images/undo.png"));
         putValue(NAME, "Undo");
         putValue(SHORT_DESCRIPTION, "Undo");
+
+        setEnabled(false);
     }
 
     @Override

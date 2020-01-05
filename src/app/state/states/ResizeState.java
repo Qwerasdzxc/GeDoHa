@@ -12,6 +12,9 @@ import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
 import app.Utilities;
+import app.commands.CommandManager;
+import app.commands.ResizeSlotsCommand;
+import app.commands.RotateSlotsCommand;
 import app.graphics.elements.PageElement;
 import app.graphics.elements.PageShape;
 import app.graphics.elements.shapes.CircleElement;
@@ -28,10 +31,11 @@ public class ResizeState extends State {
     private PageView mediator;
 
     private PageShape shape;
-    private Utilities.ShapeType type;
 
     private boolean dragging = true;
-    private final int PROX_DIST = 5;
+
+    private double completeDx;
+    private double completeDy;
     private double dy = 0;
     private double dx = 0;
 
@@ -73,6 +77,9 @@ public class ResizeState extends State {
 
             dx = p.getX() - oldPoint.getX();
             dy = p.getY() - oldPoint.getY();
+
+            completeDx += dx;
+            completeDy += dy;
 
             oldPoint = (Point2D) e.getPoint().clone();
             int type = mediator.getCursor().getType();
@@ -293,6 +300,11 @@ public class ResizeState extends State {
 
     @Override
     public void onMouseReleased(MouseEvent e) {
+
+        CommandManager.getInstance().addCommand(
+                new ResizeSlotsCommand(mediator.getPage(), completeDx, completeDy, mediator.getCursor().getType())
+        );
+
         if (singleElement) {
             // Remove the transformed element from the selected elements list:
             mediator.getPage().getSelectionModel().removeAllFromSelectionList();
@@ -301,6 +313,11 @@ public class ResizeState extends State {
 
         dragging = false;
         shape = null;
+
+        dx = 0;
+        dy = 0;
+        completeDx = 0;
+        completeDy = 0;
     }
 
     @Override
@@ -308,7 +325,7 @@ public class ResizeState extends State {
         Point p = e.getPoint();
 
         shape = mediator.getOverlappedElement(p);
-        type = getShapeType(shape);
+        Utilities.ShapeType type = getShapeType(shape);
 
         if (shape == null) {
             if (mediator.getCursor() != Cursor.getDefaultCursor()) {
@@ -327,6 +344,8 @@ public class ResizeState extends State {
 
         // Locate cursor relative to center of rect.
         int outcode = getOutcode(p, r);
+
+        int PROX_DIST = 5;
 
         switch (outcode) {
             case Rectangle.OUT_TOP:

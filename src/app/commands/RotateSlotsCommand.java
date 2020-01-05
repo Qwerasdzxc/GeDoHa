@@ -11,21 +11,19 @@ import java.util.ArrayList;
 import static app.Utilities.getShapeType;
 import static app.Utilities.recreateElement;
 
-public class MoveSlotsCommand extends AbstractCommand {
+public class RotateSlotsCommand extends AbstractCommand {
 
     private Page page;
 
-    private ArrayList<PageElement> moved = new ArrayList<>();
+    private ArrayList<PageElement> rotated = new ArrayList<>();
 
-    private double dx;
-    private double dy;
+    private int dAlpha;
     private boolean redo = false;
 
-    public MoveSlotsCommand(Page page, double dx, double dy) {
+    public RotateSlotsCommand(Page page, int dAlpha) {
         this.page = page;
-        this.dx = dx;
-        this.dy = dy;
-        this.moved.addAll(page.getSelectionModel().getSelectionList());
+        this.dAlpha = dAlpha;
+        this.rotated.addAll(page.getSelectionModel().getSelectionList());
     }
 
     @Override
@@ -35,22 +33,24 @@ public class MoveSlotsCommand extends AbstractCommand {
         } else {
             ArrayList<PageShape> newElements = new ArrayList<>();
 
-            for (PageElement element : moved) {
+            for (PageElement element : rotated) {
 
                 PageShape shape = (PageShape) element;
 
+                shape.setAngle(shape.getAngle() - dAlpha);
+
                 PageShape newElement = recreateElement(shape.getId(),
-                        new Point2D.Double(shape.getPosition().getX() + dx, shape.getPosition().getY() + dy),
+                        new Point2D.Double(shape.getPosition().getX(), shape.getPosition().getY()),
                         new Dimension((int) shape.getSize().getWidth(), (int) shape.getSize().getHeight()), shape.getAngle(), getShapeType(shape)
                 );
 
                 newElements.add(newElement);
             }
 
-            for (int i = 0; i < moved.size(); i++) {
-                page.removeSlot(moved.get(i));
+            for (int i = 0; i < rotated.size(); i++) {
+                page.removeSlot(rotated.get(i));
                 page.addSlot(newElements.get(i));
-                moved.set(i, newElements.get(i));
+                rotated.set(i, newElements.get(i));
             }
 
             page.getSelectionModel().removeAllFromSelectionList();
@@ -61,22 +61,24 @@ public class MoveSlotsCommand extends AbstractCommand {
     public void undoCommand() {
         ArrayList<PageShape> newElements = new ArrayList<>();
 
-        for (PageElement element : moved) {
+        for (PageElement element : rotated) {
 
             PageShape shape = (PageShape) element;
 
+            shape.setAngle(shape.getAngle() + dAlpha);
+
             PageShape newElement = recreateElement(shape.getId(),
-                    new Point2D.Double(shape.getPosition().getX() - dx, shape.getPosition().getY() - dy),
+                    new Point2D.Double(shape.getPosition().getX(), shape.getPosition().getY()),
                     new Dimension((int) shape.getSize().getWidth(), (int) shape.getSize().getHeight()), shape.getAngle(), getShapeType(shape)
             );
 
             newElements.add(newElement);
         }
 
-        for (int i = 0; i < moved.size(); i++) {
-            page.removeSlot(moved.get(i));
+        for (int i = 0; i < rotated.size(); i++) {
+            page.removeSlot(rotated.get(i));
             page.addSlot(newElements.get(i));
-            moved.set(i, newElements.get(i));
+            rotated.set(i, newElements.get(i));
         }
 
         page.getSelectionModel().removeAllFromSelectionList();

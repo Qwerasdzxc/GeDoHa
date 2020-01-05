@@ -1,5 +1,8 @@
 package app.state.states;
 
+import app.commands.CommandManager;
+import app.commands.MoveSlotsCommand;
+import app.commands.RotateSlotsCommand;
 import app.graphics.elements.PageElement;
 import app.graphics.elements.PageShape;
 import app.graphics.elements.shapes.CircleElement;
@@ -23,8 +26,10 @@ public class RotateState extends State {
     private PageShape shape;
 
     private boolean dragging = true;
-    private int dy = 0;
+
+    private int completeDx;
     private int dx = 0;
+
     private Point2D oldPoint;
 
     private boolean singleElement;
@@ -55,7 +60,8 @@ public class RotateState extends State {
             Point p = e.getPoint();
 
             dx = (int) p.getX() - (int) oldPoint.getX();
-            dy = (int) p.getY() - (int) oldPoint.getY();
+
+            completeDx += dx;
 
             oldPoint = e.getPoint();
 
@@ -89,6 +95,11 @@ public class RotateState extends State {
 
     @Override
     public void onMouseReleased(MouseEvent e) {
+
+        CommandManager.getInstance().addCommand(
+                new RotateSlotsCommand(mediator.getPage(), completeDx)
+        );
+
         if (singleElement) {
             // Remove the transformed element from the selected elements list:
             mediator.getPage().getSelectionModel().removeAllFromSelectionList();
@@ -97,8 +108,8 @@ public class RotateState extends State {
 
         dragging = false;
         shape = null;
-        dy = 0;
         dx = 0;
+        completeDx = 0;
     }
 
     @Override

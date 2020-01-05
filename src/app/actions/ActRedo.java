@@ -15,6 +15,8 @@ public class ActRedo extends GAbstractAction {
         putValue(SMALL_ICON, loadIcon("images/redo.png"));
         putValue(NAME, "Redo");
         putValue(SHORT_DESCRIPTION, "Redo");
+
+        setEnabled(false);
     }
 
     @Override

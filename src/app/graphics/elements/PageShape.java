@@ -48,11 +48,6 @@ public abstract class PageShape extends PageElement {
     }
 
     public void setAngle(int angle) {
-        if (angle > 360)
-            angle = angle - 360;
-        if (angle < 0)
-            angle = 360 - angle;
-
         this.angle = angle;
     }
 }

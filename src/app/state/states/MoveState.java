@@ -25,8 +25,8 @@ public class MoveState extends State {
 
     private boolean dragging = true;
 
-    private int originalX;
-    private int originalY;
+    private int completeDx;
+    private int completeDy;
     private int dx = 0;
     private int dy = 0;
 
@@ -57,14 +57,13 @@ public class MoveState extends State {
                 }
             }
 
-            // TODO: Save first element's coordinates for dx and xy
-//            originalX = (int) ((Point2D) shape.getPosition().clone()).getX();
-//            originalY = (int) ((Point2D) shape.getPosition().clone()).getY();
-
             Point p = e.getPoint();
 
             dx = (int) p.getX() - (int) oldPoint.getX();
             dy = (int) p.getY() - (int) oldPoint.getY();
+
+            completeDx += dx;
+            completeDy += dy;
 
             oldPoint = (Point2D) e.getPoint().clone();
 
@@ -98,10 +97,11 @@ public class MoveState extends State {
     @Override
     public void onMouseReleased(MouseEvent e) {
 
+        if (mediator.getPage().getSelectionModel().getSelectionList().isEmpty())
+            return;
+
         CommandManager.getInstance().addCommand(
-                new MoveSlotsCommand(mediator.getPage(),
-                        (int) shape.getPosition().getX() - originalX,
-                        (int) shape.getPosition().getY() - originalY)
+                new MoveSlotsCommand(mediator.getPage(), completeDx, completeDy)
         );
 
         if (singleElement) {
@@ -114,8 +114,8 @@ public class MoveState extends State {
         shape = null;
         dy = 0;
         dx = 0;
-        originalX = 0;
-        originalY = 0;
+        completeDx = 0;
+        completeDy = 0;
     }
 
     @Override
