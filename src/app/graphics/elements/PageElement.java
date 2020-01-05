@@ -31,7 +31,7 @@ public abstract class PageElement implements Serializable, Cloneable {
     }
 
     public PageElement(PageElement element) {
-        this.id = element.id;
+        this.id = UUID.randomUUID();
         this.parent = element.parent;
         this.stroke = element.stroke;
         this.color = element.color;

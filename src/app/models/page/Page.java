@@ -52,8 +52,8 @@ public class Page extends AbstractNode implements PageObserver, Serializable {
         notifySlotChanged();
     }
 
-    public void addSlot(Slot slot) {
-        this.slots.add(slot);
+    public void addSlots(ArrayList<Slot> slots) {
+        this.slots.addAll(slots);
 
         notifySlotChanged();
     }
@@ -65,6 +65,25 @@ public class Page extends AbstractNode implements PageObserver, Serializable {
                 break;
             }
         }
+
+        notifySlotChanged();
+    }
+
+    public void removeSlots(ArrayList<Slot> slots) {
+        int slotCount = this.slots.size();
+        ArrayList<Slot> toDelete = new ArrayList<>(slots.size());
+
+        for (int i = 0; i < slotCount; i++) {
+            for (int j = 0; j < slots.size(); j++) {
+                if (this.slots.get(i).getElement().getId().equals(slots.get(j).getElement().getId())) {
+                    toDelete.add(this.slots.get(i));
+                    break;
+                }
+            }
+        }
+
+        for (Slot slot : toDelete)
+            this.slots.remove(slot);
 
         notifySlotChanged();
     }

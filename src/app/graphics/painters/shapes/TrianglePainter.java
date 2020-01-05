@@ -16,20 +16,20 @@ public class TrianglePainter extends PagePainter {
         TriangleElement triangle = (TriangleElement) element;
 
         shape = new GeneralPath();
-//        ((GeneralPath) shape).moveTo(triangle.getPosition().getX(), triangle.getPosition().getY());
-//
-//        ((GeneralPath) shape).lineTo(triangle.getPosition().getX() + triangle.getSize().getWidth(), triangle.getPosition().getY());
-//
-//        ((GeneralPath) shape).lineTo((triangle.getPosition().getX() + triangle.getSize().getWidth() / 2), triangle.getPosition().getY() - triangle.getSize().getHeight());
-//
-//        ((GeneralPath) shape).closePath();
+        ((GeneralPath) shape).moveTo(triangle.getPosition().getX(), triangle.getPosition().getY());
 
-        ((GeneralPath) shape).moveTo(triangle.getPosition().getX(), triangle.getPosition().getY() - triangle.getSize().getHeight());
+        ((GeneralPath) shape).lineTo(triangle.getPosition().getX() + triangle.getSize().getWidth(), triangle.getPosition().getY());
 
-        ((GeneralPath) shape).lineTo(triangle.getPosition().getX() + triangle.getSize().getWidth(), triangle.getPosition().getY() - triangle.getSize().getHeight());
-
-        ((GeneralPath) shape).lineTo((triangle.getPosition().getX() + triangle.getSize().getWidth() / 2), triangle.getPosition().getY());
+        ((GeneralPath) shape).lineTo((triangle.getPosition().getX() + triangle.getSize().getWidth() / 2), triangle.getPosition().getY() - triangle.getSize().getHeight());
 
         ((GeneralPath) shape).closePath();
+
+//        ((GeneralPath) shape).moveTo(triangle.getPosition().getX(), triangle.getPosition().getY() - triangle.getSize().getHeight());
+//
+//        ((GeneralPath) shape).lineTo(triangle.getPosition().getX() + triangle.getSize().getWidth(), triangle.getPosition().getY() - triangle.getSize().getHeight());
+//
+//        ((GeneralPath) shape).lineTo((triangle.getPosition().getX() + triangle.getSize().getWidth() / 2), triangle.getPosition().getY());
+//
+//        ((GeneralPath) shape).closePath();
     }
 }

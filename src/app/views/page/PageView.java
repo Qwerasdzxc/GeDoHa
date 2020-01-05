@@ -1,6 +1,8 @@
 package app.views.page;
 
 import app.Utilities;
+import app.commands.AddSlotCommand;
+import app.commands.CommandManager;
 import app.graphics.elements.PageElement;
 import app.graphics.elements.PageShape;
 import app.graphics.elements.shapes.CircleElement;
@@ -148,6 +150,7 @@ public class PageView extends JPanel implements ProjListener, DocListener, PageL
             try {
                 Slot slot;
                 java.util.List<Slot> tempElements = (List<Slot>) clipboardContent.getTransferData(SlotSelection.flavor);
+                ArrayList<Slot> createdSlots = new ArrayList<>(tempElements.size());
                 int newElementCount = tempElements.size();
                 for (int i = 0; i < newElementCount; i++) {
                     if (tempElements.get(i) != null) {
@@ -164,10 +167,12 @@ public class PageView extends JPanel implements ProjListener, DocListener, PageL
                         else if (shape instanceof RectangleElement)
                             slot.getElement().setElementPainter(new RectanglePainter(shape));
 
-                        page.addSlot(slot);
+                        createdSlots.add(slot);
                         page.getSelectionModel().addToSelectionList(slot.getElement());
                     }
                 }
+
+                CommandManager.getInstance().addCommand(new AddSlotCommand(page, createdSlots));
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
