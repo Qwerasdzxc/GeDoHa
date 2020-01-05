@@ -15,6 +15,8 @@ public class ActionManager {
 	private ActSaveProjectAs saveProjectAs;
 	private ActOpenProject openProject;
 
+	private ActShareDocument shareDocument;
+
 	private ActSlotsCut slotsCut;
 	private ActSlotsCopy slotsCopy;
 	private ActSlotsPaste slotsPaste;
@@ -35,6 +37,7 @@ public class ActionManager {
 		saveProject = new ActSaveProject();
 		saveProjectAs = new ActSaveProjectAs();
 		openProject = new ActOpenProject();
+		shareDocument = new ActShareDocument();
 		slotsCut = new ActSlotsCut();
 		slotsCopy = new ActSlotsCopy();
 		slotsPaste = new ActSlotsPaste();
@@ -82,6 +85,10 @@ public class ActionManager {
 
 	public ActSaveProjectAs getSaveProjectAs() {
 		return saveProjectAs;
+	}
+
+	public ActShareDocument getShareDocument() {
+		return shareDocument;
 	}
 
 	public ActSlotsCut getSlotsCut() {

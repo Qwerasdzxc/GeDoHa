@@ -97,6 +97,9 @@ public class Page extends AbstractNode implements PageObserver, Serializable {
     }
 
     @Override
+    protected void onChildAdded(AbstractNode childNode) {}
+
+    @Override
     public void addObserver(PageListener listener) {
         if(listener == null)
             return;

@@ -18,7 +18,6 @@ import app.models.project.Project;
 public class HierarchyTreeEditor extends DefaultTreeCellEditor implements ActionListener {
 
     private Object node = null;
-    private JTextField edit = null;
 
     public HierarchyTreeEditor(JTree arg0, DefaultTreeCellRenderer arg1) {
         super(arg0, arg1);
@@ -30,7 +29,7 @@ public class HierarchyTreeEditor extends DefaultTreeCellEditor implements Action
 
         node = arg1;
 
-        edit = new JTextField(arg1.toString());
+        JTextField edit = new JTextField(arg1.toString());
         edit.addActionListener(this);
         return edit;
     }

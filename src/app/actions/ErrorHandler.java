@@ -10,6 +10,10 @@ public class ErrorHandler {
         JOptionPane.showMessageDialog(MainFrame.getInstance(), "Greška u otvaranju izabranog file-a.");
     }
 
+    public static void showNoProjectsError() {
+        JOptionPane.showMessageDialog(MainFrame.getInstance(), "Ne postoji projekat u koji može da se podeli dokument.");
+    }
+
     public static void showRenameError() {
         JOptionPane.showMessageDialog(null, "Naziv ne može biti prazan!",
                 "Greška", JOptionPane.ERROR_MESSAGE);

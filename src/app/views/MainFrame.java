@@ -22,6 +22,7 @@ public class MainFrame extends JFrame implements ClipboardOwner {
 
     private static MainFrame instance = null;
 
+    private Workspace workspace;
     private WorkspaceView workspaceView;
 
     private HierarchyTree hierarchyTree;
@@ -136,8 +137,12 @@ public class MainFrame extends JFrame implements ClipboardOwner {
         splitPane.setRightComponent(workspaceView);
     }
 
+    public Workspace getWorkspace() {
+        return workspace;
+    }
+
     private void initialiseWorkspaceTree() {
-        Workspace workspace = new Workspace();
+        this.workspace = new Workspace();
 
         this.workspaceView = new WorkspaceView(workspace);
 

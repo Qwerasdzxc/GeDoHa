@@ -6,17 +6,24 @@ import java.util.List;
 
 import app.models.AbstractNode;
 import app.models.page.Page;
+import app.models.project.Project;
 
 public class Document extends AbstractNode implements DocObserver, Serializable {
 
     private transient List<DocListener> listeners;
 
+    private transient ArrayList<Project> parents = new ArrayList<>();
+
     public Document(int number) {
         super("Dokument " + number);
+
+        addParent((Project) super.getParent());
     }
 
     public Document(Document document) {
         super(document);
+
+        addParents(document.getParents());
     }
 
     @Override
@@ -33,6 +40,22 @@ public class Document extends AbstractNode implements DocObserver, Serializable 
         children.remove(page);
 
         notifyPageDeleted(page, index);
+    }
+
+    public ArrayList<Project> getParents() {
+        return parents;
+    }
+
+    public void addParent(Project parent) {
+        this.parents.add(parent);
+    }
+
+    public void addParents(ArrayList<Project> parents) {
+        this.parents.addAll(parents);
+    }
+
+    public void removeParent(Project parent) {
+        this.parents.remove(parent);
     }
 
     @Override

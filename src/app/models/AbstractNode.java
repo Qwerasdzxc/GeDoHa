@@ -1,6 +1,7 @@
 package app.models;
 
 import app.graphics.elements.PageElement;
+import app.models.document.Document;
 import app.models.slot.Slot;
 
 import java.io.Serializable;
@@ -39,7 +40,11 @@ public abstract class AbstractNode implements MutableTreeNode, Serializable, Clo
         onChildAdded(childNode);
     }
 
-    protected void onChildAdded(AbstractNode childNode) {}
+    public void addSharedDocument(Document document) {
+        this.children.add(document);
+    }
+
+    protected abstract void onChildAdded(AbstractNode childNode);
 
     public List<AbstractNode> getChildren() {
         return children;

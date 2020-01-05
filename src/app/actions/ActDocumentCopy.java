@@ -41,14 +41,5 @@ public class ActDocumentCopy extends GAbstractAction {
             DocumentSelection content = new DocumentSelection(selectedDocument);
             MainFrame.getInstance().getClipboard().setContents(content, MainFrame.getInstance());
         }
-
-//        if (!activePage.getSelectionModel().getSelectionList().isEmpty()) {
-//            ArrayList<Slot> selectedSlots = new ArrayList<>();
-//            for (PageElement el : activePage.getSelectionModel().getSelectionList())
-//                selectedSlots.add(el.getParent());
-//
-//            SlotSelection contents = new SlotSelection(selectedSlots);
-//            MainFrame.getInstance().getClipboard().setContents(contents, MainFrame.getInstance());
-//        }
     }
 }
