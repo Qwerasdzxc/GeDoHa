@@ -83,8 +83,7 @@ public class MoveState extends State {
             }
 
             for (int i = 0; i < selectedElements.size(); i++) {
-                mediator.getPage().removeSlot(selectedElements.get(i));
-                mediator.getPage().addSlot(newElements.get(i));
+                mediator.getPage().updateSlot(newElements.get(i));
             }
 
             mediator.getPage().getSelectionModel().removeAllFromSelectionList();

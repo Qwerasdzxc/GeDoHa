@@ -48,8 +48,7 @@ public class MoveSlotsCommand extends AbstractCommand {
             }
 
             for (int i = 0; i < moved.size(); i++) {
-                page.removeSlot(moved.get(i));
-                page.addSlot(newElements.get(i));
+                page.updateSlot(newElements.get(i));
                 moved.set(i, newElements.get(i));
             }
 
@@ -74,8 +73,7 @@ public class MoveSlotsCommand extends AbstractCommand {
         }
 
         for (int i = 0; i < moved.size(); i++) {
-            page.removeSlot(moved.get(i));
-            page.addSlot(newElements.get(i));
+            page.updateSlot(newElements.get(i));
             moved.set(i, newElements.get(i));
         }
 

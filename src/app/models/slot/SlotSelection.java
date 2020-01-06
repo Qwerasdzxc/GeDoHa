@@ -37,7 +37,7 @@ public class SlotSelection implements Transferable, ClipboardOwner {
 
     @Override
     public boolean isDataFlavorSupported(DataFlavor flavor) {
-        return (flavor.equals(flavor));
+        return SlotSelection.flavor.equals(flavor);
     }
 
     @Override

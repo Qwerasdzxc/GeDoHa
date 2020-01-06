@@ -45,6 +45,9 @@ public class Document extends AbstractNode implements DocObserver, Serializable 
     }
 
     public void addParent(Project parent) {
+        if (this.parents == null)
+            this.parents = new ArrayList<>();
+
         this.parents.add(parent);
     }
 

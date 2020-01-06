@@ -10,6 +10,7 @@ import javax.swing.JFileChooser;
 import javax.swing.KeyStroke;
 
 import app.models.AbstractNode;
+import app.models.document.Document;
 import app.models.project.Project;
 import app.models.workspace.Workspace;
 import app.views.MainFrame;
@@ -48,7 +49,9 @@ public class ActOpenProject extends GAbstractAction {
             }
 
             for (AbstractNode doc : project.getChildren()) {
-                doc.setParent(project);
+                Document document = (Document) doc;
+                document.setParent(project);
+                document.addParent(project);
 
                 for (AbstractNode page : doc.getChildren()) {
                     page.setParent(doc);

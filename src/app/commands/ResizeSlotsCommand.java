@@ -251,8 +251,7 @@ public class ResizeSlotsCommand extends AbstractCommand {
             }
 
             for (int i = 0; i < resized.size(); i++) {
-                page.removeSlot(resized.get(i));
-                page.addSlot(newElements.get(i));
+                page.updateSlot(newElements.get(i));
                 resized.set(i, newElements.get(i));
             }
 
@@ -476,8 +475,7 @@ public class ResizeSlotsCommand extends AbstractCommand {
         }
 
         for (int i = 0; i < resized.size(); i++) {
-            page.removeSlot(resized.get(i));
-            page.addSlot(newElements.get(i));
+            page.updateSlot(newElements.get(i));
             resized.set(i, newElements.get(i));
         }
 

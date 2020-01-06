@@ -8,9 +8,9 @@ import javax.swing.JToolBar;
 import app.actions.graphics.GraphicsActionManager;
 import app.state.StateManager;
 
-public class PalleteBar extends JToolBar {
+public class PaletteBar extends JToolBar {
 
-    public PalleteBar(StateManager stateManager, PageView pageView) {
+    public PaletteBar(StateManager stateManager, PageView pageView) {
         super(JToolBar.VERTICAL);
 
         setFloatable(false);
@@ -18,6 +18,8 @@ public class PalleteBar extends JToolBar {
 
         add(GraphicsActionManager.getInstance().getSelectAction(stateManager));
         add(GraphicsActionManager.getInstance().getDeleteAction(pageView));
+        addSeparator();
+        add(GraphicsActionManager.getInstance().getModifySlotContentAction(stateManager));
         addSeparator();
         add(GraphicsActionManager.getInstance().getRectangleAction(stateManager));
         add(GraphicsActionManager.getInstance().getCircleAction(stateManager));

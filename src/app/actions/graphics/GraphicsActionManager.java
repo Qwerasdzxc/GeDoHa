@@ -18,6 +18,10 @@ public class GraphicsActionManager {
         return new GActTriangleAction(stateManager);
     }
 
+    public GActModifySlotContentAction getModifySlotContentAction(StateManager stateManager) {
+        return new GActModifySlotContentAction(stateManager);
+    }
+
     public GActSelectAction getSelectAction(StateManager stateManager) {
         return new GActSelectAction(stateManager);
     }

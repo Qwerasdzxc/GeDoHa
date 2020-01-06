@@ -48,8 +48,7 @@ public class RotateSlotsCommand extends AbstractCommand {
             }
 
             for (int i = 0; i < rotated.size(); i++) {
-                page.removeSlot(rotated.get(i));
-                page.addSlot(newElements.get(i));
+                page.updateSlot(newElements.get(i));
                 rotated.set(i, newElements.get(i));
             }
 
@@ -76,8 +75,7 @@ public class RotateSlotsCommand extends AbstractCommand {
         }
 
         for (int i = 0; i < rotated.size(); i++) {
-            page.removeSlot(rotated.get(i));
-            page.addSlot(newElements.get(i));
+            page.updateSlot(newElements.get(i));
             rotated.set(i, newElements.get(i));
         }
 

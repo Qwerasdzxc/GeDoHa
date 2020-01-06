@@ -1,6 +1,8 @@
 package app.actions;
 
 import app.models.AbstractNode;
+import app.models.document.Document;
+import app.models.project.Project;
 import app.models.workspace.Workspace;
 import app.views.MainFrame;
 import app.views.workspace.WorkspaceView;
@@ -44,7 +46,9 @@ public class ActSwitchWorkspace extends GAbstractAction {
                 proj.setParent(ws);
 
                 for (AbstractNode doc : proj.getChildren()) {
-                    doc.setParent(proj);
+                    Document document = (Document) doc;
+                    document.setParent(proj);
+                    document.addParent((Project) proj);
 
                     for (AbstractNode page : doc.getChildren()) {
                         page.setParent(doc);

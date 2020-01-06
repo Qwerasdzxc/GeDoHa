@@ -52,6 +52,17 @@ public class Page extends AbstractNode implements PageObserver, Serializable {
         notifySlotChanged();
     }
 
+    public void updateSlot(PageElement element) {
+        for (Slot slot : slots) {
+            if (slot.getElement().getId().equals(element.getId())) {
+                slot.setElement(element);
+                element.setParent(slot);
+            }
+        }
+
+        notifySlotChanged();
+    }
+
     public void addSlots(ArrayList<Slot> slots) {
         this.slots.addAll(slots);
 

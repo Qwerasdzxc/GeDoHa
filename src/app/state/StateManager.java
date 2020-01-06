@@ -2,14 +2,7 @@ package app.state;
 
 import java.awt.geom.Point2D;
 
-import app.state.states.CircleState;
-import app.state.states.LassoState;
-import app.state.states.MoveState;
-import app.state.states.RectangleState;
-import app.state.states.ResizeState;
-import app.state.states.RotateState;
-import app.state.states.SelectState;
-import app.state.states.TriangleState;
+import app.state.states.*;
 import app.views.page.PageView;
 
 public class StateManager {
@@ -19,6 +12,8 @@ public class StateManager {
     private RectangleState rectangleState;
     private CircleState circleState;
     private TriangleState triangleState;
+
+    private ModifySlotContent modifySlotContentState;
 
     private SelectState selectState;
     private LassoState lassoState;
@@ -30,6 +25,7 @@ public class StateManager {
         rectangleState = new RectangleState(mediator);
         circleState = new CircleState(mediator);
         triangleState = new TriangleState(mediator);
+        modifySlotContentState = new ModifySlotContent(mediator);
         selectState = new SelectState(mediator);
         lassoState = new LassoState(mediator);
         moveState = new MoveState(mediator);
@@ -53,6 +49,10 @@ public class StateManager {
 
     public void startTriangleState() {
         currentState = triangleState;
+    }
+
+    public void startModifySlotContentState() {
+        currentState = modifySlotContentState;
     }
 
     public void startSelectState() {

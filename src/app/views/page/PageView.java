@@ -7,7 +7,6 @@ import app.graphics.elements.PageElement;
 import app.graphics.elements.PageShape;
 import app.graphics.elements.shapes.CircleElement;
 import app.graphics.elements.shapes.RectangleElement;
-import app.graphics.painters.ElementPainter;
 import app.graphics.painters.PagePainter;
 import app.graphics.painters.shapes.CirclePainter;
 import app.graphics.painters.shapes.RectanglePainter;
@@ -26,14 +25,11 @@ import app.views.MainFrame;
 import javax.swing.*;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
-import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
 import java.awt.*;
 import java.awt.datatransfer.Transferable;
-import java.awt.geom.AffineTransform;
 import java.awt.geom.Area;
-import java.awt.geom.NoninvertibleTransformException;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
@@ -48,7 +44,7 @@ public class PageView extends JPanel implements ProjListener, DocListener, PageL
     private TitledBorder pageTitleBorder;
     private CanvasView content;
 
-    private PalleteBar palleteBar;
+    private PaletteBar paletteBar;
 
     private StateManager stateManager;
 
@@ -85,8 +81,8 @@ public class PageView extends JPanel implements ProjListener, DocListener, PageL
         add(content);
 
         stateManager = new StateManager(this);
-        palleteBar = new PalleteBar(stateManager, this);
-        add(palleteBar, BorderLayout.NORTH);
+        paletteBar = new PaletteBar(stateManager, this);
+        add(paletteBar, BorderLayout.NORTH);
 
         pathLabel = new JLabel();
 
