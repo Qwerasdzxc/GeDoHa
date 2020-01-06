@@ -13,16 +13,18 @@ public class ShareDocumentDialogController {
         view.addSelectionChangedListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
-                view.enableBtnOk();
+                view.enableConfirmationButton();
             }
         });
-        view.addBtnOkListener(new ActionListener() {
+        view.addConfirmationButtonListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 for (Project project : view.getSelected()) {
-                    project.addSharedDocument(view.getShared());
-                    view.getShared().addParent(project);
+                    project.addSharedDocument(view.getDocument());
+                    view.getDocument().addParent(project);
                 }
+
+                view.setVisible(false);
             }
         });
     }

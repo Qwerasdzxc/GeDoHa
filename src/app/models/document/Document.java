@@ -16,8 +16,6 @@ public class Document extends AbstractNode implements DocObserver, Serializable 
 
     public Document(int number) {
         super("Dokument " + number);
-
-        addParent((Project) super.getParent());
     }
 
     public Document(Document document) {

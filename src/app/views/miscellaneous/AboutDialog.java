@@ -18,10 +18,10 @@ public class AboutDialog extends JDialog {
         b.add(Box.createGlue());
         getContentPane().add(b, "Center");
         
-        b.add(new JLabel("Clanovi tima 09 (grupa 202):"));
+        b.add(new JLabel("Članovi tima 09 (grupa 202):"));
         b.add(new JLabel(" "));
 
-        b.add(new JLabel("Luka Petrovic - RN 33/2018"));
+        b.add(new JLabel("Luka Petrović - RN 33/2018"));
         ImageIcon IconL = null;
 		try {
             IconL = new ImageIcon(this.getClass().getResource("/images/Luka.jpg"));
@@ -35,7 +35,7 @@ public class AboutDialog extends JDialog {
 		b.add(new JLabel(IconL));
         b.add(new JLabel(" "));
 
-        b.add(new JLabel("Matija Pleskonjic - RN 59/2018"));
+        b.add(new JLabel("Matija Pleskonjić - RN 59/2018"));
         ImageIcon Icon = null;
 		try {
             Icon = new ImageIcon(this.getClass().getResource("/images/Matija.jpg"));

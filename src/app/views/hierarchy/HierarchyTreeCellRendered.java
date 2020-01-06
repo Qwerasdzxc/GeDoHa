@@ -39,8 +39,8 @@ class HierarchyTreeCellRendered extends DefaultTreeCellRenderer {
             TreePath path = hierarchy.getSelectionPath();
 
             // TODO: Copy showing on both documents
-            boolean isCopy = doc.getParents().size() > 1 && !doc.getParent().equals(path.getPath()[1]);
-            setText(isCopy ? doc.getName() + " - Copy" : doc.getName());
+//            boolean isCopy = doc.getParents().size() > 1 && !doc.getParent().equals(path.getPath()[1]);
+//            setText(isCopy ? doc.getName() + " - Copy" : doc.getName());
         } else if (value instanceof Project) {
             URL imageURL = getClass().getResource("/app/actions/images/new_project.png");
             ImageIcon icon = null;

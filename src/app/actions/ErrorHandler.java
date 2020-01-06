@@ -14,6 +14,10 @@ public class ErrorHandler {
         JOptionPane.showMessageDialog(MainFrame.getInstance(), "Ne postoji projekat u koji može da se podeli dokument.");
     }
 
+    public static void showDocumentDeletedDialog() {
+        JOptionPane.showMessageDialog(MainFrame.getInstance(), "Ne postoji projekat u koji mogu da se prebace dokumenti.");
+    }
+
     public static void showRenameError() {
         JOptionPane.showMessageDialog(null, "Naziv ne može biti prazan!",
                 "Greška", JOptionPane.ERROR_MESSAGE);

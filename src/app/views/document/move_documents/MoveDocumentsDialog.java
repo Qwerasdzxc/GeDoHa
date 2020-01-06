@@ -1,33 +1,37 @@
-package app.views.document.share_document;
+package app.views.document.move_documents;
 
 import app.models.AbstractNode;
 import app.models.document.Document;
 import app.models.project.Project;
 import app.views.MainFrame;
+import app.views.document.share_document.ShareDocumentDialogCellRenderer;
+import app.views.document.share_document.ShareDocumentDialogController;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseListener;
+import java.util.ArrayList;
 import java.util.List;
 
-public class ShareDocumentDialog extends JDialog {
+public class MoveDocumentsDialog extends JDialog {
 
-    private Document document;
+    private ArrayList<Document> documents;
     private JButton confirmButton;
     private JList<Project> projects;
 
-    public ShareDocumentDialog(Document document) {
-        super(MainFrame.getInstance(), "Deljenje dokumenta", ModalityType.APPLICATION_MODAL,
+    private Project toBeDeleted;
+
+    public MoveDocumentsDialog(Project toBeDeleted, ArrayList<Document> documents) {
+        super(MainFrame.getInstance(), "Pomeranje dokumenata", ModalityType.APPLICATION_MODAL,
                 MainFrame.getInstance().getGraphicsConfiguration());
 
-        this.document = document;
-
+        this.documents = documents;
+        this.toBeDeleted = toBeDeleted;
         this.setLayout(new BorderLayout());
 
-        JLabel descriptionLabel = new JLabel("Izaberite projekte u koje će biti ubačen podeljeni dokument:");
+        JLabel descriptionLabel = new JLabel("Izaberi projekat u koji će biti ubačeni slobodni dokumenti:");
         descriptionLabel.setBorder(new EmptyBorder(10, 10, 10, 10));
         descriptionLabel.setAlignmentY(CENTER_ALIGNMENT);
         this.add(descriptionLabel, BorderLayout.NORTH);
@@ -35,17 +39,18 @@ public class ShareDocumentDialog extends JDialog {
         DefaultListModel<Project> defaultListModel = new DefaultListModel<>();
         projects = new JList<Project>(defaultListModel);
         projects.setCellRenderer(new ShareDocumentDialogCellRenderer());
+        projects.setSelectionMode(DefaultListSelectionModel.SINGLE_SELECTION);
 
         this.add(projects, BorderLayout.CENTER);
 
         for (AbstractNode node : MainFrame.getInstance().getWorkspace().getChildren()) {
             Project project = (Project) node;
 
-            if (!document.getParents().contains(project) && document.getParent() != project)
+            if (project != toBeDeleted)
                 defaultListModel.addElement(project);
         }
 
-        confirmButton = new JButton("Podeli sa izabranim projektima");
+        confirmButton = new JButton("Premesti " + documents.size() + " dokumenta u izabrani projekat");
         confirmButton.setEnabled(false);
         this.add(confirmButton, BorderLayout.SOUTH);
 
@@ -53,7 +58,7 @@ public class ShareDocumentDialog extends JDialog {
         pack();
         setLocationRelativeTo(null);
 
-        ShareDocumentDialogController controller = new ShareDocumentDialogController(this);
+        MoveDocumentsController controller = new MoveDocumentsController(this);
 
         this.setVisible(true);
     }
@@ -62,12 +67,16 @@ public class ShareDocumentDialog extends JDialog {
         this.confirmButton.setEnabled(!projects.getSelectedValuesList().isEmpty());
     }
 
-    public List<Project> getSelected() {
-        return this.projects.getSelectedValuesList();
+    public Project getSelected() {
+        return this.projects.getSelectedValue();
     }
 
-    public Document getDocument() {
-        return this.document;
+    public Project getProjectForDeletion() {
+        return this.toBeDeleted;
+    }
+
+    public ArrayList<Document> getMovingDocuments() {
+        return documents;
     }
 
     public void addSelectionChangedListener(ListSelectionListener listener) {
