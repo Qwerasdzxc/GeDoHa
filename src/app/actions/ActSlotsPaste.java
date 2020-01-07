@@ -1,8 +1,5 @@
 package app.actions;
 
-import app.actions.GAbstractAction;
-import app.models.page.Page;
-import app.models.slot.SlotSelection;
 import app.views.MainFrame;
 import app.views.document.DocumentView;
 import app.views.page.PageView;

@@ -56,9 +56,9 @@ public class HierarchyTree extends JTree implements TreeSelectionListener {
                 ArrayList<Project> projects = new ArrayList<Project>(document.getParents());
                 projects.add((Project) document.getParent());
 
-                // 0 - [Workspace];
-                // 1 - [Project];
-                // 2 - [Document];
+                // 0 - [Workspace]
+                // 1 - [Project]
+                // 2 - [Document]
                 Project selection = (Project) pathElements[pathElements.length - 2];
 
                 for (Project project : projects) {
@@ -77,6 +77,36 @@ public class HierarchyTree extends JTree implements TreeSelectionListener {
             enableForPage();
 
             Page page = (Page) selectedComponent;
+            Document parentDocument = (Document) page.getParent();
+            Project parentProject = null;
+
+            // Case if the document is shared:
+            if (parentDocument.getParents().size() > 1) {
+                Object[] pathElements = path.getPath();
+                ArrayList<Project> projects = new ArrayList<Project>(parentDocument.getParents());
+                projects.add((Project) parentDocument.getParent());
+
+                // 0 - [Workspace]
+                // 1 - [Project]
+                // 2 - [Document]
+                // 3 - [Page]
+                Project selection = (Project) pathElements[pathElements.length - 3];
+
+                for (Project project : projects) {
+                    if (selection.equals(project)) {
+                        parentProject = selection;
+                        break;
+                    }
+                }
+            } else {
+                parentProject = (Project) parentDocument.getParent();
+            }
+
+            if (parentProject == null)
+                return;
+
+            parentProject.setSelected();
+            parentDocument.setSelected();
             page.setSelected();
         }
     }

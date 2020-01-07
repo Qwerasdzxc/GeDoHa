@@ -9,6 +9,7 @@ public class HierarchyContextMenu extends JPopupMenu {
     private JMenuItem save;
     private JMenuItem saveAs;
     private JMenuItem create;
+    private JMenuItem shareDocument;
     private JMenuItem cutDocument;
     private JMenuItem copyDocument;
     private JMenuItem pasteDocument;
@@ -24,6 +25,9 @@ public class HierarchyContextMenu extends JPopupMenu {
 
         this.create = new JMenuItem("Napravi");
         this.create.addActionListener(ActionManager.getInstance().getNewNode());
+
+        this.shareDocument = new JMenuItem("Podeli dokument");
+        this.shareDocument.addActionListener(ActionManager.getInstance().getShareDocument());
 
         this.cutDocument = new JMenuItem("Iseci dokument");
         this.cutDocument.addActionListener(ActionManager.getInstance().getDocumentCut());
@@ -45,6 +49,8 @@ public class HierarchyContextMenu extends JPopupMenu {
         addSeparator();
         add(create);
         addSeparator();
+        add(shareDocument);
+        addSeparator();
         add(cutDocument);
         add(copyDocument);
         add(pasteDocument);
@@ -57,6 +63,7 @@ public class HierarchyContextMenu extends JPopupMenu {
         save.setEnabled(false);
         saveAs.setEnabled(false);
         create.setEnabled(true);
+        shareDocument.setEnabled(false);
         cutDocument.setEnabled(false);
         copyDocument.setEnabled(false);
         pasteDocument.setEnabled(false);
@@ -68,6 +75,7 @@ public class HierarchyContextMenu extends JPopupMenu {
         save.setEnabled(true);
         saveAs.setEnabled(true);
         create.setEnabled(true);
+        shareDocument.setEnabled(false);
         cutDocument.setEnabled(false);
         copyDocument.setEnabled(false);
         pasteDocument.setEnabled(true);
@@ -79,6 +87,7 @@ public class HierarchyContextMenu extends JPopupMenu {
         save.setEnabled(false);
         saveAs.setEnabled(false);
         create.setEnabled(true);
+        shareDocument.setEnabled(true);
         cutDocument.setEnabled(true);
         copyDocument.setEnabled(true);
         pasteDocument.setEnabled(false);
@@ -90,6 +99,7 @@ public class HierarchyContextMenu extends JPopupMenu {
         save.setEnabled(false);
         saveAs.setEnabled(false);
         create.setEnabled(false);
+        shareDocument.setEnabled(false);
         cutDocument.setEnabled(false);
         copyDocument.setEnabled(false);
         pasteDocument.setEnabled(false);

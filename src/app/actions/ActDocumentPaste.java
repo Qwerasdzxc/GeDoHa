@@ -1,5 +1,7 @@
 package app.actions;
 
+import app.commands.AddDocumentCommand;
+import app.commands.CommandManager;
 import app.graphics.elements.PageShape;
 import app.graphics.elements.shapes.CircleElement;
 import app.graphics.elements.shapes.RectangleElement;
@@ -9,6 +11,7 @@ import app.models.AbstractNode;
 import app.models.document.Document;
 import app.models.document.DocumentSelection;
 import app.models.page.Page;
+import app.models.project.Project;
 import app.models.slot.Slot;
 import app.models.slot.SlotSelection;
 import app.views.MainFrame;
@@ -66,6 +69,7 @@ public class ActDocumentPaste extends GAbstractAction {
 
                         clonedPage.getSlots().set(j, clonedSlot);
                     }
+                    clonedPage.setParent(document);
                     document.getChildren().set(i, clonedPage);
                 }
 
@@ -82,8 +86,10 @@ public class ActDocumentPaste extends GAbstractAction {
         hierarchy.expandPath(path);
 
         AbstractNode selectedNode = (AbstractNode) hierarchy.getLastSelectedPathComponent();
-        selectedNode.addChild(document);
+        document.setParent(selectedNode);
+        document.getParents().clear();
+        document.addParent((Project) selectedNode);
 
-        hierarchy.setSelectionPath(createTreePathFromNode(document));
+        CommandManager.getInstance().addCommand(new AddDocumentCommand((Project) selectedNode, document));
     }
 }

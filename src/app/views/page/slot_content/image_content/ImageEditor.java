@@ -10,15 +10,11 @@ import java.io.File;
 
 public class ImageEditor extends JDialog {
 
-    private ImageSlotContent content;
     private ImageEditorController controller;
 
     private JLabel label;
-    private JPanel panel;
 
     public ImageEditor(ImageSlotContent content) {
-        this.content = content;
-
         this.setSize(new Dimension(600, 600));
         this.setLayout(new BorderLayout());
         this.setLocationRelativeTo(null);
@@ -28,7 +24,7 @@ public class ImageEditor extends JDialog {
         ImageEditorToolbar toolbar = new ImageEditorToolbar(this);
         this.add(toolbar, BorderLayout.NORTH);
 
-        panel = new JPanel();
+        JPanel panel = new JPanel();
         label = new JLabel();
         label.setPreferredSize(new Dimension(500, 500));
 
@@ -40,10 +36,6 @@ public class ImageEditor extends JDialog {
 
         if (content.getImagePath() != null)
             updatePhoto(content.getImagePath());
-    }
-
-    public JPanel getPanel() {
-        return panel;
     }
 
     public ImageEditorController getController() {

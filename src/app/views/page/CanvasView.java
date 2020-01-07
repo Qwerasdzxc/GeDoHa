@@ -3,11 +3,13 @@ package app.views.page;
 import app.graphics.elements.PageElement;
 import app.graphics.elements.PageShape;
 import app.graphics.painters.ElementPainter;
+import app.graphics.painters.PagePainter;
 import app.models.page.Page;
 import app.models.slot.Slot;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.geom.Area;
 import java.awt.geom.Rectangle2D;
 import java.util.Iterator;
 

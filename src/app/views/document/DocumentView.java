@@ -12,6 +12,7 @@ import app.views.page.PageView;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.tree.TreePath;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -19,9 +20,13 @@ import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.List;
+
+import static app.actions.ActNewNode.createTreePathFromNode;
 
 public class DocumentView extends JPanel implements ProjListener, DocListener, PageListener {
 
+    private Project parent;
     public Document document;
 
     private Page activePage;
@@ -33,13 +38,13 @@ public class DocumentView extends JPanel implements ProjListener, DocListener, P
 
     private ArrayList<PageThumbnail> thumbnails = new ArrayList<>();
 
-    public DocumentView(Document document) {
+    public DocumentView(Document document, Project parent) {
         super();
 
         this.document = document;
         this.document.addObserver(this);
-        Project parent = (Project) this.document.getParent();
-        parent.addObserver(this);
+        this.parent = parent;
+        this.parent.addObserver(this);
 
         body = new JPanel();
         body.setLayout(new BoxLayout(body, BoxLayout.PAGE_AXIS));
@@ -77,7 +82,7 @@ public class DocumentView extends JPanel implements ProjListener, DocListener, P
             thumbnail.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
-                    page.setSelected();
+                    onPageThumbnailClicked(thumbnail);
                 }
             });
             thumbnails.add(thumbnail);
@@ -86,16 +91,28 @@ public class DocumentView extends JPanel implements ProjListener, DocListener, P
         }
     }
 
-    public Document getDocument() {
-        return document;
-    }
+    public void onPageThumbnailClicked(PageThumbnail thumbnail) {
+        activePage = thumbnail.getPage();
 
-    public Page getActivePage() {
-        return activePage;
-    }
+        body.removeAll();
+        activePageView = new PageView(thumbnail.getPage());
+        body.add(activePageView);
 
-    public PageView getActivePageView() {
-        return activePageView;
+        List<Object> nodePath = new ArrayList<Object>();
+        nodePath.add(parent.getParent());
+        nodePath.add(parent);
+        nodePath.add(document);
+        nodePath.add(thumbnail.getPage());
+
+        MainFrame.getInstance().getHierarchyTree().setSelectionPath(new TreePath(nodePath.toArray()));
+
+        for (PageThumbnail tn : thumbnails) {
+            if (tn != thumbnail)
+                tn.resetColor();
+        }
+
+        revalidate();
+        repaint();
     }
 
     @Override
@@ -107,9 +124,13 @@ public class DocumentView extends JPanel implements ProjListener, DocListener, P
         thumbnail.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                page.setSelected();
+                onPageThumbnailClicked(thumbnail);
             }
         });
+
+        for (PageThumbnail tn : thumbnails)
+            tn.resetColor();
+
         thumbnails.add(thumbnail);
         pageStripPanel.add(thumbnail);
 
@@ -150,6 +171,9 @@ public class DocumentView extends JPanel implements ProjListener, DocListener, P
         activePageView = new PageView(page);
         body.add(activePageView);
 
+        for (PageThumbnail tn : thumbnails)
+            tn.resetColor();
+
         revalidate();
         repaint();
     }
@@ -164,5 +188,17 @@ public class DocumentView extends JPanel implements ProjListener, DocListener, P
     @Override
     public void onProjectChangedName(String name) {
         pathLabel.setText(name + " -> " + document.getName());
+    }
+
+    public Document getDocument() {
+        return document;
+    }
+
+    public Page getActivePage() {
+        return activePage;
+    }
+
+    public PageView getActivePageView() {
+        return activePageView;
     }
 }

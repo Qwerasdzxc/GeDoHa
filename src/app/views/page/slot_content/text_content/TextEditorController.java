@@ -26,7 +26,6 @@ public class TextEditorController {
                     textContent.getFormats().add(TextSlotContent.FormatType.BOLD);
                 }
                 updateText();
-//                slot.notifyObservers(NotificationObserver.ADD, new JPanel());
             }
         };
     }
@@ -42,7 +41,6 @@ public class TextEditorController {
                     textContent.getFormats().add(TextSlotContent.FormatType.ITALIC);
                 }
                 updateText();
-//                slot.notifyObservers(NotificationObserver.ADD, new JPanel());
             }
         };
     }
@@ -54,7 +52,6 @@ public class TextEditorController {
             public void actionPerformed(ActionEvent e) {
                 textContent.setFontSize(editor.getToolbar().getSelectedFontSize());
                 updateText();
-//                slot.notifyObservers(NotificationObserver.ADD, new JPanel());
             }
         };
     }
@@ -66,7 +63,6 @@ public class TextEditorController {
             public void actionPerformed(ActionEvent e) {
                 textContent.setFontStyle(editor.getToolbar().getSelectedFontStyle());
                 updateText();
-//                slot.notifyObservers(NotificationObserver.ADD, new JPanel());
             }
         };
     }
@@ -78,22 +74,19 @@ public class TextEditorController {
             public void actionPerformed(ActionEvent e) {
                 String c = editor.getToolbar().getSelectedFontColor();
                 switch (c) {
-                    case "Black":
+                    case "Crna":
                         textContent.setColor(Color.BLACK);
                         break;
-                    case "Red":
+                    case "Crvena":
                         textContent.setColor(Color.RED);
                         break;
-                    case "Green":
+                    case "Zelena":
                         textContent.setColor(Color.GREEN);
                         break;
-                    case "Blue":
+                    case "Plava":
                         textContent.setColor(Color.BLUE);
                         break;
-                    case "Yellow":
-                        textContent.setColor(Color.YELLOW);
-                        break;
-                    case "Orange":
+                    case "Narandžasta":
                         textContent.setColor(Color.ORANGE);
                         break;
                     case "Pink":
@@ -101,7 +94,6 @@ public class TextEditorController {
                         break;
                 }
                 updateText();
-//                slot.notifyObservers(NotificationObserver.ADD, new JPanel());
             }
         };
     }
@@ -110,7 +102,7 @@ public class TextEditorController {
         boolean isBold = textContent.getFormats().contains(TextSlotContent.FormatType.BOLD);
         boolean isItalic = textContent.getFormats().contains(TextSlotContent.FormatType.ITALIC);
 
-        int style = -1;
+        int style;
 
         if (isBold && isItalic)
             style = Font.BOLD + Font.ITALIC;

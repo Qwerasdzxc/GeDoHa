@@ -90,7 +90,7 @@ public class ProjectView extends JPanel implements ProjListener, DocListener {
             Document doc = (Document) node;
             doc.addObserver(this);
 
-            DocumentView documentView = new DocumentView(doc);
+            DocumentView documentView = new DocumentView(doc, project);
             tabbedPane.add(doc.getName(), documentView);
         }
     }
@@ -99,27 +99,11 @@ public class ProjectView extends JPanel implements ProjListener, DocListener {
         return (DocumentView) tabbedPane.getSelectedComponent();
     }
 
-    public void pasteDocument() {
-        Transferable clipboardContent = MainFrame.getInstance().getClipboard().getContents(MainFrame.getInstance());
-
-        if ((clipboardContent != null) &&
-                (clipboardContent.isDataFlavorSupported(SlotSelection.flavor))) {
-            try {
-                Document document = (Document) clipboardContent.getTransferData(DocumentSelection.flavor);
-                document = (Document) document.clone();
-
-//                project.
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
-        }
-    }
-
     @Override
     public void onDocumentCreated(Document document) {
        document.addObserver(this);
 
-       DocumentView documentView = new DocumentView(document);
+       DocumentView documentView = new DocumentView(document, project);
        tabbedPane.add(document.getName(), documentView);
 
        SwingUtilities.updateComponentTreeUI(MainFrame.getInstance().getHierarchyTree());
@@ -155,7 +139,7 @@ public class ProjectView extends JPanel implements ProjListener, DocListener {
         else {
             document.addObserver(this);
 
-            DocumentView documentView = new DocumentView(document);
+            DocumentView documentView = new DocumentView(document, project);
             tabbedPane.add(document.getName(), documentView);
 
             revalidate();

@@ -31,7 +31,7 @@ public class TextEditor extends JDialog {
         controller = new TextEditorController(content, this);
         controller.updateText();
 
-        toolbar = new TextEditorToolbar(textElement, this);
+        toolbar = new TextEditorToolbar(this);
 
         this.add(toolbar, BorderLayout.NORTH);
         this.setSize(new Dimension(600, 600));
@@ -43,19 +43,16 @@ public class TextEditor extends JDialog {
             @Override
             public void keyTyped(KeyEvent arg0) {
                 textElement.setContent(textArea.getText());
-//                slot.notifyObservers(NotificationObserver.ADD, new JPanel());
             }
 
             @Override
             public void keyReleased(KeyEvent arg0) {
                 textElement.setContent(textArea.getText());
-//                slot.notifyObservers(NotificationObserver.ADD, new JPanel());
             }
 
             @Override
             public void keyPressed(KeyEvent arg0) {
                 textElement.setContent(textArea.getText());
-//                slot.notifyObservers(NotificationObserver.ADD, new JPanel());
             }
         });
     }

@@ -21,6 +21,7 @@ class PageThumbnail extends JPanel implements PageListener {
 
     private Page page;
 
+    private JPanel paper;
     private TitledBorder pageTitleBorder;
 
     public PageThumbnail(Page page) {
@@ -44,7 +45,7 @@ class PageThumbnail extends JPanel implements PageListener {
         setLayout(new BorderLayout());
         setBorder(border);
 
-        JPanel paper = new JPanel();
+        paper = new JPanel();
         paper.setBackground(Color.WHITE);
         add(paper);
 
@@ -57,5 +58,15 @@ class PageThumbnail extends JPanel implements PageListener {
     }
 
     @Override
-    public void onPageSelected(Page page) {}
+    public void onPageSelected(Page page) {
+        paper.setBackground(new Color(120, 120, 120, 150));
+    }
+
+    public void resetColor() {
+        paper.setBackground(Color.WHITE);
+    }
+
+    public Page getPage() {
+        return page;
+    }
 }

@@ -11,7 +11,7 @@ import java.util.UUID;
 
 public class Utilities {
 
-    public static final int PAGE_HEIGHT = 600;
+    public static final int PAGE_HEIGHT = 750;
     public static final int PAGE_WIDTH = 500;
 
     public static final int PAGE_THUMBNAIL_HEIGHT = 200;
@@ -21,13 +21,13 @@ public class Utilities {
         RECTANGLE, CIRCLE, TRIANGLE
     }
 
-    public static PageShape recreateElement(UUID id, Point2D pos, Dimension dim, int angle, ShapeType type) {
+    public static PageShape recreateElement(UUID id, Point2D pos, Dimension dim, Paint paint, int angle, ShapeType type) {
         if (type == ShapeType.RECTANGLE)
-            return RectangleElement.createWithData(id, pos, dim, angle);
+            return RectangleElement.createWithData(id, pos, dim, paint, angle);
         else if (type == ShapeType.CIRCLE)
-            return CircleElement.createWithData(id, pos, dim, angle);
+            return CircleElement.createWithData(id, pos, dim, paint, angle);
         else if (type == ShapeType.TRIANGLE)
-            return TriangleElement.createWithData(id, pos, dim, angle);
+            return TriangleElement.createWithData(id, pos, dim, paint, angle);
 
         return null;
     }

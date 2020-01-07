@@ -37,14 +37,14 @@ public class CircleElement extends PageShape {
                 0);
     }
 
-    public static CircleElement createWithData(UUID id, Point2D pos, Dimension dim, int angle) {
+    public static CircleElement createWithData(UUID id, Point2D pos, Dimension dim, Paint paint, int angle) {
         Point2D position = (Point2D) pos.clone();
 
         CircleElement copy = new CircleElement(
                 position,
                 dim,
                 new BasicStroke((float) (2), BasicStroke.CAP_SQUARE, BasicStroke.JOIN_BEVEL),
-                Color.WHITE,
+                paint,
                 Color.BLACK,
                 angle);
 

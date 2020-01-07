@@ -1,5 +1,6 @@
 package app.models.slot;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.io.Serializable;
@@ -8,7 +9,9 @@ import java.util.ArrayList;
 import app.graphics.elements.PageElement;
 import app.graphics.painters.ElementPainter;
 import app.models.page.Page;
+import app.models.slot.content.ImageSlotContent;
 import app.models.slot.content.SlotContent;
+import app.models.slot.content.TextSlotContent;
 
 public class Slot implements Serializable, Cloneable {
 
@@ -27,6 +30,19 @@ public class Slot implements Serializable, Cloneable {
         this.element = element;
     }
 
+    public SlotContent getContent() {
+        return content;
+    }
+
+    public void setContent(SlotContent content) {
+        this.content = content;
+
+        if (content instanceof TextSlotContent)
+            element.setPaint(new Color(0, 255, 0, 50));
+        else if (content instanceof ImageSlotContent)
+            element.setPaint(new Color(0, 0, 255, 50));
+    }
+
     @Override
     public Object clone() {
         Slot slot;
@@ -36,20 +52,15 @@ public class Slot implements Serializable, Cloneable {
             slot = new Slot(this.getElement());
             this.getElement().setParent(slot);
         }
-        PageElement el = (PageElement) this.element.clone();
-        SlotContent content = (SlotContent) this.content.clone();
+        if (this.content != null) {
+            SlotContent content = this.content.clone();
+            slot.setContent(content);
+        }
+
+        PageElement el = this.element.clone();
         slot.setElement(el);
         el.setParent(slot);
-        slot.setContent(content);
 
         return slot;
-    }
-
-    public SlotContent getContent() {
-        return content;
-    }
-
-    public void setContent(SlotContent content) {
-        this.content = content;
     }
 }

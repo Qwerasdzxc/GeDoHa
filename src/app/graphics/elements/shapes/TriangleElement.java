@@ -37,14 +37,14 @@ public class TriangleElement extends PageShape {
                 0);
     }
 
-    public static TriangleElement createWithData(UUID id, Point2D pos, Dimension dim, int angle) {
+    public static TriangleElement createWithData(UUID id, Point2D pos, Dimension dim, Paint paint, int angle) {
         Point2D position = (Point2D) pos.clone();
 
         TriangleElement copy = new TriangleElement(
                 position,
                 dim,
                 new BasicStroke((float) (2), BasicStroke.CAP_SQUARE, BasicStroke.JOIN_BEVEL),
-                Color.WHITE,
+                paint,
                 Color.BLACK,
                 angle);
 

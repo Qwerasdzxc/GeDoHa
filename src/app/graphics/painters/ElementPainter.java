@@ -8,7 +8,7 @@ import app.graphics.elements.PageElement;
 
 public abstract class ElementPainter implements Serializable {
 
-    public ElementPainter(PageElement element) {	}
+    public ElementPainter(PageElement element) {}
 
     public abstract void paint(Graphics2D g, PageElement element);
 

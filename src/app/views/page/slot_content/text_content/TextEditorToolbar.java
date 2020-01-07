@@ -13,21 +13,7 @@ public class TextEditorToolbar extends JToolBar {
     private JComboBox<String> style;
     private JComboBox<String> color;
 
-    private final String[] sizes = {"8", "9", "10", "11", "12", "14",
-            "16", "18", "20", "24", "36", "48", "72"
-    };
-
-    private final String[] styles = {"Serif", "Agency FB", "Arial",
-            "Calibri", "Century Gothic",
-            "Comic Sans MS", "Courier New", "Forte",
-            "Garamond", "Monospaced", "Segoe UI",
-            "Times New Roman", "Trebuchet MS", "Serif"};
-
-    private final String[] colors = {"Black", "Red", "Green",
-            "Blue", "Orange", "Pink"
-    };
-
-    public TextEditorToolbar(TextSlotContent content, TextEditor editor) {
+    public TextEditorToolbar(TextEditor editor) {
         this.setFloatable(false);
 
         URL boldImgUrl = getClass().getResource("/app/actions/images/bold.png");
@@ -52,8 +38,10 @@ public class TextEditorToolbar extends JToolBar {
 
         this.addSeparator();
 
-        size = new JComboBox<>(sizes);
-        size.setSelectedItem(sizes[5]);
+        size = new JComboBox<>(new String[]{"8", "9", "10", "11", "12", "14",
+                "16", "18", "20", "24", "36", "48", "72"
+        });
+        size.setSelectedItem("14");
         size.setEditable(false);
         size.setToolTipText("Izaberite veličinu fonta");
         size.addActionListener(editor.getController().getFontSizeActionListener());
@@ -61,7 +49,11 @@ public class TextEditorToolbar extends JToolBar {
 
         this.addSeparator();
 
-        style = new JComboBox<>(styles);
+        style = new JComboBox<>(new String[]{"Serif", "Agency FB", "Arial",
+                "Calibri", "Century Gothic",
+                "Comic Sans MS", "Courier New", "Forte",
+                "Garamond", "Monospaced", "Segoe UI",
+                "Times New Roman", "Trebuchet MS", "Serif"});
         style.setEditable(false);
         style.setToolTipText("Izaberite stil fonta");
         style.addActionListener(editor.getController().getFontStyleActionListener());
@@ -69,7 +61,9 @@ public class TextEditorToolbar extends JToolBar {
 
         this.addSeparator();
 
-        color = new JComboBox<>(colors);
+        color = new JComboBox<>(new String[]{"Crna", "Crvena", "Zelena",
+                "Plava", "Narandžasta", "Pink"
+        });
         color.setEditable(false);
         color.setToolTipText("Izaberite boju");
         color.addActionListener(editor.getController().getFontColorActionListener());

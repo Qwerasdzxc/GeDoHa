@@ -9,7 +9,8 @@ public class ImageSlotContent extends SlotContent {
     public ImageSlotContent() {}
 
     public ImageSlotContent(ImageSlotContent content) {
-        imagePath = new File(content.imagePath.toURI());
+        if (content.imagePath != null)
+            imagePath = new File(content.imagePath.toURI());
     }
 
     public File getImagePath() {

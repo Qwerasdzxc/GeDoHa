@@ -39,18 +39,6 @@ public class ResizeSlotsCommand extends AbstractCommand {
         } else {
             ArrayList<PageShape> newElements = new ArrayList<>();
 
-//            for (PageElement element : resized) {
-//
-//                PageShape shape = (PageShape) element;
-//
-//                PageShape newElement = recreateElement(shape.getId(),
-//                        new Point2D.Double(shape.getPosition().getX() + dx, shape.getPosition().getY() + dy),
-//                        new Dimension((int) shape.getSize().getWidth(), (int) shape.getSize().getHeight()), shape.getAngle(), getShapeType(shape)
-//                );
-//
-//                newElements.add(newElement);
-//            }
-
             switch (cursorType) {
                 case Cursor.N_RESIZE_CURSOR:
                     for (PageElement element : resized) {
@@ -68,7 +56,7 @@ public class ResizeSlotsCommand extends AbstractCommand {
                         PageShape newElement = recreateElement(shape.getId(),
                                 new Point2D.Double(shape.getPosition().getX(), shape.getPosition().getY() + dy),
                                 new Dimension((int) shape.getSize().getWidth(), (int) height),
-                                shape.getAngle(), getShapeType(shape)
+                                shape.getPaint(), shape.getAngle(), getShapeType(shape)
                         );
 
                         newElements.add(newElement);
@@ -95,7 +83,7 @@ public class ResizeSlotsCommand extends AbstractCommand {
                         PageShape newElement = recreateElement(shape.getId(),
                                 new Point2D.Double(shape.getPosition().getX() + dx, shape.getPosition().getY() + dy),
                                 new Dimension((int) width, (int) height),
-                                shape.getAngle(), getShapeType(shape)
+                                shape.getPaint(), shape.getAngle(), getShapeType(shape)
                         );
 
                         newElements.add(newElement);
@@ -116,7 +104,7 @@ public class ResizeSlotsCommand extends AbstractCommand {
                         PageShape newElement = recreateElement(shape.getId(),
                                 new Point2D.Double(shape.getPosition().getX() + dx, shape.getPosition().getY()),
                                 new Dimension((int) width, (int) shape.getSize().getHeight()),
-                                shape.getAngle(), getShapeType(shape)
+                                shape.getPaint(), shape.getAngle(), getShapeType(shape)
                         );
 
                         newElements.add(newElement);
@@ -143,7 +131,7 @@ public class ResizeSlotsCommand extends AbstractCommand {
                         PageShape newElement = recreateElement(shape.getId(),
                                 new Point2D.Double(shape.getPosition().getX() + dx, shape.getPosition().getY()),
                                 new Dimension((int) width, (int) height),
-                                shape.getAngle(), getShapeType(shape)
+                                shape.getPaint(), shape.getAngle(), getShapeType(shape)
                         );
 
                         newElements.add(newElement);
@@ -165,7 +153,7 @@ public class ResizeSlotsCommand extends AbstractCommand {
                         PageShape newElement = recreateElement(shape.getId(),
                                 new Point2D.Double(shape.getPosition().getX(), shape.getPosition().getY()),
                                 new Dimension((int) shape.getSize().getWidth(), (int) height),
-                                shape.getAngle(), getShapeType(shape)
+                                shape.getPaint(), shape.getAngle(), getShapeType(shape)
                         );
 
                         newElements.add(newElement);
@@ -192,7 +180,7 @@ public class ResizeSlotsCommand extends AbstractCommand {
                         PageShape newElement = recreateElement(shape.getId(),
                                 new Point2D.Double(shape.getPosition().getX(), shape.getPosition().getY()),
                                 new Dimension((int) width, (int) height),
-                                shape.getAngle(), getShapeType(shape)
+                                shape.getPaint(), shape.getAngle(), getShapeType(shape)
                         );
 
                         newElements.add(newElement);
@@ -213,7 +201,7 @@ public class ResizeSlotsCommand extends AbstractCommand {
                         PageShape newElement = recreateElement(shape.getId(),
                                 new Point2D.Double(shape.getPosition().getX(), shape.getPosition().getY()),
                                 new Dimension((int) width, (int) shape.getSize().getHeight()),
-                                shape.getAngle(), getShapeType(shape)
+                                shape.getPaint(), shape.getAngle(), getShapeType(shape)
                         );
 
                         newElements.add(newElement);
@@ -240,7 +228,7 @@ public class ResizeSlotsCommand extends AbstractCommand {
                         PageShape newElement = recreateElement(shape.getId(),
                                 new Point2D.Double(shape.getPosition().getX(), shape.getPosition().getY() + dy),
                                 new Dimension((int) width, (int) height),
-                                shape.getAngle(), getShapeType(shape)
+                                shape.getPaint(), shape.getAngle(), getShapeType(shape)
                         );
 
                         newElements.add(newElement);
@@ -263,18 +251,6 @@ public class ResizeSlotsCommand extends AbstractCommand {
     public void undoCommand() {
         ArrayList<PageShape> newElements = new ArrayList<>();
 
-//            for (PageElement element : resized) {
-//
-//                PageShape shape = (PageShape) element;
-//
-//                PageShape newElement = recreateElement(shape.getId(),
-//                        new Point2D.Double(shape.getPosition().getX() + dx, shape.getPosition().getY() + dy),
-//                        new Dimension((int) shape.getSize().getWidth(), (int) shape.getSize().getHeight()), shape.getAngle(), getShapeType(shape)
-//                );
-//
-//                newElements.add(newElement);
-//            }
-
         switch (cursorType) {
             case Cursor.N_RESIZE_CURSOR:
                 for (PageElement element : resized) {
@@ -292,7 +268,7 @@ public class ResizeSlotsCommand extends AbstractCommand {
                     PageShape newElement = recreateElement(shape.getId(),
                             new Point2D.Double(shape.getPosition().getX(), shape.getPosition().getY() - dy),
                             new Dimension((int) shape.getSize().getWidth(), (int) height),
-                            shape.getAngle(), getShapeType(shape)
+                            shape.getPaint(), shape.getAngle(), getShapeType(shape)
                     );
 
                     newElements.add(newElement);
@@ -319,7 +295,7 @@ public class ResizeSlotsCommand extends AbstractCommand {
                     PageShape newElement = recreateElement(shape.getId(),
                             new Point2D.Double(shape.getPosition().getX() - dx, shape.getPosition().getY() - dy),
                             new Dimension((int) width, (int) height),
-                            shape.getAngle(), getShapeType(shape)
+                            shape.getPaint(), shape.getAngle(), getShapeType(shape)
                     );
 
                     newElements.add(newElement);
@@ -340,7 +316,7 @@ public class ResizeSlotsCommand extends AbstractCommand {
                     PageShape newElement = recreateElement(shape.getId(),
                             new Point2D.Double(shape.getPosition().getX() - dx, shape.getPosition().getY()),
                             new Dimension((int) width, (int) shape.getSize().getHeight()),
-                            shape.getAngle(), getShapeType(shape)
+                            shape.getPaint(), shape.getAngle(), getShapeType(shape)
                     );
 
                     newElements.add(newElement);
@@ -367,7 +343,7 @@ public class ResizeSlotsCommand extends AbstractCommand {
                     PageShape newElement = recreateElement(shape.getId(),
                             new Point2D.Double(shape.getPosition().getX() - dx, shape.getPosition().getY()),
                             new Dimension((int) width, (int) height),
-                            shape.getAngle(), getShapeType(shape)
+                            shape.getPaint(), shape.getAngle(), getShapeType(shape)
                     );
 
                     newElements.add(newElement);
@@ -389,7 +365,7 @@ public class ResizeSlotsCommand extends AbstractCommand {
                     PageShape newElement = recreateElement(shape.getId(),
                             new Point2D.Double(shape.getPosition().getX(), shape.getPosition().getY()),
                             new Dimension((int) shape.getSize().getWidth(), (int) height),
-                            shape.getAngle(), getShapeType(shape)
+                            shape.getPaint(), shape.getAngle(), getShapeType(shape)
                     );
 
                     newElements.add(newElement);
@@ -416,7 +392,7 @@ public class ResizeSlotsCommand extends AbstractCommand {
                     PageShape newElement = recreateElement(shape.getId(),
                             new Point2D.Double(shape.getPosition().getX(), shape.getPosition().getY()),
                             new Dimension((int) width, (int) height),
-                            shape.getAngle(), getShapeType(shape)
+                            shape.getPaint(), shape.getAngle(), getShapeType(shape)
                     );
 
                     newElements.add(newElement);
@@ -437,7 +413,7 @@ public class ResizeSlotsCommand extends AbstractCommand {
                     PageShape newElement = recreateElement(shape.getId(),
                             new Point2D.Double(shape.getPosition().getX(), shape.getPosition().getY()),
                             new Dimension((int) width, (int) shape.getSize().getHeight()),
-                            shape.getAngle(), getShapeType(shape)
+                            shape.getPaint(), shape.getAngle(), getShapeType(shape)
                     );
 
                     newElements.add(newElement);
@@ -464,7 +440,7 @@ public class ResizeSlotsCommand extends AbstractCommand {
                     PageShape newElement = recreateElement(shape.getId(),
                             new Point2D.Double(shape.getPosition().getX(), shape.getPosition().getY() - dy),
                             new Dimension((int) width, (int) height),
-                            shape.getAngle(), getShapeType(shape)
+                            shape.getPaint(), shape.getAngle(), getShapeType(shape)
                     );
 
                     newElements.add(newElement);

@@ -44,8 +44,6 @@ public class PageView extends JPanel implements ProjListener, DocListener, PageL
     private TitledBorder pageTitleBorder;
     private CanvasView content;
 
-    private PaletteBar paletteBar;
-
     private StateManager stateManager;
 
     public PageView(Page page) {
@@ -81,7 +79,7 @@ public class PageView extends JPanel implements ProjListener, DocListener, PageL
         add(content);
 
         stateManager = new StateManager(this);
-        paletteBar = new PaletteBar(stateManager, this);
+        PaletteBar paletteBar = new PaletteBar(stateManager, this);
         add(paletteBar, BorderLayout.NORTH);
 
         pathLabel = new JLabel();

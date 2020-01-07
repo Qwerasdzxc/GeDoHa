@@ -13,7 +13,7 @@ import javax.swing.JMenuItem;
 public class MenuBar extends JMenuBar{
 	
 	public MenuBar() {
-		JMenu file = new JMenu("File");
+		JMenu file = new JMenu("Datoteka");
 
 		file.add(ActionManager.getInstance().getSaveWorkspace());
 		file.add(ActionManager.getInstance().getSwitchWorkspace());
@@ -24,6 +24,8 @@ public class MenuBar extends JMenuBar{
 		file.addSeparator();
 		file.add(ActionManager.getInstance().getNewNode());
 		file.addSeparator();
+		file.add(ActionManager.getInstance().getShareDocument());
+		file.addSeparator();
 		file.add(ActionManager.getInstance().getDocumentCut());
 		file.add(ActionManager.getInstance().getDocumentCopy());
 		file.add(ActionManager.getInstance().getDocumentPaste());
@@ -31,10 +33,14 @@ public class MenuBar extends JMenuBar{
 		file.add(ActionManager.getInstance().getRenameNode());
 		file.add(ActionManager.getInstance().getDeleteNode());
 
-		JMenu help = new JMenu("Help");
-		JMenu about = new JMenu("About");
+		JMenu edit = new JMenu("Izmeni");
+
+		edit.add(ActionManager.getInstance().getUndo());
+		edit.add(ActionManager.getInstance().getRedo());
+
+		JMenu about = new JMenu("O programu");
 		
-		JMenuItem aboutTim= new JMenuItem("Members");
+		JMenuItem aboutTim= new JMenuItem("Autori");
 
 		about.add(aboutTim);
 		
@@ -47,7 +53,7 @@ public class MenuBar extends JMenuBar{
         });
 		
 		this.add(file);
-		this.add(help);
+		this.add(edit);
 		this.add(about);
 	}
 }

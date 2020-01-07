@@ -41,7 +41,7 @@ public class MoveSlotsCommand extends AbstractCommand {
 
                 PageShape newElement = recreateElement(shape.getId(),
                         new Point2D.Double(shape.getPosition().getX() + dx, shape.getPosition().getY() + dy),
-                        new Dimension((int) shape.getSize().getWidth(), (int) shape.getSize().getHeight()), shape.getAngle(), getShapeType(shape)
+                        new Dimension((int) shape.getSize().getWidth(), (int) shape.getSize().getHeight()), shape.getPaint(), shape.getAngle(), getShapeType(shape)
                 );
 
                 newElements.add(newElement);
@@ -66,7 +66,7 @@ public class MoveSlotsCommand extends AbstractCommand {
 
             PageShape newElement = recreateElement(shape.getId(),
                     new Point2D.Double(shape.getPosition().getX() - dx, shape.getPosition().getY() - dy),
-                    new Dimension((int) shape.getSize().getWidth(), (int) shape.getSize().getHeight()), shape.getAngle(), getShapeType(shape)
+                    new Dimension((int) shape.getSize().getWidth(), (int) shape.getSize().getHeight()), shape.getPaint(), shape.getAngle(), getShapeType(shape)
             );
 
             newElements.add(newElement);
