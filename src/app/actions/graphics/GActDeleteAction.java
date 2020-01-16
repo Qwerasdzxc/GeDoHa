@@ -16,8 +16,8 @@ public class GActDeleteAction extends GAbstractAction {
         this.pageView = pageView;
 
         putValue(SMALL_ICON, loadIcon("images/delete.png"));
-        putValue(NAME, "Obriši");
-        putValue(SHORT_DESCRIPTION, "Obriši izabrane elemente");
+        putValue(NAME, "Delete");
+        putValue(SHORT_DESCRIPTION, "Delete selected elements");
     }
 
     @Override
@@ -26,14 +26,5 @@ public class GActDeleteAction extends GAbstractAction {
                 new DeleteSlotsCommand(pageView.getPage(),
                 new ArrayList<>(pageView.getPage().getSelectionModel().getSelectionList()))
         );
-//        int elementsToDelete = pageView.getPage().getSelectionModel().getSelectionListSize();
-//
-//        for (int i = 0; i < elementsToDelete; i++) {
-//            PageElement toBeRemoved = pageView.getPage().getSelectionModel().getElementFromSelectionListAt(i);
-//
-//            pageView.getPage().removeSlot(toBeRemoved);
-//        }
-//
-//        pageView.getPage().getSelectionModel().removeAllFromSelectionList();
     }
 }

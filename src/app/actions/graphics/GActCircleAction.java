@@ -13,8 +13,8 @@ class GActCircleAction extends GAbstractAction {
         this.stateManager = stateManager;
 
         putValue(SMALL_ICON, loadIcon("images/circle.png"));
-        putValue(NAME, "Krug");
-        putValue(SHORT_DESCRIPTION, "Napravi novi krug");
+        putValue(NAME, "Circle");
+        putValue(SHORT_DESCRIPTION, "Create new circle");
     }
 
     @Override
