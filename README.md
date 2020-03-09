@@ -4,5 +4,5 @@ Java Swing desktop application for handling generic documents built using variou
 
 
 <p align="center">
-  <img width="900" height="600" src="https://i.ibb.co/RSLgGPQ/GeDoHa.png">
+  <img width="675" height="450" src="https://i.ibb.co/RSLgGPQ/GeDoHa.png">
 </p>
