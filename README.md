@@ -1,4 +1,4 @@
-# GeDoHa
+# GeDoHa - Generic Document Handler
 
 Java Swing desktop application for handling generic documents built using various design patterns such as:
 
