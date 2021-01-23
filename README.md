@@ -1,3 +1,5 @@
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+
 # GeDoHa - Generic Document Handler
 
 Java Swing desktop application for handling generic documents built using various design patterns such as:
